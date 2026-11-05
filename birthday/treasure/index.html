@@ -98,6 +98,67 @@
   .foot{text-align:center;color:#6e6e73;font-size:11.5px;margin-top:34px;line-height:1.9;}
   @media (max-width:390px){.hud div{font-size:11.5px}.lvl{padding:17px}.wall{gap:6px}.concert{gap:7px;padding:10px}.concert strong{font-size:14px}}
 </style>
+<style>
+.progress{gap:6px;}
+.dot{border:none;background:#e4e4e9;border-radius:8px;padding:10px 4px;}
+.dot.on{background:#1d1d1f;color:#fff;border:none;}
+.lvl{background:transparent;border:none;box-shadow:none;border-radius:0;padding:0;margin-top:58px;}
+.lvl.locked{opacity:.5;filter:none;}
+.lvl h2{font-size:29px;font-weight:600;letter-spacing:-.2px;margin:8px 0 8px;}
+.lvl>p{font-size:15.5px;color:#6e6e73;line-height:1.65;}
+.wall{background:#fff;border-radius:24px;padding:12px;gap:6px;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.photo{border:none;border-radius:10px;}
+.photo.right{border:none;box-shadow:none;outline:3px solid #34c759;outline-offset:-3px;}
+.status{background:transparent;padding:10px 2px 0;color:#6e6e73;font-size:13px;border-radius:0;}
+.hint{display:none;background:transparent;border:none;color:#6e6e73;padding:8px 2px 0;font-size:13px;border-radius:0;}
+.hint.show{display:block;}
+.clue{background:#000;color:#f5f5f7;border:none;border-radius:18px;padding:16px 18px;font-size:14.5px;}
+.clue b{color:#fff;}
+.round{margin-top:28px;}
+.round h3{font-size:19px;font-weight:600;}
+.round>p{font-size:14.5px;color:#6e6e73;line-height:1.65;}
+.round.sealed{opacity:.5;filter:none;}
+.concerts{display:block;background:#fff;border-radius:24px;padding:6px 14px;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.concert{display:flex;width:100%;align-items:center;gap:12px;background:transparent;border:none;border-bottom:1px solid #e8e8ed;padding:14px 2px;border-radius:0;text-align:left;cursor:pointer;font-family:inherit;}
+.concert:last-child{border-bottom:none;}
+.concert strong{font-size:16px;font-weight:600;color:#1d1d1f;}
+.concert small{display:block;color:#6e6e73;font-size:12.5px;margin-top:2px;font-weight:400;}
+.concert.picked{background:transparent;border:none;}
+.concert.picked .num{background:#0071e3;border-color:#0071e3;color:#fff;}
+.concert.wrong{animation:shake .35s;}
+.songs{display:block;background:#fff;border-radius:24px;padding:6px 14px;box-shadow:0 4px 18px rgba(0,0,0,.05);margin-top:13px;}
+.song{display:block;width:100%;border:none;border-bottom:1px solid #e8e8ed;background:transparent;border-radius:0;padding:14px 2px;font-size:16px;font-weight:600;color:#1d1d1f;cursor:pointer;text-align:left;position:relative;font-family:inherit;}
+.song:last-child{border-bottom:none;}
+.song small{display:block;color:#6e6e73;font-size:12.5px;font-weight:400;margin-top:2px;}
+.song.right{background:transparent;border:none;}
+.song.right::after{content:'✓';position:absolute;right:4px;top:50%;transform:translateY(-50%);color:#34c759;font-weight:700;font-size:17px;}
+.hud{display:flex;gap:10px;background:#fff;border-radius:24px;padding:18px;box-shadow:0 4px 18px rgba(0,0,0,.05);margin-top:14px;}
+.hud div{flex:1;font-size:12px;color:#6e6e73;}
+.hud b{display:block;font-size:27px;font-weight:600;color:#1d1d1f;margin-top:4px;}
+.hunt{background:#000;border-radius:24px;}
+.decoy{border:2px solid rgba(255,255,255,.35);box-shadow:none;}
+.final{display:none;background:transparent;border:none;border-radius:0;padding:0;margin-top:64px;text-align:left;}
+.final.show{display:block;}
+.finH{font-size:32px;font-weight:600;margin-top:8px;}
+.pass{background:#000;border-radius:28px;padding:26px 24px;color:#fff;margin-top:18px;}
+.passTop{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+.passName{font-size:19px;font-weight:600;}
+.passOrg{font-size:12px;color:#a1a1a6;white-space:nowrap;}
+.passGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;margin-top:20px;border-top:1px solid rgba(255,255,255,.16);padding-top:20px;}
+.pk{font-size:11px;color:#a1a1a6;}
+.pv{font-size:17px;font-weight:600;margin-top:3px;}
+.passCode{margin-top:24px;background:#fff;border-radius:12px;padding:12px 14px 9px;}
+.bars{height:38px;background:repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 4px,#111 4px 7px,transparent 7px 9px,#111 9px 10px,transparent 10px 14px,#111 14px 17px,transparent 17px 19px);}
+.codeTx{color:#1d1d1f;font-size:11.5px;letter-spacing:.14em;text-align:center;margin-top:7px;}
+.finNote{font-size:15.5px;color:#6e6e73;line-height:1.7;margin-top:20px;}
+.finBtn{display:block;text-align:center;background:#0071e3;color:#fff;padding:14px;border-radius:980px;font-size:16.5px;font-weight:600;margin-top:18px;text-decoration:none;}
+.finPhoto{margin-top:26px;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.finPhoto img{width:100%;display:block;}
+.finPhoto .cap{padding:16px 18px 18px;}
+.finPhoto .t{font-size:16.5px;font-weight:600;}
+.finPhoto .d{font-size:14px;color:#6e6e73;margin-top:4px;line-height:1.6;}
+.finCredit{font-size:12.5px;color:#86868b;margin-top:16px;}
+</style>
 </head>
 <body>
 <div class="subnav">寻宝局<span class="r">第二站 · 寻宝</span></div>
@@ -138,8 +199,8 @@
       <button class="photo" type="button" aria-label="金豆豆照片 12"><img src="img/wall-12.jpg" alt="金豆豆照片 12"/></button>
     </div>
     <div class="status" id="wallStatus">已点错 0 次 · 点错的照片会被盖上红叉，第三次点错后才有提示。</div>
-    <div class="hint" id="wallHint">🐾 猫哥提示：确实还有一张戴圈照，但那张是在家里吃饭。目标照片里有医院诊台、电脑，还有趴在桌边的爸爸。</div>
-    <div class="clue" id="c1">🐾 <b>过关！</b>猫哥说：第一片拼图给你——礼物不在网上，在这个家里，而且<b>离豆豆的日常活动范围不远</b>。</div>
+    <div class="hint" id="wallHint">猫哥提示：确实还有一张戴圈照，但那张是在家里吃饭。目标照片里有医院诊台、电脑，还有趴在桌边的爸爸。</div>
+    <div class="clue" id="c1"><b>过关 · 第一片拼图。</b>猫哥说：——礼物不在网上，在这个家里，而且<b>离豆豆的日常活动范围不远</b>。</div>
   </div>
 
   <div class="lvl locked" id="l2">
@@ -158,7 +219,7 @@
         <button class="concert" type="button" data-order="2" data-date="2023.12.09 · 广西体育中心体育场"><span class="num"></span><span><strong>南宁 · 林俊杰</strong><small>等待点选</small></span></button>
       </div>
       <div class="status" id="orderStatus">进度 0 / 5 · 从最早的一场开始。</div>
-      <div class="hint" id="orderHint">🎫 小乖提示：先按年份分堆——2023 年有两场，2024 年有两场，2025 年只有一场。再想想哪一年去了两次五月天、哪一年把 JJ 听了两遍。</div>
+      <div class="hint" id="orderHint">小乖提示：先按年份分堆——2023 年有两场，2024 年有两场，2025 年只有一场。再想想哪一年去了两次五月天、哪一年把 JJ 听了两遍。</div>
     </div>
 
     <div class="round sealed" id="songRound">
@@ -171,38 +232,47 @@
         <button class="song" type="button" data-song-wrong="1">《不为谁而作的歌》<small>林俊杰 · 候选主题曲</small></button>
       </div>
       <div class="status" id="songStatus">还没开始猜 · 点错两次后才给提示。</div>
-      <div class="hint" id="songHint">🎵 小乖提示：歌名里有“我们”两个字，而且这首歌讲的正是把两个人的故事写下去。</div>
+      <div class="hint" id="songHint">小乖提示：歌名里有“我们”两个字，而且这首歌讲的正是把两个人的故事写下去。</div>
     </div>
 
-    <div class="clue" id="c2">🎵 <b>过关！</b>第二片拼图：礼物不大，拿在手里刚刚好；它身上藏着<b>只给你看的小记号</b>，找到的时候记得翻面。</div>
+    <div class="clue" id="c2"><b>过关 · 第二片拼图。</b>礼物不大，拿在手里刚刚好；它身上藏着<b>只给你看的小记号</b>，找到的时候记得翻面。</div>
   </div>
 
   <div class="lvl locked" id="l3">
     <div class="no">第 三 关 · 手 速 考</div>
     <h2>45 秒内，抓住小乖 3 次</h2>
-    <p>这次我不会乖乖待在角落里。按下开始后，我会不停换位置；抓到一次就加速一次。星空里的白色圆点是假身，<b>点错一个扣 3 秒</b>。</p>
+    <p>按下开始，我会不停换位置，抓到一次就加速一次。白色圆点是假身，<b>点错一个扣 3 秒</b>。</p>
     <div class="hud">
-      <div>⏱ 剩余<br/><b id="timeLeft">45.0</b> 秒</div>
-      <div>🎯 已抓到<br/><b id="catchCount">0</b> / 3 次</div>
-      <div>🏃 当前速度<br/><b id="speedLabel">1 档</b></div>
+      <div>剩余时间<br/><b id="timeLeft">45.0</b> 秒</div>
+      <div>已抓到<br/><b id="catchCount">0</b> / 3 次</div>
+      <div>当前速度<br/><b id="speedLabel">1 档</b></div>
     </div>
     <button class="start" id="huntStart" type="button">开始抓小乖</button>
     <div class="hunt" id="hunt">
-      <span class="tip" id="huntTip">✦ 按下开始，小乖就会开始逃跑 ✦</span>
+      <span class="tip" id="huntTip">按下开始，小乖就会开始逃跑</span>
       <img class="me" id="meBtn" src="img/xiaoguai-avatar.webp" alt="小乖躲在这里"/>
     </div>
     <div class="status" id="huntStatus">白色圆点是假身。真正的我有青色护目镜、圆圆的黑眼睛和毛茸茸的奶油色身体——看清再点。</div>
-    <div class="clue" id="c3">🎉 <b>抓到啦！</b>三关全过，往下翻——最后一页。</div>
+    <div class="clue" id="c3"><b>抓到啦。</b>三关全过，往下翻——最后一页。</div>
   </div>
 
   <div class="final" id="final">
-    <h2>🏆 寻宝成功 🏆</h2>
-    <p class="big">发布会入场函 · 到手！</p>
-    <p>但发布会现场不在屏幕里——去抱一下张大宝，<br/>他身上藏着第一条线索。顺着线索走到底，<br/>坐到发布会席位上，再打开主会场的大门。</p>
-    <a href="../index.html" style="display:inline-block;margin:14px 0 6px;background:#fff;color:#1d1d1f;font-weight:600;font-size:15px;padding:12px 28px;border-radius:999px;text-decoration:none;">进入发布会主会场 →</a>
-    <img src="img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝"/>
-    <p>26 岁生日快乐，妈妈。<br/>新的一岁，继续把我们的故事，写成我们。</p>
-    <p style="font-size:12.5px;color:#86868b;">—— 出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
+    <div class="no">通 关 奖 励</div>
+    <h2 class="finH">寻宝成功</h2>
+    <div class="pass">
+      <div class="passTop"><span class="passName">发布会入场函</span><span class="passOrg">小乖筹备组</span></div>
+      <div class="passGrid">
+        <div><div class="pk">嘉宾</div><div class="pv">赖大宝</div></div>
+        <div><div class="pk">场次</div><div class="pv">生日特别场</div></div>
+        <div><div class="pk">日期</div><div class="pv">2026.11.09</div></div>
+        <div><div class="pk">座位</div><div class="pv">主会场 · 连座</div></div>
+      </div>
+      <div class="passCode"><div class="bars"></div><div class="codeTx">XG · 20261109 · LDB26</div></div>
+    </div>
+    <p class="finNote">发布会现场不在屏幕里——去抱一下张大宝，他身上藏着第一条线索。顺着线索走到底，坐到发布会席位上，再打开主会场的大门。</p>
+    <a class="finBtn" href="../index.html">进入发布会主会场 →</a>
+    <div class="finPhoto"><img src="img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝"/><div class="cap"><div class="t">26 岁生日快乐，妈妈。</div><div class="d">新的一岁，继续把我们的故事，写成我们。</div></div></div>
+    <p class="finCredit">出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
   </div>
 
   <div class="foot">小乖寻宝局 · 2026.11.09 升级专场<br/>答案如有争议，以猫哥的呼噜声为准<br/>小乖筹备组 · 2026.11.09 于南宁<br/><a href="../index.html" style="color:#0066cc;text-decoration:none;font-weight:600;">进入发布会主会场 ›</a></div>
