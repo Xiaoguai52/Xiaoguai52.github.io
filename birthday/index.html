@@ -76,7 +76,8 @@
   .dark .secSub{color:#a1a1a6;}
   .dark .secSub b{color:#f5f5f7;}
   .dark .kick{color:#2997ff;}
-  .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px 32px;margin-top:52px;}
+  .chipImg{display:block;width:min(300px,78%);margin:32px auto 6px;border-radius:20px;}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px 32px;margin-top:52px;}
   .dcard{border-top:1px solid rgba(255,255,255,.16);padding-top:18px;}
   .dcard .k{font-size:12px;color:#86868b;letter-spacing:2px;}
   .dcard .v{font-size:25px;font-weight:600;margin-top:8px;line-height:1.35;}
@@ -134,7 +135,8 @@
   .feat .t{font-size:17px;line-height:1.6;}
   .feat .t span{color:#6e6e73;font-size:15px;}
   /* airpods */
-  .pods{padding:58px 24px 50px;text-align:center;background:#000;color:#f5f5f7;border-radius:28px;margin:96px -10px 0;}
+  .teaserImg{width:100%;max-width:430px;border-radius:18px;display:block;margin:22px auto 4px;aspect-ratio:1.5;object-fit:cover;}
+.pods{padding:58px 24px 50px;text-align:center;background:#000;color:#f5f5f7;border-radius:28px;margin:96px -10px 0;}
   .pods h2{font-size:52px;font-weight:600;letter-spacing:-1px;margin-top:10px;}
   @media(max-width:560px){.pods h2{font-size:40px}}
   .pods .tag2{font-size:21px;font-weight:600;margin-top:12px;}
@@ -297,6 +299,7 @@
   <div class="kick rv">芯 片</div>
   <h2 class="secT rv s1" style="margin-top:14px;">天蝎 A26 Pro<br/>聪明，而且记仇</h2>
   <p class="secSub rv s2">全新一代情感处理核心：<b>你对她的好，一件不落全记住</b>；<br/>你惹她生的气——也记住，但哄一下就删。</p>
+  <img class="chipImg rv s2" src="img/chip-a26.jpg" alt="天蝎 A26 Pro 芯片">
   <div class="dgrid">
     <div class="dcard rv"><div class="k">情感引擎</div><div class="v">心软 Pro</div><div class="d">对张大宝与金豆豆特别优化</div></div>
     <div class="dcard rv s1"><div class="k">散热系统</div><div class="v">笑声散热</div><div class="d">一生气就启动，效果显著</div></div>
@@ -357,7 +360,7 @@
     <div class="eyebrow rv">同 场 加 映</div>
     <h2 class="rv s1 gradtext">还有一件新品</h2>
     <p class="tag2 rv s2">今晚的第二位主角，先卖个关子。</p>
-    <div class="giftbox rv s2">🎁</div>
+    <img class="teaserImg rv s2" src="img/giftbox.jpg" alt="黑金礼盒">
     <p class="teaserTx rv">它已经被张大宝藏好了，藏得很认真。<br/>等你走完前两站、坐进发布会，它自己登场。</p>
     <div class="teaserCd rv">距离发布 · <span class="n" id="podsCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
     <button class="rv" id="podsUnlock" type="button">我已经找到它了 · 提前发布</button>
