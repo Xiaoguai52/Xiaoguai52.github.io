@@ -67,6 +67,16 @@
   .thint{text-align:center;font-size:12.5px;color:#a5937a;margin-top:16px;letter-spacing:1px;}
   .checkin{display:block;margin:18px auto 0;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;border:none;font-size:16px;font-weight:700;padding:13px 38px;border-radius:999px;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(241,7,163,.35);}
   .checkin:disabled{opacity:.55;box-shadow:none;}
+  .am{color:#ff7ad9;text-decoration:none;font-size:16px;flex:none;margin-left:10px;font-weight:700;}
+  /* broadcast player */
+  .cast{margin:22px auto 0;max-width:560px;display:flex;align-items:center;gap:14px;background:rgba(245,240,232,.06);border:1px solid rgba(245,240,232,.14);border-radius:18px;padding:14px 18px;}
+  .castBtn{flex:none;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;font-size:15px;cursor:pointer;font-family:inherit;}
+  .castTx .ct{font-size:15.5px;font-weight:700;}
+  .castTx .cs{font-size:12.5px;color:#a5937a;margin-top:2px;}
+  .eq2{display:none;align-items:flex-end;gap:2.5px;height:15px;margin-left:auto;flex:none;}
+  .eq2 i{width:3.5px;background:#ff7ad9;border-radius:2px;animation:eqb .8s ease-in-out infinite;}
+  .eq2 i:nth-child(2){animation-delay:-.25s}.eq2 i:nth-child(3){animation-delay:-.5s}.eq2 i:nth-child(4){animation-delay:-.1s}
+  .cast.playing .eq2{display:flex;}
   /* sections */
   .secT{font-size:32px;font-weight:800;letter-spacing:-.5px;margin-top:88px;}
   .secSub{color:#a5937a;font-size:14.5px;margin-top:10px;line-height:1.7;}
@@ -166,14 +176,21 @@
   <p class="thint">— 点 一 下 票 面 ， 翻 看 背 面 —</p>
   <button class="checkin" id="checkin" type="button">检 票 入 场</button>
 
+  <div class="cast" id="cast">
+    <button class="castBtn" id="castBtn" type="button" aria-label="播放检票员广播">▶</button>
+    <div class="castTx"><div class="ct">检票员广播</div><div class="cs" id="castState">小乖亲口说的 · 点开听，半分钟</div></div>
+    <div class="eq2"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <audio id="castAudio" src="audio/broadcast.mp3" preload="metadata"></audio>
+
   <h2 class="secT rv">今晚歌单</h2>
-  <p class="secSub rv s1">点一首，假装它正在响。</p>
+  <p class="secSub rv s1">点一首，它就亮起来；点行尾的 ↗，去 Apple Music 听真的。</p>
   <div class="tracks rv s1" id="tracks">
-    <div class="track"><span class="no">1</span><div class="tt">将故事写成我们<span>主题曲 · 片头一响，六年都在里面</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">4:58</span></div>
-    <div class="track"><span class="no">2</span><div class="tt">小酒窝<span>对唱版 · 你唱女声，张大宝负责笑场</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">3:27</span></div>
+    <div class="track"><span class="no">1</span><div class="tt">将故事写成我们<span>主题曲 · 片头一响，六年都在里面</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">4:58</span><a class="am" href="https://music.apple.com/cn/search?term=%E5%B0%86%E6%95%85%E4%BA%8B%E5%86%99%E6%88%90%E6%88%91%E4%BB%AC%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener" title="在 Apple Music 打开">↗</a></div>
+    <div class="track"><span class="no">2</span><div class="tt">小酒窝<span>对唱版 · 你唱女声，张大宝负责笑场</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">3:27</span><a class="am" href="https://music.apple.com/cn/search?term=%E5%B0%8F%E9%85%92%E7%AA%9D%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener" title="在 Apple Music 打开">↗</a></div>
     <div class="track"><span class="no">3</span><div class="tt">生日快乐歌<span>张大宝独唱 · 跑调预警，但诚意满格</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">1:09</span></div>
-    <div class="track"><span class="no">4</span><div class="tt">交换余生<span>交换的不是余生，是往后每一场演唱会的连座票</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">4:12</span></div>
-    <div class="track"><span class="no">5</span><div class="tt">一千年以后<span>安可曲 · 一千年太久，先把这一场听完</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">3:51</span></div>
+    <div class="track"><span class="no">4</span><div class="tt">交换余生<span>交换的不是余生，是往后每一场演唱会的连座票</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">4:12</span><a class="am" href="https://music.apple.com/cn/search?term=%E4%BA%A4%E6%8D%A2%E4%BD%99%E7%94%9F%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener" title="在 Apple Music 打开">↗</a></div>
+    <div class="track"><span class="no">5</span><div class="tt">一千年以后<span>安可曲 · 一千年太久，先把这一场听完</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">3:51</span><a class="am" href="https://music.apple.com/cn/search?term=%E4%B8%80%E5%8D%83%E5%B9%B4%E4%BB%A5%E5%90%8E%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener" title="在 Apple Music 打开">↗</a></div>
   </div>
 
   <h2 class="secT rv">合听录</h2>
@@ -245,6 +262,16 @@
     btn.textContent='已 检 票 · 请 入 场';
     btn.disabled=true;
   });
+  /* broadcast player */
+  var castBox=document.getElementById('cast'),castBtn=document.getElementById('castBtn'),
+      castAudio=document.getElementById('castAudio'),castState=document.getElementById('castState');
+  castBtn.addEventListener('click',function(){
+    if(castAudio.paused){castAudio.play();}
+    else{castAudio.pause();}
+  });
+  castAudio.addEventListener('play',function(){castBox.classList.add('playing');castBtn.textContent='❚❚';castState.textContent='正在播 · 检票员小乖';});
+  castAudio.addEventListener('pause',function(){castBox.classList.remove('playing');castBtn.textContent='▶';castState.textContent='小乖亲口说的 · 点开听，半分钟';});
+  castAudio.addEventListener('ended',function(){castState.textContent='播完了 · 最后一句是给你的';});
   /* setlist play state */
   document.querySelectorAll('.track').forEach(function(t){
     t.addEventListener('click',function(){
