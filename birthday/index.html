@@ -157,6 +157,9 @@
   .teaserCd .n{color:#1d1d1f;font-weight:700;font-variant-numeric:tabular-nums;}
   #podsUnlock{margin-top:22px;background:#0071e3;color:#fff;border:none;font-size:15px;font-weight:600;padding:12px 30px;border-radius:999px;cursor:pointer;font-family:inherit;}
   .teaserWarn{margin:14px auto 0;max-width:420px;font-size:13px;color:#b23a48;line-height:1.8;}
+  .caseTeaser{margin:34px auto 0;max-width:520px;border-radius:22px;background:radial-gradient(circle at 50% 34%,#2c2c30,#131315 74%);color:#f5f5f7;padding:44px 20px 38px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:inset 0 0 0 1px #3a3a3f;}
+  .caseTeaser .gb{font-size:56px;animation:giftfloat 3.6s ease-in-out infinite;}
+  .caseTeaser .gt{font-size:13.5px;color:#a1a1a6;line-height:1.9;letter-spacing:1px;}
   .podcard .hint{font-size:12.5px;color:#6e6e73;letter-spacing:2px;}
   .podcard .secret{display:none;margin-top:10px;font-size:15.5px;line-height:1.85;}
   .podcard.open .secret{display:block;animation:up .6s cubic-bezier(.2,.7,.2,1) both;}
@@ -246,7 +249,7 @@
 </div>
 <script>(function(){var U=new Date('2026-11-09T00:00:00+08:00').getTime();var q=new URLSearchParams(location.search);var open=q.get('preview')==='1'||q.get('party')==='1'||Date.now()>=U;if(!open){document.documentElement.classList.add('locked');document.body.classList.add('locked');}})();</script>
 <div id="app">
-<nav class="gnav"><span class="logo"></span><span class="hideS">商店</span><span class="hideS">Mac</span><span class="hideS">iPad</span><span class="hideS">iPhone</span><span class="hideS">Watch</span><span>AirPods</span><span class="hideS">家居</span><span>配件</span><span class="hideS">技术支持</span></nav>
+<nav class="gnav"><span class="logo"></span><span class="hideS">商店</span><span class="hideS">Mac</span><span class="hideS">iPad</span><span class="hideS">iPhone</span><span class="hideS">Watch</span><span id="gnavPods">Vision</span><span class="hideS">家居</span><span>配件</span><span class="hideS">技术支持</span></nav>
 
 <div class="pnav" id="pnav"><div class="in">
   <div class="name">赖大宝 Pro 26</div>
@@ -302,7 +305,7 @@
 <div class="wrap">
   <div class="featSec">
     <div class="kick rv">表 现</div>
-    <h2 class="secT rv s1" style="margin-top:14px;">好脾气，<br/>入耳式贴心，入主新声代</h2>
+    <h2 class="secT rv s1" id="featH2" style="margin-top:14px;">好脾气，<br/>越处越贴心</h2>
     <div class="arows">
       <div class="arow rv"><div class="ic">🎵</div><div class="tx"><b>自适应撒娇功能</b>会利用内置的体贴麦克风，实时调整撒娇的力度：心情好时是糖，心情差时——也是糖，只是带点小脾气。</div></div>
       <div class="arow rv s1"><div class="ic">🧭</div><div class="tx"><b>个性化陪伴空间</b>可基于你头部的几何结构……不对，基于她对你的了解程度，为你量身打造沉浸感满满的相处体验。</div></div>
@@ -325,8 +328,9 @@
 
 <div class="caseSec"><div class="wrap">
   <div class="kick rv">续 航 与 查 找</div>
-  <h2 class="secT rv s1" style="margin-top:14px;">充电盒里，是整个家</h2>
-  <img class="caseimg rv s1" src="img/airpods-case.webp" alt="充电盒"/>
+  <h2 class="secT rv s1" id="caseH2" style="margin-top:14px;">一抱，就满电</h2>
+  <div class="caseTeaser rv s1" id="caseTeaser"><span class="gb">🎁</span><span class="gt">这张照片，藏着今晚的神秘新品<br/>发布之后，自动解码</span></div>
+  <img class="caseimg rv s1" id="caseReal" src="img/airpods-case.webp" alt="充电盒" hidden/>
   <div class="caseStats">
     <div class="cs rv"><div class="n">一整年</div><div class="k">单次充满（一个拥抱）续航时间，辅助电源为林俊杰的歌与金豆豆的呼噜</div></div>
     <div class="cs rv s1"><div class="n">1.5 倍</div><div class="k">精确查找张大宝的距离扩展：他躲到哪个房间，都能被一嗓子定位</div></div>
@@ -595,6 +599,11 @@
   function reveal(){
     T.hidden=true;R.hidden=false;
     if(N)N.textContent='降噪数据来自苹果官网对 AirPods Pro 3 的描述；但对张大宝的呼噜声无效，建议佩戴耳机入睡。';
+    var g=document.getElementById('gnavPods');if(g)g.textContent='AirPods';
+    var fh=document.getElementById('featH2');if(fh)fh.innerHTML='好脾气，<br/>入耳式贴心，入主新声代';
+    var ch=document.getElementById('caseH2');if(ch)ch.textContent='充电盒里，是整个家';
+    var ct=document.getElementById('caseTeaser'),cr=document.getElementById('caseReal');
+    if(ct)ct.hidden=true;if(cr){cr.hidden=false;cr.classList.add('in');}
     R.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
     try{localStorage.setItem('xg_pods','1');}catch(e){}
   }
