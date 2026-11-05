@@ -7,68 +7,69 @@
 <title>小乖的寻宝任务 · 升级版</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:#fdf8ef;color:#433020;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(ellipse 90% 45% at 50% -5%,rgba(255,196,110,.35),transparent),radial-gradient(ellipse 60% 35% at 90% 105%,rgba(255,150,170,.20),transparent);}
+  body{background:#050508;color:#f5f5f7;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse 90% 45% at 50% -5%,rgba(123,47,247,.22),transparent),radial-gradient(ellipse 60% 35% at 90% 105%,rgba(232,176,106,.10),transparent);}
   button{font-family:inherit;}
   .wrap{max-width:520px;margin:0 auto;padding:30px 20px 70px;}
   .badge{display:flex;align-items:center;gap:12px;}
-  .badge img{width:52px;height:52px;border-radius:50%;border:2px solid #f0b35e;background:#fff;object-fit:cover;}
-  .badge .t1{font-size:12px;letter-spacing:3px;color:#c07f2e;font-weight:700;}
+  .badge img{width:52px;height:52px;border-radius:50%;border:2px solid #e8b06a;background:#17171c;object-fit:cover;}
+  .badge .t1{font-size:12px;letter-spacing:3px;color:#e8b06a;font-weight:700;}
   .badge .t2{font-size:17px;font-weight:800;margin-top:2px;}
   h1{font-size:30px;font-weight:800;line-height:1.35;margin:22px 0 10px;}
-  .intro{font-size:15px;line-height:1.85;color:#6d5136;}
-  .intro b{color:#43302e;}
-  .hard{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;background:#433020;color:#ffe2ae;font-size:12px;font-weight:700;letter-spacing:1px;}
+  .intro{font-size:15px;line-height:1.85;color:#a1a1a6;}
+  .chap{font-size:12px;letter-spacing:4px;color:#e8b06a;font-weight:700;margin-bottom:16px;}
+  .intro b{color:#f5f5f7;}
+  .hard{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;}
   .progress{display:flex;gap:8px;margin:24px 0 6px;}
-  .dot{flex:1;text-align:center;font-size:12px;color:#a5834f;padding:9px 4px;border:1.5px dashed #dcbd85;border-radius:999px;background:rgba(255,255,255,.55);transition:all .3s;}
-  .dot.on{border-style:solid;border-color:#e8933a;background:#fdeeda;color:#9a5b12;font-weight:700;}
-  .lvl{margin-top:22px;background:#fffdf8;border:1px solid #eeddbd;border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(160,110,40,.08);}
+  .dot{flex:1;text-align:center;font-size:12px;color:#a1a1a6;padding:9px 4px;border:1.5px dashed rgba(232,176,106,.45);border-radius:999px;background:rgba(255,255,255,.04);transition:all .3s;}
+  .dot.on{border-style:solid;border-color:#e8b06a;background:rgba(232,176,106,.14);color:#ffd9a0;font-weight:700;}
+  .lvl{margin-top:22px;background:#101014;border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.45);}
   .lvl.locked{opacity:.45;pointer-events:none;filter:saturate(.5);}
-  .lvl .no{font-size:11.5px;letter-spacing:2.5px;color:#c07f2e;font-weight:700;}
+  .lvl .no{font-size:11.5px;letter-spacing:2.5px;color:#e8b06a;font-weight:700;}
   .lvl h2{font-size:19px;font-weight:800;margin:6px 0 6px;}
-  .lvl p{font-size:14px;line-height:1.75;color:#6d5136;}
-  .status{margin-top:12px;padding:10px 12px;border-radius:12px;background:#fff4dc;color:#7c5514;font-size:13px;line-height:1.65;}
-  .hint{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;background:#eef7ee;color:#37633d;font-size:13px;line-height:1.65;border:1px solid #bcdabd;}
+  .lvl p{font-size:14px;line-height:1.75;color:#a1a1a6;}
+  .status{margin-top:12px;padding:10px 12px;border-radius:12px;background:#17171c;color:#ffd9a0;font-size:13px;line-height:1.65;}
+  .hint{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(88,179,104,.12);color:#8fd79b;font-size:13px;line-height:1.65;border:1px solid rgba(88,179,104,.35);}
   .hint.show{display:block;}
-  .clue{display:none;margin-top:14px;background:#fdf1dc;border:1px dashed #e0a94f;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.75;color:#7c5514;}
+  .clue{display:none;margin-top:14px;background:rgba(232,176,106,.10);border:1px dashed rgba(232,176,106,.55);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.75;color:#ffd9a0;}
   .clue.show{display:block;}
 
   .wall{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
-  .photo{position:relative;border:2px solid #eeddbd;border-radius:13px;overflow:hidden;cursor:pointer;background:#eee;padding:0;aspect-ratio:1;transition:transform .15s,border-color .2s,opacity .2s;}
+  .photo{position:relative;border:2px solid rgba(255,255,255,.14);border-radius:13px;overflow:hidden;cursor:pointer;background:#17171c;padding:0;aspect-ratio:1;transition:transform .15s,border-color .2s,opacity .2s;}
   .photo:active{transform:scale(.97);}
   .photo img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;}
   .photo.missed{opacity:.42;filter:grayscale(.45);}
   .photo.missed::after{content:'✕';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;background:rgba(160,35,35,.38);font-size:30px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.35);}
   .photo.right{border-color:#58b368;box-shadow:0 0 0 4px rgba(88,179,104,.28);opacity:1;filter:none;}
 
-  .round{margin-top:18px;padding-top:16px;border-top:1.5px dashed #e8cf9f;}
+  .round{margin-top:18px;padding-top:16px;border-top:1.5px dashed rgba(255,255,255,.12);}
   .round:first-of-type{border-top:none;padding-top:4px;}
   .round h3{font-size:16.5px;font-weight:800;margin-bottom:5px;}
   .round.sealed{opacity:.42;pointer-events:none;filter:saturate(.55);}
   .concerts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px;}
-  .concert{display:flex;align-items:center;gap:10px;border:2px solid #eeddbd;background:#fff;border-radius:14px;padding:12px;cursor:pointer;text-align:left;color:#43302e;transition:all .2s;min-height:66px;}
-  .concert .num{flex:0 0 auto;width:27px;height:27px;border-radius:50%;border:2px solid #dcbd85;display:flex;align-items:center;justify-content:center;color:#a5834f;font-size:13px;font-weight:800;background:#fffaf0;}
+  .concert{display:flex;align-items:center;gap:10px;border:2px solid rgba(255,255,255,.12);background:#141419;border-radius:14px;padding:12px;cursor:pointer;text-align:left;color:#f5f5f7;transition:all .2s;min-height:66px;}
+  .concert .num{flex:0 0 auto;width:27px;height:27px;border-radius:50%;border:2px solid rgba(232,176,106,.5);display:flex;align-items:center;justify-content:center;color:#e8b06a;font-size:13px;font-weight:800;background:#17171c;}
   .concert strong{display:block;font-size:15px;line-height:1.35;}
-  .concert small{display:block;font-size:11.5px;color:#a5834f;margin-top:2px;line-height:1.35;}
-  .concert.picked{border-color:#58b368;background:#effaf1;}
+  .concert small{display:block;font-size:11.5px;color:#a1a1a6;margin-top:2px;line-height:1.35;}
+  .concert.picked{border-color:#58b368;background:rgba(88,179,104,.13);}
   .concert.picked .num{background:#58b368;border-color:#58b368;color:#fff;}
   .concert.wrong,.song.wrong{animation:shake .35s;}
   @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
   .songs{display:flex;flex-direction:column;gap:10px;margin-top:13px;}
-  .song{border:2px solid #eeddbd;background:#fff;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:600;color:#43302e;cursor:pointer;text-align:left;transition:all .2s;}
-  .song small{display:block;font-weight:400;font-size:12px;color:#a5834f;margin-top:2px;}
-  .song.right{border-color:#58b368;background:#effaf1;}
+  .song{border:2px solid rgba(255,255,255,.12);background:#141419;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:600;color:#f5f5f7;cursor:pointer;text-align:left;transition:all .2s;}
+  .song small{display:block;font-weight:400;font-size:12px;color:#a1a1a6;margin-top:2px;}
+  .song.right{border-color:#58b368;background:rgba(88,179,104,.13);}
   .song:disabled{cursor:default;}
 
   .hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;}
-  .hud div{background:#2b2140;color:#fff;border-radius:12px;padding:9px 6px;text-align:center;font-size:12.5px;}
+  .hud div{background:#17171c;border:1px solid rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:9px 6px;text-align:center;font-size:12.5px;}
   .hud b{font-size:16px;color:#ffd60a;}
-  .start{width:100%;margin-top:12px;border:none;border-radius:999px;background:#433020;color:#fff;padding:13px 18px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(67,48,32,.18);}
-  .start:disabled{background:#9c8a76;cursor:default;box-shadow:none;}
+  .start{width:100%;margin-top:12px;border:none;border-radius:999px;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;padding:13px 18px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.45);}
+  .start:disabled{background:#3a3a42;cursor:default;box-shadow:none;}
   .hunt{position:relative;margin-top:12px;background:linear-gradient(170deg,#241a38,#46335f);border-radius:16px;height:320px;overflow:hidden;touch-action:manipulation;}
   .hunt .star{position:absolute;color:rgba(255,255,255,.5);user-select:none;pointer-events:none;z-index:1;}
   .hunt .tip{position:absolute;left:14px;top:12px;color:rgba(255,255,255,.82);font-size:12.5px;z-index:6;pointer-events:none;text-shadow:0 1px 5px rgba(0,0,0,.35);}
-  .hunt .me{display:none;position:absolute;width:44px;height:44px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.85);object-fit:cover;background:#fff;z-index:5;box-shadow:0 4px 16px rgba(0,0,0,.35);padding:0;}
+  .hunt .me{display:none;position:absolute;width:44px;height:44px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.85);object-fit:cover;background:#17171c;z-index:5;box-shadow:0 4px 16px rgba(0,0,0,.35);padding:0;}
   .hunt .me.live{display:block;}
   .hunt .me.caught{transform:scale(1.18);border-color:#ffd60a;box-shadow:0 0 0 6px rgba(255,214,10,.25),0 4px 16px rgba(0,0,0,.35);}
   .decoy{position:absolute;border-radius:50%;cursor:pointer;z-index:3;border:2px solid rgba(255,255,255,.5);box-shadow:inset -6px -7px 12px rgba(120,100,180,.18),0 3px 10px rgba(0,0,0,.22);padding:0;}
@@ -77,21 +78,22 @@
   .decoy::after{right:31%;}
   .decoy.hit{opacity:.22;filter:grayscale(.5);pointer-events:none;}
 
-  .final{display:none;margin-top:24px;background:linear-gradient(165deg,#fff7e6,#ffe9f0);border:1.5px solid #f0b35e;border-radius:22px;padding:24px 22px;text-align:center;}
+  .final{display:none;margin-top:24px;background:linear-gradient(165deg,#171017,#101014);border:1.5px solid rgba(232,176,106,.55);border-radius:22px;padding:24px 22px;text-align:center;}
   .final.show{display:block;}
   .final h2{font-size:24px;font-weight:800;}
-  .final p{font-size:14.5px;line-height:1.9;color:#6d5136;margin-top:10px;}
+  .final p{font-size:14.5px;line-height:1.9;color:#a1a1a6;margin-top:10px;}
   .final img{width:100%;border-radius:14px;margin-top:14px;display:block;}
-  .final .big{font-size:17px;color:#43302e;font-weight:700;}
+  .final .big{font-size:17px;color:#f5f5f7;font-weight:700;}
   .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20;}
   .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
   @keyframes fall{to{transform:translateY(105vh) rotate(560deg);}}
-  .foot{text-align:center;color:#b08d55;font-size:11.5px;margin-top:34px;line-height:1.9;}
+  .foot{text-align:center;color:#86868b;font-size:11.5px;margin-top:34px;line-height:1.9;}
   @media (max-width:390px){.hud div{font-size:11.5px}.lvl{padding:17px}.wall{gap:6px}.concert{gap:7px;padding:10px}.concert strong{font-size:14px}}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="chap">第 二 站 · 寻 宝 局</div>
   <div class="badge">
     <img src="img/xiaoguai-avatar.webp" alt="小乖"/>
     <div><div class="t1">小 乖 的 寻 宝 任 务</div><div class="t2">妈妈，生日快乐！</div></div>
@@ -187,13 +189,13 @@
     <h2>🏆 寻宝成功 🏆</h2>
     <p class="big">发布会入场函 · 到手！</p>
     <p>但发布会现场不在屏幕里——去抱一下张大宝，<br/>他身上藏着第一条线索。顺着线索走到底，<br/>坐到发布会席位上，再打开主会场的大门。</p>
-    <a href="../index.html" style="display:inline-block;margin:14px 0 6px;background:#b57e1e;color:#fff;font-weight:700;font-size:15px;padding:12px 28px;border-radius:999px;text-decoration:none;">进入发布会主会场 →</a>
+    <a href="../index.html" style="display:inline-block;margin:14px 0 6px;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;font-weight:700;font-size:15px;padding:12px 28px;border-radius:999px;text-decoration:none;">进入发布会主会场 →</a>
     <img src="img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝"/>
     <p>26 岁生日快乐，妈妈。<br/>新的一岁，继续把我们的故事，写成我们。</p>
-    <p style="font-size:12.5px;color:#a5834f;">—— 出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
+    <p style="font-size:12.5px;color:#86868b;">—— 出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
   </div>
 
-  <div class="foot">小乖寻宝局 · 2026.11.09 升级专场<br/>答案如有争议，以猫哥的呼噜声为准<br/><a href="../index.html" style="color:#c07f2e;text-decoration:none;font-weight:700;">进入发布会主会场 ›</a></div>
+  <div class="foot">小乖寻宝局 · 2026.11.09 升级专场<br/>答案如有争议，以猫哥的呼噜声为准<br/>小乖筹备组 · 2026.11.09 于南宁<br/><a href="../index.html" style="color:#e8b06a;text-decoration:none;font-weight:700;">进入发布会主会场 ›</a></div>
 </div>
 <div class="confetti" id="confetti"></div>
 <script>
