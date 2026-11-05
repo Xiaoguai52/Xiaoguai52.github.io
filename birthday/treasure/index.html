@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>小乖的寻宝任务 · 给妈妈的生日</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#fdf8ef;color:#433020;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse 90% 45% at 50% -5%,rgba(255,196,110,.35),transparent),radial-gradient(ellipse 60% 35% at 90% 105%,rgba(255,150,170,.20),transparent);}
+  .wrap{max-width:520px;margin:0 auto;padding:30px 20px 70px;}
+  .badge{display:flex;align-items:center;gap:12px;}
+  .badge img{width:52px;height:52px;border-radius:50%;border:2px solid #f0b35e;background:#fff;object-fit:cover;}
+  .badge .t1{font-size:12px;letter-spacing:3px;color:#c07f2e;font-weight:700;}
+  .badge .t2{font-size:17px;font-weight:800;margin-top:2px;}
+  h1{font-size:30px;font-weight:800;line-height:1.35;margin:22px 0 10px;}
+  .intro{font-size:15px;line-height:1.85;color:#6d5136;}
+  .intro b{color:#43302e;}
+  .progress{display:flex;gap:8px;margin:24px 0 6px;}
+  .dot{flex:1;text-align:center;font-size:12px;color:#a5834f;padding:9px 4px;border:1.5px dashed #dcbd85;border-radius:999px;background:rgba(255,255,255,.55);transition:all .3s;}
+  .dot.on{border-style:solid;border-color:#e8933a;background:#fdeeda;color:#9a5b12;font-weight:700;}
+  .lvl{margin-top:22px;background:#fffdf8;border:1px solid #eeddbd;border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(160,110,40,.08);}
+  .lvl.locked{opacity:.45;pointer-events:none;filter:saturate(.5);}
+  .lvl .no{font-size:11.5px;letter-spacing:2.5px;color:#c07f2e;font-weight:700;}
+  .lvl h2{font-size:19px;font-weight:800;margin:6px 0 6px;}
+  .lvl p{font-size:14px;line-height:1.75;color:#6d5136;}
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+  .opt{border:2px solid #eeddbd;border-radius:14px;overflow:hidden;cursor:pointer;background:#fff;padding:0;text-align:center;transition:all .2s;font-family:inherit;}
+  .opt img{display:block;width:100%;height:88px;object-fit:cover;}
+  .opt .lab{font-size:12.5px;padding:7px 2px;color:#6d5136;font-weight:600;}
+  .opt.right{border-color:#58b368;box-shadow:0 0 0 3px rgba(88,179,104,.25);}
+  .opt.wrong{animation:shake .35s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .songs{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .song{border:2px solid #eeddbd;background:#fff;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:600;color:#43302e;cursor:pointer;text-align:left;font-family:inherit;transition:all .2s;}
+  .song small{display:block;font-weight:400;font-size:12px;color:#a5834f;margin-top:2px;}
+  .song.right{border-color:#58b368;background:#effaf1;}
+  .song.wrong{animation:shake .35s;}
+  .clue{display:none;margin-top:14px;background:#fdf1dc;border:1px dashed #e0a94f;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.75;color:#7c5514;}
+  .clue.show{display:block;}
+  .hunt{position:relative;margin-top:14px;background:linear-gradient(170deg,#2b2140,#46335f);border-radius:16px;height:190px;overflow:hidden;}
+  .hunt .star{position:absolute;color:rgba(255,255,255,.5);font-size:13px;user-select:none;}
+  .hunt .me{position:absolute;width:44px;height:44px;border-radius:50%;cursor:pointer;right:26px;bottom:20px;border:2px solid rgba(255,255,255,.75);object-fit:cover;background:#fff;transition:transform .2s;}
+  .hunt .me:active{transform:scale(1.2);}
+  .hunt .tip{position:absolute;left:14px;top:12px;color:rgba(255,255,255,.75);font-size:12.5px;}
+  .final{display:none;margin-top:24px;background:linear-gradient(165deg,#fff7e6,#ffe9f0);border:1.5px solid #f0b35e;border-radius:22px;padding:24px 22px;text-align:center;}
+  .final.show{display:block;}
+  .final h2{font-size:24px;font-weight:800;}
+  .final p{font-size:14.5px;line-height:1.9;color:#6d5136;margin-top:10px;}
+  .final img{width:100%;border-radius:14px;margin-top:14px;display:block;}
+  .final .big{font-size:17px;color:#43302e;font-weight:700;}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9;}
+  .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(105vh) rotate(560deg);}}
+  .foot{text-align:center;color:#b08d55;font-size:11.5px;margin-top:34px;line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge">
+    <img src="img/xiaoguai-avatar.webp" alt="小乖"/>
+    <div><div class="t1">小 乖 的 寻 宝 任 务</div><div class="t2">妈妈，生日快乐！</div></div>
+  </div>
+
+  <h1>礼物被我藏起来啦<br/>要过三关才能拿到</h1>
+  <p class="intro">规矩很简单：<b>找到猫哥、猜对今晚的主题曲、再把小乖找出来</b>，三关全过，最后一页会告诉你礼物在哪。慢慢玩，豆豆全程监考（虽然它可能睡着）。</p>
+
+  <div class="progress">
+    <div class="dot" id="d1">第一关 · 找猫哥</div>
+    <div class="dot" id="d2">第二关 · 猜主题曲</div>
+    <div class="dot" id="d3">第三关 · 找小乖</div>
+  </div>
+
+  <div class="lvl" id="l1">
+    <div class="no">第 一 关</div>
+    <h2>哪一张照片里有金豆豆？</h2>
+    <p>三张照片，只有一张里有猫哥本猫。点一点试试。</p>
+    <div class="opts">
+      <button class="opt" data-wrong="1"><img src="img/laixinwen-2021-12-11-roses.jpg" alt="玫瑰"/><div class="lab">玫瑰这张</div></button>
+      <button class="opt" id="catRight"><img src="img/doudou-1.jpg" alt="金豆豆"/><div class="lab">毛茸茸这张</div></button>
+      <button class="opt" data-wrong="1"><img src="img/laixinwen-2021-10-pink-night.jpg" alt="夜色"/><div class="lab">夜色这张</div></button>
+    </div>
+    <div class="clue" id="c1">🐾 <b>过关！</b>猫哥说：第一片拼图给你——礼物不在网上，在这个家里，而且<b>离豆豆的日常活动范围不远</b>。</div>
+  </div>
+
+  <div class="lvl locked" id="l2">
+    <div class="no">第 二 关</div>
+    <h2>今晚的主题曲是哪一首？</h2>
+    <p>提示：是林俊杰的歌，讲的是把「故事」写成「我们」。</p>
+    <div class="songs">
+      <button class="song" data-wrong="1">《江南》<small>圈圈圆圆圈圈——好听，但不是这首</small></button>
+      <button class="song" id="songRight">《将故事写成我们》<small>这故事，从 2020.12.11 开始写</small></button>
+      <button class="song" data-wrong="1">《曹操》<small>气势拉满，但生日不兴打仗</small></button>
+    </div>
+    <div class="clue" id="c2">🎵 <b>过关！</b>第二片拼图：礼物是个小盒子，盒子上<b>有一句专门刻给你的话</b>，记得翻过来看。</div>
+  </div>
+
+  <div class="lvl locked" id="l3">
+    <div class="no">第 三 关</div>
+    <h2>小乖躲在星空里，点到我！</h2>
+    <p>最后一关：我在下面这片星空里躲好了，找到我，点我一下。</p>
+    <div class="hunt" id="hunt">
+      <span class="tip">✦ 星星很多，小乖只有一个 ✦</span>
+      <img class="me" id="meBtn" src="img/xiaoguai-avatar.webp" alt="小乖躲在这里"/>
+    </div>
+    <div class="clue" id="c3">🎉 <b>找到啦！</b>三关全过，往下翻——最后一页。</div>
+  </div>
+
+  <div class="final" id="final">
+    <h2>🏆 寻宝成功 🏆</h2>
+    <p class="big">最后一步，不在手机里——</p>
+    <p>合上手机，去抱一下张大宝。<br/>礼物由他亲自呈上，猫哥负责在旁边围观，我负责在这里给你撒花。</p>
+    <img src="img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝"/>
+    <p>26 岁生日快乐，妈妈。<br/>新的一岁，继续把我们的故事，写成我们。</p>
+    <p style="font-size:12.5px;color:#a5834f;">—— 出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
+  </div>
+
+  <div class="foot">小乖寻宝局 · 2026.11.09 专场<br/>答案如有争议，以猫哥的呼噜声为准<br/><a href="../index.html" style="color:#c07f2e;text-decoration:none;font-weight:700;">‹ 回发布会主会场</a></div>
+</div>
+<div class="confetti" id="confetti"></div>
+<script>
+  var stars=document.getElementById('hunt');
+  var glyphs=['✦','✧','·','✦','✧'];
+  for(var i=0;i<26;i++){var s=document.createElement('span');s.className='star';s.textContent=glyphs[i%glyphs.length];
+    s.style.left=(Math.random()*92+2)+'%';s.style.top=(Math.random()*78+4)+'%';s.style.fontSize=(9+Math.random()*9)+'px';stars.appendChild(s);}
+  function boom(){
+    var box=document.getElementById('confetti');var colors=['#f0b35e','#ef7fa6','#7fb5e8','#8fd18b','#b79ced'];
+    for(var i=0;i<60;i++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';
+      p.style.background=colors[i%colors.length];p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(p);setTimeout(function(el){return function(){el.remove();};}(p),4200);}
+  }
+  function unlock(n){
+    document.getElementById('d'+n).classList.add('on');
+    var nx=document.getElementById('l'+(n+1)); if(nx){nx.classList.remove('locked');}
+    document.getElementById('c'+n).classList.add('show');
+  }
+  document.querySelectorAll('[data-wrong]').forEach(function(b){
+    b.addEventListener('click',function(){b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');});
+  });
+  var done1=false,done2=false;
+  document.getElementById('catRight').addEventListener('click',function(){
+    if(done1)return;done1=true;this.classList.add('right');unlock(1);boom();
+  });
+  document.getElementById('songRight').addEventListener('click',function(){
+    if(done2)return;done2=true;this.classList.add('right');unlock(2);
+  });
+  document.getElementById('meBtn').addEventListener('click',function(){
+    document.getElementById('d3').classList.add('on');
+    document.getElementById('c3').classList.add('show');
+    var f=document.getElementById('final');f.classList.add('show');boom();
+    setTimeout(function(){f.scrollIntoView({behavior:'smooth',block:'center'});},350);
+  });
+</script>
+</body>
+</html>
