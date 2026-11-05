@@ -68,15 +68,17 @@
   .checkin{display:block;margin:18px auto 0;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;border:none;font-size:16px;font-weight:700;padding:13px 38px;border-radius:999px;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(241,7,163,.35);}
   .checkin:disabled{opacity:.55;box-shadow:none;}
   .am{color:#ff7ad9;text-decoration:none;font-size:16px;flex:none;margin-left:10px;font-weight:700;}
-  /* broadcast player */
-  .cast{margin:22px auto 0;max-width:560px;display:flex;align-items:center;gap:14px;background:rgba(245,240,232,.06);border:1px solid rgba(245,240,232,.14);border-radius:18px;padding:14px 18px;}
-  .castBtn{flex:none;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;font-size:15px;cursor:pointer;font-family:inherit;}
-  .castTx .ct{font-size:15.5px;font-weight:700;}
-  .castTx .cs{font-size:12.5px;color:#a5937a;margin-top:2px;}
-  .eq2{display:none;align-items:flex-end;gap:2.5px;height:15px;margin-left:auto;flex:none;}
-  .eq2 i{width:3.5px;background:#ff7ad9;border-radius:2px;animation:eqb .8s ease-in-out infinite;}
-  .eq2 i:nth-child(2){animation-delay:-.25s}.eq2 i:nth-child(3){animation-delay:-.5s}.eq2 i:nth-child(4){animation-delay:-.1s}
-  .cast.playing .eq2{display:flex;}
+  /* opening subtitles — stage LED screen */
+  .led{margin:24px auto 0;max-width:560px;background:#050308;border:1px solid rgba(245,240,232,.16);border-radius:18px;padding:20px 22px 16px;box-shadow:inset 0 0 44px rgba(123,47,247,.13);}
+  .led .lhead{display:flex;justify-content:space-between;align-items:center;}
+  .led .lk{font-size:11px;letter-spacing:3px;color:#e8b06a;font-weight:700;}
+  .ledBtn{background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;border:none;font-size:13px;font-weight:700;padding:8px 20px;border-radius:999px;cursor:pointer;font-family:inherit;}
+  .ledBody{margin-top:16px;min-height:118px;}
+  .ledLine{font-size:16.5px;line-height:1.65;color:#f5f0e8;opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease;padding:3px 0;}
+  .ledLine.on{opacity:1;transform:none;}
+  .ledLine.dim{color:#8d7f68;}
+  .ledLine b{background:linear-gradient(95deg,#c89bff,#ff7ad9);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .ledHint{font-size:11.5px;color:#6f6152;margin-top:10px;letter-spacing:1px;}
   /* sections */
   .secT{font-size:32px;font-weight:800;letter-spacing:-.5px;margin-top:88px;}
   .secSub{color:#a5937a;font-size:14.5px;margin-top:10px;line-height:1.7;}
@@ -176,12 +178,21 @@
   <p class="thint">— 点 一 下 票 面 ， 翻 看 背 面 —</p>
   <button class="checkin" id="checkin" type="button">检 票 入 场</button>
 
-  <div class="cast" id="cast">
-    <button class="castBtn" id="castBtn" type="button" aria-label="播放检票员广播">▶</button>
-    <div class="castTx"><div class="ct">检票员广播</div><div class="cs" id="castState">小乖亲口说的 · 点开听，半分钟</div></div>
-    <div class="eq2"><i></i><i></i><i></i><i></i></div>
+  <div class="led" id="led">
+    <div class="lhead"><span class="lk">开 场 白 · OPENING</span><button class="ledBtn" id="ledBtn" type="button">▶ 开场</button></div>
+    <div class="ledBody" id="ledBody">
+      <div class="ledLine">各位观众，晚上好。</div>
+      <div class="ledLine">我是今晚的检票员，小乖。</div>
+      <div class="ledLine">赖大宝 26 岁生日特别场，即将开场。</div>
+      <div class="ledLine">观众席只有一个座位——<b>就是你的</b>。</div>
+      <div class="ledLine">左边坐着张大宝，右边趴着金豆豆。</div>
+      <div class="ledLine">台上唱歌的人，换了一茬又一茬；</div>
+      <div class="ledLine">台下陪你听歌的人，<b>一直没有换</b>。</div>
+      <div class="ledLine">祝赖大宝，26 岁生日快乐。</div>
+      <div class="ledLine">接下来请欣赏主题曲——<b>《将故事写成我们》</b>。</div>
+    </div>
+    <div class="ledHint">检票员的手写字幕 · 点屏幕可以快进</div>
   </div>
-  <audio id="castAudio" src="audio/broadcast.mp3" preload="metadata"></audio>
 
   <h2 class="secT rv">今晚歌单</h2>
   <p class="secSub rv s1">点一首，它就亮起来；点行尾的 ↗，去 Apple Music 听真的。</p>
@@ -262,16 +273,31 @@
     btn.textContent='已 检 票 · 请 入 场';
     btn.disabled=true;
   });
-  /* broadcast player */
-  var castBox=document.getElementById('cast'),castBtn=document.getElementById('castBtn'),
-      castAudio=document.getElementById('castAudio'),castState=document.getElementById('castState');
-  castBtn.addEventListener('click',function(){
-    if(castAudio.paused){castAudio.play();}
-    else{castAudio.pause();}
+  /* opening subtitles sequence */
+  var ledBtn=document.getElementById('ledBtn'),ledBox=document.getElementById('led'),
+      ledLines=document.querySelectorAll('#ledBody .ledLine'),ledTimers=[],ledPlaying=false;
+  function ledReset(){
+    ledTimers.forEach(clearTimeout);ledTimers=[];ledPlaying=false;
+    ledLines.forEach(function(l){l.classList.remove('on','dim');});
+    ledBtn.textContent='▶ 开场';
+  }
+  function ledPlay(){
+    ledReset();ledPlaying=true;ledBtn.textContent='↻ 重播';
+    ledLines.forEach(function(l,i){
+      ledTimers.push(setTimeout(function(){
+        ledLines.forEach(function(x,j){if(j<i)x.classList.add('dim');});
+        l.classList.add('on');
+        if(i===ledLines.length-1){boom(60);ledPlaying=false;}
+      },500+i*1350));
+    });
+  }
+  ledBtn.addEventListener('click',ledPlay);
+  ledBox.addEventListener('click',function(e){
+    if(e.target===ledBtn)return;
+    if(ledPlaying){ledTimers.forEach(clearTimeout);ledTimers=[];
+      ledLines.forEach(function(l){l.classList.add('on');l.classList.remove('dim');});
+      ledPlaying=false;boom(60);}
   });
-  castAudio.addEventListener('play',function(){castBox.classList.add('playing');castBtn.textContent='❚❚';castState.textContent='正在播 · 检票员小乖';});
-  castAudio.addEventListener('pause',function(){castBox.classList.remove('playing');castBtn.textContent='▶';castState.textContent='小乖亲口说的 · 点开听，半分钟';});
-  castAudio.addEventListener('ended',function(){castState.textContent='播完了 · 最后一句是给你的';});
   /* setlist play state */
   document.querySelectorAll('.track').forEach(function(t){
     t.addEventListener('click',function(){
