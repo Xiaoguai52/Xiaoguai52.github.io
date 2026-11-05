@@ -394,12 +394,11 @@
     var gate=document.getElementById('gate');
     if(!gate)return;
     var pv=new URLSearchParams(location.search).get('preview')==='1';
-    if(pv){try{localStorage.setItem('xg_preview','1');}catch(e){}}
-    var hasPv=false; try{hasPv=localStorage.getItem('xg_preview')==='1';}catch(e){}
+    if(pv){document.querySelectorAll('.egg').forEach(function(a){a.href=a.href+'?preview=1';});}
     function pad(n){return (n<10?'0':'')+n;}
     function gTick(){
       var diff=target-Date.now();
-      if(hasPv||pv){gate.classList.add('off');setTimeout(function(){gate.remove();},950);return;}
+      if(pv){gate.classList.add('off');setTimeout(function(){gate.remove();},950);return;}
       if(diff<=0){
         gate.classList.add('off');boom(90);
         setTimeout(function(){gate.remove();},950);return;
