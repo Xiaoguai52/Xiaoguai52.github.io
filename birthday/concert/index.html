@@ -13,8 +13,8 @@ a{color:#0066cc;text-decoration:none;}
 .subnav{position:sticky;top:0;z-index:50;height:52px;display:flex;align-items:center;padding:0 22px;background:rgba(251,251,253,.82);backdrop-filter:blur(16px);border-bottom:1px solid #d2d2d7;font-size:21px;font-weight:600;}
 .subnav .r{margin-left:auto;font-size:12px;font-weight:400;color:#6e6e73;}
 .wrap{max-width:980px;margin:0 auto;padding:0 22px;}
-.hero{margin:14px 12px 0;border-radius:28px;overflow:hidden;position:relative;background:#000;color:#fff;min-height:520px;display:flex;flex-direction:column;justify-content:flex-end;}
-.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:.92;}
+.hero{margin:0;overflow:hidden;position:relative;background:#000;color:#fff;min-height:86vh;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 16%;opacity:.92;}
 .hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.06) 30%,rgba(0,0,0,.52) 68%,rgba(0,0,0,.78));}
 .hero .in{position:relative;padding:30px 26px 34px;}
 .hero .kick{font-size:14px;font-weight:600;color:rgba(255,255,255,.82);letter-spacing:.06em;}
@@ -34,7 +34,12 @@ a{color:#0066cc;text-decoration:none;}
 .card.black{background:#000;color:#f5f5f7;}
 .card.black p{color:#a1a1a6;}
 .card.black p b{color:#fff;}
-.cakeArt{height:120px;border-radius:12px;background:linear-gradient(120deg,#7b2ff7,#b565d8 55%,#e39ec2);display:flex;align-items:center;justify-content:center;font-size:52px;margin-bottom:18px;}
+.cakeCard{background:#000;border-radius:28px;overflow:hidden;margin-top:20px;color:#f5f5f7;}
+.cakeCard img{width:100%;display:block;aspect-ratio:1.15;object-fit:cover;}
+.cakeCard .bd{padding:24px 26px 28px;}
+.cakeCard h3{font-size:25px;font-weight:600;}
+.cakeCard p{margin-top:8px;font-size:16px;line-height:1.65;color:#a1a1a6;}
+.cakeCard p b{color:#fff;font-weight:600;}
 .tracks{margin-top:8px;}
 .trk{display:flex;align-items:baseline;gap:12px;padding:14px 2px;border-bottom:1px solid #e8e8ed;cursor:pointer;}
 .trk:last-child{border-bottom:0;}
@@ -44,14 +49,14 @@ a{color:#0066cc;text-decoration:none;}
 .trk .tm{margin-left:auto;font-size:14px;color:#86868b;font-variant-numeric:tabular-nums;white-space:nowrap;}
 .trk .lk{font-size:16px;color:#0066cc;white-space:nowrap;}
 .trk .main{flex:1;min-width:0;}
-.past{margin-top:14px;}
-.prow{display:flex;gap:16px;align-items:center;background:#fff;border-radius:18px;padding:16px 18px;margin-top:12px;}
-.prow .th{width:58px;height:58px;border-radius:12px;object-fit:cover;flex:none;background:#e8e8ed;}
-.prow .ph{width:58px;height:58px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;color:#fff;}
-.prow .dt{font-size:13px;color:#6e6e73;font-variant-numeric:tabular-nums;}
-.prow .nm{font-size:17px;font-weight:600;margin-top:2px;}
-.prow .nt{font-size:13.5px;color:#6e6e73;margin-top:2px;line-height:1.5;}
-.prow.today{outline:2px solid #0071e3;}
+.past{margin-top:6px;}
+.hrow{display:flex;gap:14px;align-items:baseline;padding:17px 2px;border-bottom:1px solid #dcdce1;}
+.hrow .dt{flex:0 0 86px;font-size:13px;color:#6e6e73;font-variant-numeric:tabular-nums;}
+.hrow .nm{font-size:16.5px;font-weight:600;}
+.hrow .nt{font-size:13.5px;color:#6e6e73;margin-top:2px;line-height:1.5;}
+.hrow.today{background:#000;color:#f5f5f7;border-radius:18px;padding:18px 16px;border-bottom:0;margin-top:16px;align-items:center;}
+.hrow.today .dt{color:#a1a1a6;}
+.hrow.today .nt{color:#a1a1a6;}
 .bigphoto{margin-top:20px;border-radius:18px;overflow:hidden;background:#fff;}
 .bigphoto img{width:100%;display:block;}
 .bigphoto .cap{padding:18px 22px 20px;}
@@ -93,10 +98,12 @@ a{color:#0066cc;text-decoration:none;}
     <h2 class="secH rv">今晚将发布</h2>
     <p class="secSub rv">四段节目，一台晚会。按顺序来，别跳台。</p>
 
-    <div class="card rv">
-      <div class="cakeArt">🎂</div>
-      <h3>蛋糕</h3>
-      <p>六寸，<b>葡萄紫</b>——JJ 的应援色。上面有一条小龙（属龙限定），和一副小耳机。字只有一句：<b>赖大宝，26 岁生日快乐</b>。</p>
+    <div class="cakeCard rv">
+      <img src="img/cake-purple.jpg" alt="葡萄紫生日蛋糕，小龙坐在上面">
+      <div class="bd">
+        <h3>蛋糕</h3>
+        <p>六寸，<b>葡萄紫</b>——JJ 的应援色。上面有一条小龙（属龙限定），和一副小耳机。字只有一句：<b>赖大宝，26 岁生日快乐</b>。</p>
+      </div>
     </div>
 
     <div class="card rv">
@@ -128,12 +135,12 @@ a{color:#0066cc;text-decoration:none;}
     <h2 class="secH rv">往期场次</h2>
     <p class="secSub rv">你们已经一起到场五次。今晚，第六场。</p>
     <div class="past">
-      <div class="prow rv"><img class="th" src="img/concert-2023-06-25-1.jpg" alt="武汉五月天"><div><div class="dt">2023.06.25 · 武汉</div><div class="nm">五月天 · 五环体育中心</div><div class="nt">第一场，手心出汗</div></div></div>
-      <div class="prow rv"><img class="th" src="img/jj20-2023-12-09-1.jpg" alt="南宁林俊杰 JJ20"><div><div class="dt">2023.12.09 · 南宁</div><div class="nm">林俊杰 JJ20 · 广西体育中心</div><div class="nt">你的主场，你哭了</div></div></div>
-      <div class="prow rv"><div class="ph" style="background:linear-gradient(135deg,#3b6ea5,#7fb0dd);">京</div><div><div class="dt">2024.05.25 · 北京</div><div class="nm">五月天 · 鸟巢</div><div class="nt">一层 142 区，大场面</div></div></div>
-      <div class="prow rv"><div class="ph" style="background:linear-gradient(135deg,#7b2ff7,#b565d8);">青</div><div><div class="dt">2024.09.22 · 青岛</div><div class="nm">林俊杰 · 市民健身中心体育场</div><div class="nt">海边的风，第二晚</div></div></div>
-      <div class="prow rv"><div class="ph" style="background:linear-gradient(135deg,#e2703a,#f2a65a);">贵</div><div><div class="dt">2025.09.13 · 贵阳</div><div class="nm">五月天 · 奥林匹克体育中心</div><div class="nt">E 区 33 排，山里的风</div></div></div>
-      <div class="prow today rv"><div class="ph" style="background:#000;">今</div><div><div class="dt">2026.11.09 · 南宁 · 家里</div><div class="nm">生日特别场</div><div class="nt">第六场，观众只有你</div></div></div>
+      <div class="hrow rv"><div class="dt">2023.06.25<br>武汉</div><div><div class="nm">五月天 · 五环体育中心</div><div class="nt">第一场，手心出汗</div></div></div>
+      <div class="hrow rv"><div class="dt">2023.12.09<br>南宁</div><div><div class="nm">林俊杰 JJ20 · 广西体育中心</div><div class="nt">你的主场，你哭了</div></div></div>
+      <div class="hrow rv"><div class="dt">2024.05.25<br>北京</div><div><div class="nm">五月天 · 鸟巢</div><div class="nt">一层 142 区，大场面</div></div></div>
+      <div class="hrow rv"><div class="dt">2024.09.22<br>青岛</div><div><div class="nm">林俊杰 · 市民健身中心体育场</div><div class="nt">海边的风，第二晚</div></div></div>
+      <div class="hrow rv"><div class="dt">2025.09.13<br>贵阳</div><div><div class="nm">五月天 · 奥林匹克体育中心</div><div class="nt">E 区 33 排，山里的风</div></div></div>
+      <div class="hrow today rv"><div class="dt">2026.11.09<br>南宁 · 家里</div><div><div class="nm">生日特别场</div><div class="nt">第六场，观众只有你</div></div></div>
     </div>
 
     <div class="bigphoto rv">
