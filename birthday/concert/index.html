@@ -58,7 +58,11 @@
   .rules{padding:14px 24px 0;display:flex;flex-direction:column;gap:11px;}
   .rules .r{display:flex;gap:11px;font-size:14px;line-height:1.65;color:#3a2a1c;}
   .rules .r .no{flex:none;width:20px;height:20px;border-radius:50%;background:#7b2ff7;color:#fff;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px;}
-  .tback .bf{margin-top:auto;padding:0 24px 22px;font-size:12.5px;color:#6d5636;line-height:1.9;}
+  .flow{padding:16px 24px 0;}
+  .flow .k{font-size:10.5px;letter-spacing:2px;color:#a2824f;font-weight:700;margin-bottom:7px;}
+  .flow .fr{display:flex;gap:13px;font-size:13.5px;color:#3a2a1c;padding:4px 0;}
+  .flow .fr span{color:#a2824f;font-weight:700;font-variant-numeric:tabular-nums;flex:none;}
+  .tback .bf{margin-top:auto;padding:14px 24px 22px;font-size:12.5px;color:#6d5636;line-height:1.9;}
   .tback .bf b{color:#33241a;}
   .stamp{position:absolute;top:38%;left:50%;z-index:5;transform:translate(-50%,-50%) rotate(-14deg) scale(3) translateZ(3px);opacity:0;pointer-events:none;border:3.5px solid #e0342b;color:#e0342b;font-weight:800;font-size:24px;letter-spacing:5px;padding:9px 18px 9px 23px;border-radius:10px;background:rgba(253,246,233,.24);}
   .stamp.on{animation:stampIn .45s cubic-bezier(.2,1.4,.4,1) both;}
@@ -114,6 +118,11 @@
   .letter .qm{font-size:64px;line-height:.6;color:#7b2ff7;font-weight:800;}
   .letter p{font-size:18.5px;line-height:2.05;margin-top:22px;color:#efe7d8;}
   .letter .sign{text-align:right;font-size:13.5px;color:#a5937a;margin-top:26px;line-height:1.9;}
+  .saveT{display:block;text-align:center;margin-top:20px;color:#c9a7eb;font-size:13.5px;text-decoration:none;font-weight:600;}
+  .finale{margin-top:88px;text-align:center;}
+  .finale h2{font-size:30px;font-weight:800;letter-spacing:-.4px;}
+  .finale p{margin-top:16px;font-size:16.5px;line-height:2.05;color:#cfc4b0;}
+  .finale p b{color:#ffd9a0;}
   .foot{text-align:center;color:#7d6c55;font-size:11.5px;margin:64px 0 44px;line-height:1.9;}
   .foot a{color:#e8b06a;text-decoration:none;font-weight:700;}
   .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:90;}
@@ -171,6 +180,13 @@
           <div class="r"><span class="no">3</span><span>场内禁止客气：蛋糕要吃完，礼物要收下，夸奖要全盘接受。</span></div>
           <div class="r"><span class="no">4</span><span>特邀嘉宾金豆豆若中途睡着，请勿叫醒，拍照留念即可。</span></div>
         </div>
+        <div class="flow">
+          <div class="k">今 晚 流 程 · RUN OF SHOW</div>
+          <div class="fr"><span>19:30</span>开场字幕 · 灯光就位</div>
+          <div class="fr"><span>19:40</span>蛋糕上桌 · 歌单开唱</div>
+          <div class="fr"><span>20:11</span>寻宝揭晓 · 翻面看盒子</div>
+          <div class="fr"><span>21:00</span>安可合影 · 散场不散</div>
+        </div>
         <div class="bf">遗失不补——但张大宝那里存了一张一模一样的。<br/><b>本票终身有效，每年 11 月 9 日自动续场。</b></div>
       </div>
     </div>
@@ -193,6 +209,7 @@
     </div>
     <div class="ledHint">检票员的手写字幕 · 点屏幕可以快进</div>
   </div>
+  <a class="saveT" href="img/ticket-keep.jpg" download="赖大宝生日特别场票根.jpg">保存这张票根留念 ↓</a>
 
   <h2 class="secT rv">今晚歌单</h2>
   <p class="secSub rv s1">点一首，它就亮起来；点行尾的 ↗，去 Apple Music 听真的。</p>
@@ -224,6 +241,11 @@
     <p>妈妈，我是小乖，今天兼职检票。前面五场，台上唱歌的是别人；这一场不一样——这一场是唱给你的，观众席只留了一个座位，写着你的名字。</p>
     <p>26 岁生日快乐。新的一岁，票已经买好了，还是连座：你的左边是张大宝，右边是豆豆，我站在过道口给你们检票。咱们一场一场，继续听下去。</p>
     <div class="sign">检票员的话 · 小乖<br/>2026.11.09 于南宁</div>
+  </div>
+
+  <div class="finale rv">
+    <h2>散场之后</h2>
+    <p>彩带落完，真正的宝藏不在屏幕里。<br/>去抱一下张大宝——<b>他身上藏着第一条线索。</b><br/>顺着线索走到底，今晚的礼物在终点等你翻面。</p>
   </div>
 
   <div class="foot">本票由小乖印制 · 不可转让，不可退票（退了我会哭）<br/><a href="../index.html">‹ 回发布会主会场</a></div>
@@ -299,11 +321,11 @@
       ledPlaying=false;boom(60);}
   });
   /* setlist play state */
-  document.querySelectorAll('.track').forEach(function(t){
+  document.querySelectorAll('.track').forEach(function(t,i){
     t.addEventListener('click',function(){
       var was=t.classList.contains('playing');
       document.querySelectorAll('.track').forEach(function(x){x.classList.remove('playing');});
-      if(!was)t.classList.add('playing');
+      if(!was){t.classList.add('playing');if(i===2)boom(50);}
     });
   });
 </script>
