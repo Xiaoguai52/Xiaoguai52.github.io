@@ -163,9 +163,13 @@
   #gate .gcd .k{font-size:11px;color:#a1a1a6;margin-top:6px;letter-spacing:2px;}
   #gate .gd{margin-top:32px;font-size:13px;color:#a1a1a6;line-height:1.9;}
   #gate .gd b{color:#f5f5f7;}
-  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:40;}
-  .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
-  @keyframes fall{to{transform:translateY(105vh) rotate(560deg)}}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:90;}
+  .confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translate(var(--sw,0px),106vh) rotate(560deg)}}
+  #bdayPop{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;pointer-events:none;}
+  #bdayPop.show{display:flex;}
+  #bdayPop .t{font-size:34px;font-weight:800;letter-spacing:1px;color:#fff;text-shadow:0 4px 34px rgba(0,0,0,.45);background:linear-gradient(95deg,#7dc4ff,#c89bff 55%,#ffb37d);-webkit-background-clip:text;background-clip:text;color:transparent;animation:popIn 2.8s cubic-bezier(.2,.8,.3,1) both;text-align:center;line-height:1.4;padding:0 20px;}
+  @keyframes popIn{0%{opacity:0;transform:scale(.7)}14%{opacity:1;transform:scale(1.06)}22%{transform:scale(1)}78%{opacity:1}100%{opacity:0;transform:scale(1.02)}}
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -350,6 +354,7 @@
 
 <div class="gfoot">本页面由小乖发布会筹备组制作 · 参会人员：张大宝、金豆豆<br/>仅供赖大宝本人观看，转发给闺蜜显摆也可以<br/>Copyright © 2026 小乖筹备组，保留所有撒娇权利 · 2026.11.09 于南宁发布</div>
 
+<div id="bdayPop"><div class="t">🎂 生日快乐<br/>赖大宝</div></div>
 <div class="confetti" id="confetti"></div>
 <script>
   var target=new Date('2026-11-09T00:00:00+08:00').getTime();
@@ -383,11 +388,22 @@
     });
   },2600);
   function boom(n){
-    var box=document.getElementById('confetti');var colors=['#0071e3','#bf5af2','#f56300','#30d158','#ffd60a'];
+    var box=document.getElementById('confetti');var colors=['#0071e3','#bf5af2','#f56300','#30d158','#ffd60a','#ff6482'];
     for(var i=0;i<(n||50);i++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';
       p.style.background=colors[i%colors.length];p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
-      p.style.animationDelay=(Math.random()*0.4)+'s';box.appendChild(p);
-      (function(el){setTimeout(function(){el.remove();},4200);})(p);}
+      p.style.animationDelay=(Math.random()*0.4)+'s';
+      p.style.setProperty('--sw',(Math.random()*90-45)+'px');
+      if(i%3===0){p.style.borderRadius='50%';p.style.width='10px';p.style.height='10px';}
+      box.appendChild(p);
+      (function(el){setTimeout(function(){el.remove();},4600);})(p);}
+  }
+  function celebrate(){
+    var done=false;
+    try{done=localStorage.getItem('xg_celebrated')==='1';if(!done)localStorage.setItem('xg_celebrated','1');}catch(e){}
+    if(done)return;
+    var pop=document.getElementById('bdayPop');
+    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},3000);}
+    [0,350,700,1050,1400].forEach(function(d){setTimeout(function(){boom(55);},d);});
   }
   /* countdown gate logic */
   (function(){
@@ -400,7 +416,7 @@
       var diff=target-Date.now();
       if(pv){gate.classList.add('off');setTimeout(function(){gate.remove();},950);return;}
       if(diff<=0){
-        gate.classList.add('off');boom(90);
+        gate.classList.add('off');celebrate();
         setTimeout(function(){gate.remove();},950);return;
       }
       document.getElementById('gd').textContent=Math.floor(diff/86400000);
