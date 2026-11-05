@@ -166,9 +166,10 @@
   .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:90;}
   .confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
   @keyframes fall{to{transform:translate(var(--sw,0px),106vh) rotate(560deg)}}
-  #bdayPop{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;pointer-events:none;}
-  #bdayPop.show{display:flex;}
-  #bdayPop .t{font-size:34px;font-weight:800;letter-spacing:1px;color:#fff;text-shadow:0 4px 34px rgba(0,0,0,.45);background:linear-gradient(95deg,#7dc4ff,#c89bff 55%,#ffb37d);-webkit-background-clip:text;background-clip:text;color:transparent;animation:popIn 2.8s cubic-bezier(.2,.8,.3,1) both;text-align:center;line-height:1.4;padding:0 20px;}
+  #bdayPop{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,8,18,.62);}
+  #bdayPop.show{display:flex;animation:popBg 3.8s ease both;}
+  @keyframes popBg{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
+  #bdayPop .t{font-size:46px;font-weight:800;letter-spacing:1px;background:linear-gradient(95deg,#ffd60a,#ff9f0a 38%,#ff6482 68%,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent;animation:popIn 3.8s cubic-bezier(.2,.8,.3,1) both;text-align:center;line-height:1.45;padding:0 20px;}
   @keyframes popIn{0%{opacity:0;transform:scale(.7)}14%{opacity:1;transform:scale(1.06)}22%{transform:scale(1)}78%{opacity:1}100%{opacity:0;transform:scale(1.02)}}
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
@@ -404,7 +405,7 @@
       if(done)return;
     }
     var pop=document.getElementById('bdayPop');
-    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},3000);}
+    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},4000);}
     [0,350,700,1050,1400].forEach(function(d){setTimeout(function(){boom(55);},d);});
   }
   /* countdown gate logic */
