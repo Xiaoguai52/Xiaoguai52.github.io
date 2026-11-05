@@ -397,10 +397,12 @@
       box.appendChild(p);
       (function(el){setTimeout(function(){el.remove();},4600);})(p);}
   }
-  function celebrate(){
-    var done=false;
-    try{done=localStorage.getItem('xg_celebrated')==='1';if(!done)localStorage.setItem('xg_celebrated','1');}catch(e){}
-    if(done)return;
+  function celebrate(force){
+    if(!force){
+      var done=false;
+      try{done=localStorage.getItem('xg_celebrated')==='1';if(!done)localStorage.setItem('xg_celebrated','1');}catch(e){}
+      if(done)return;
+    }
     var pop=document.getElementById('bdayPop');
     if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},3000);}
     [0,350,700,1050,1400].forEach(function(d){setTimeout(function(){boom(55);},d);});
@@ -414,6 +416,10 @@
     function pad(n){return (n<10?'0':'')+n;}
     function gTick(){
       var diff=target-Date.now();
+      if(new URLSearchParams(location.search).get('party')==='1'){
+        gate.classList.add('off');celebrate(true);
+        setTimeout(function(){gate.remove();},950);return;
+      }
       if(pv){gate.classList.add('off');setTimeout(function(){gate.remove();},950);return;}
       if(diff<=0){
         gate.classList.add('off');celebrate();
