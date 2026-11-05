@@ -97,8 +97,11 @@
   .pods{padding:70px 0 8px;text-align:center;}
   .pods h2{font-size:42px;font-weight:800;letter-spacing:-.8px;margin-top:8px;}
   .pods .tag2{font-size:19px;font-weight:600;margin-top:10px;}
-  .pods .imgwrap{margin:4px auto 0;max-width:330px;}
+  .pods .imgwrap{margin:4px auto 0;max-width:330px;position:relative;}
   .pods .imgwrap img{width:100%;display:block;animation:float 5.5s ease-in-out infinite;}
+  .pods .imgwrap a{display:block;-webkit-tap-highlight-color:transparent;}
+  .arbadge{position:absolute;right:6px;bottom:10px;background:rgba(29,29,31,.82);color:#fff;font-size:12px;font-weight:600;border-radius:999px;padding:7px 13px;backdrop-filter:blur(6px);pointer-events:none;}
+  .arhint{font-size:12.5px;color:#6e6e73;margin-top:8px;}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
   .podgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:2px;text-align:center;}
   .podgrid .pg{background:#f5f5f7;border-radius:16px;padding:16px 8px;}
@@ -246,7 +249,8 @@
     <div class="eyebrow rv" style="color:#f56300;font-size:15px;font-weight:600;">同 场 加 映</div>
     <h2 class="rv s1">AirPods Pro 3</h2>
     <p class="tag2 rv s2">入耳式主动降噪，入主新声代。</p>
-    <div class="imgwrap rv s2"><img src="img/airpods-pair.webp" alt="AirPods Pro 3 左右耳机"/></div>
+    <div class="imgwrap rv s2"><a rel="ar" href="img/airpods-pro3.usdz"><img src="img/airpods-pair.webp" alt="AirPods Pro 3 左右耳机"/></a><span class="arbadge">AR · 点图看 3D</span></div>
+    <p class="arhint rv s2">点一下耳机，就能像在苹果官网那样，把它放到你的桌子上转着看</p>
     <div class="podgrid rv">
       <div class="pg"><div class="n">2 倍</div><div class="k">主动降噪效果<br/>较上一代最高提升<sup>4</sup></div></div>
       <div class="pg"><div class="n">心率传感</div><div class="k">锻炼时能测心率<br/>替张大宝数着</div></div>
