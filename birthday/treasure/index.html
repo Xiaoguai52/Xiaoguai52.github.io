@@ -11,6 +11,15 @@
   button{font-family:inherit;}
   .wrap{max-width:520px;margin:0 auto;padding:30px 20px 70px;}
   .badge{display:flex;align-items:center;gap:12px;}
+  .subnav{position:sticky;top:0;z-index:50;height:52px;display:flex;align-items:center;padding:0 22px;background:rgba(251,251,253,.82);backdrop-filter:blur(16px);border-bottom:1px solid #d2d2d7;font-size:21px;font-weight:600;}
+  .subnav .r{margin-left:auto;font-size:12px;font-weight:400;color:#6e6e73;}
+  .tbanner{position:relative;margin-top:16px;border-radius:28px;overflow:hidden;background:#000;color:#fff;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;}
+  .tbanner img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;}
+  .tbanner .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.55) 72%,rgba(0,0,0,.8));}
+  .tbanner .in{position:relative;padding:24px 24px 26px;}
+  .tbanner .k{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.85);}
+  .tbanner h1{font-size:34px;font-weight:600;line-height:1.25;margin:8px 0 8px;color:#fff;}
+  .tbanner .s{font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.85);}
   .badge img{width:52px;height:52px;border-radius:50%;border:2px solid #fff;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12);object-fit:cover;}
   .badge .t1{font-size:12px;letter-spacing:3px;color:#f56300;font-weight:700;}
   .badge .t2{font-size:17px;font-weight:600;margin-top:2px;}
@@ -91,16 +100,18 @@
 </style>
 </head>
 <body>
+<div class="subnav">寻宝局<span class="r">第二站 · 寻宝</span></div>
 <div class="wrap">
-  <div class="chap">第 二 站 · 寻 宝 局</div>
-  <div class="badge">
-    <img src="img/xiaoguai-avatar.webp" alt="小乖"/>
-    <div><div class="t1">小 乖 的 寻 宝 任 务</div><div class="t2">妈妈，生日快乐！</div></div>
+  <div class="tbanner">
+    <img class="bg" src="img/wall-01.jpg" alt="金豆豆"/>
+    <div class="scrim"></div>
+    <div class="in">
+      <div class="k">小乖的寻宝任务 · 妈妈，生日快乐！</div>
+      <h1>礼物被我藏起来啦<br/>升级版，没那么好混了</h1>
+      <p class="s">出题人已加难度 · 猫哥负责监考</p>
+    </div>
   </div>
-
-  <h1>礼物被我藏起来啦<br/>升级版，没那么好混了</h1>
-  <p class="intro">这次三关都加了料：<b>在一整墙猫哥照片里找指定瞬间、先排对你们的五场演唱会再猜主题曲、最后限时抓住会逃跑的小乖三次</b>。错了不会锁死你，但会留下记录、扣时间，还会等你多错几次才给提示。</p>
-  <span class="hard">出题人已加难度 · 猫哥负责监考</span>
+  <p class="intro" style="margin-top:18px;">三关都加了料：<b>照片墙里找指定瞬间、五场演唱会排对顺序再猜主题曲、限时抓住逃跑的小乖三次</b>。错了不会锁死你，但会留下记录、扣时间，多错几次才给提示。</p>
 
   <div class="progress">
     <div class="dot" id="d1">第一关 · 照片墙寻图</div>
