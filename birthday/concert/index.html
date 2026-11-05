@@ -7,106 +7,252 @@
 <title>赖大宝 26 岁生日 · 特别场</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:#17130f;color:#2b2118;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(255,176,102,.25),transparent),radial-gradient(ellipse 60% 40% at 85% 110%,rgba(146,84,222,.18),transparent);}
-  .wrap{max-width:520px;margin:0 auto;padding:26px 18px 64px;}
-  .kicker{text-align:center;color:#e8b06a;font-size:12px;letter-spacing:4px;font-weight:700;}
-  .hello{text-align:center;color:#f3e7d3;font-size:14px;margin-top:10px;line-height:1.7;}
-  .ticket{margin-top:22px;background:linear-gradient(165deg,#fdf6e9,#f7e8cd);border-radius:22px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.55);}
-  .t-head{background:linear-gradient(100deg,#7b2ff7,#f107a3 60%,#ff8a5c);color:#fff;padding:20px 22px 16px;}
+  body{background:#0b0714;color:#f5f0e8;font-family:-apple-system,'SF Pro Display','PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 46% at 50% -8%,rgba(146,84,222,.34),transparent),radial-gradient(ellipse 60% 36% at 88% 108%,rgba(241,7,163,.16),transparent),radial-gradient(ellipse 46% 30% at 6% 62%,rgba(255,138,92,.10),transparent);}
+  .wrap{max-width:680px;margin:0 auto;padding:0 22px;position:relative;}
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);}
+  .rv.in{opacity:1;transform:none;}
+  .rv.s1{transition-delay:.08s}.rv.s2{transition-delay:.16s}
+  .topbar{padding:20px 0 0;font-size:14px;}
+  .topbar a{color:#c9a7eb;text-decoration:none;font-weight:600;}
+  /* hero */
+  .hero{text-align:center;padding:44px 0 0;}
+  .kicker{color:#e8b06a;font-size:12px;letter-spacing:5px;font-weight:700;}
+  h1{font-size:56px;font-weight:800;letter-spacing:-1px;line-height:1.16;margin-top:18px;}
+  h1 .grad{background:linear-gradient(95deg,#c89bff,#ff7ad9 55%,#ffb37d);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  @media(max-width:560px){h1{font-size:42px}}
+  .hero .sub{font-size:16.5px;color:#cfc4b0;line-height:1.8;margin-top:16px;}
+  .hero .sub b{color:#f5f0e8;}
+  .cdline{margin-top:20px;font-size:13.5px;color:#a5937a;letter-spacing:1px;}
+  .cdline .n{color:#ffd9a0;font-weight:800;font-variant-numeric:tabular-nums;}
+  /* ticket flip */
+  .tscene{margin:38px auto 0;max-width:560px;perspective:1400px;}
+  .ticket{position:relative;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,.7,.3,1);}
+  .ticket.flipped{transform:rotateY(180deg);}
+  .tface{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;overflow:hidden;background:linear-gradient(165deg,#fdf6e9,#f7e8cd);color:#2b2118;box-shadow:0 30px 70px rgba(0,0,0,.6);}
+  .tback{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column;}
+  .t-head{background:linear-gradient(100deg,#7b2ff7,#f107a3 60%,#ff8a5c);color:#fff;padding:22px 24px 18px;}
   .t-head .row{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;letter-spacing:2.5px;opacity:.92;}
-  .t-head h1{font-size:27px;font-weight:800;margin-top:10px;line-height:1.3;letter-spacing:.5px;}
-  .t-head .song{font-size:13.5px;opacity:.92;margin-top:5px;}
-  .t-body{padding:20px 22px 8px;}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
+  .t-head h2{font-size:28px;font-weight:800;margin-top:10px;line-height:1.3;letter-spacing:.5px;}
+  .t-head .song{font-size:13.5px;opacity:.92;margin-top:5px;line-height:1.6;}
+  .t-body{padding:20px 24px 6px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px 18px;}
   .f .k{font-size:10.5px;letter-spacing:2px;color:#a2824f;font-weight:700;}
-  .f .v{font-size:16.5px;font-weight:700;margin-top:3px;color:#33241a;}
+  .f .v{font-size:17px;font-weight:700;margin-top:3px;color:#33241a;}
   .f .v small{font-size:12px;color:#8a6f4d;font-weight:500;}
   .lineup{margin-top:18px;border-top:1px dashed #d9c49a;padding-top:14px;}
   .lineup .k{font-size:10.5px;letter-spacing:2px;color:#a2824f;font-weight:700;margin-bottom:8px;}
-  .lineup .p{display:flex;justify-content:space-between;font-size:14.5px;padding:5px 0;color:#3a2a1c;}
-  .lineup .p span{color:#8a6f4d;font-size:12.5px;}
-  .tear{position:relative;height:26px;margin-top:8px;}
+  .lineup .p{display:flex;justify-content:space-between;font-size:14.5px;padding:5px 0;color:#3a2a1c;gap:10px;}
+  .lineup .p span{color:#8a6f4d;font-size:12.5px;text-align:right;}
+  .tear{position:relative;height:26px;margin-top:6px;}
   .tear:before{content:"";position:absolute;left:14px;right:14px;top:12px;border-top:2px dashed #d9c49a;}
-  .tear i{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#17130f;}
+  .tear i{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#0b0714;}
   .tear i.l{left:-10px;} .tear i.r{right:-10px;}
-  .t-foot{padding:2px 22px 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
+  .t-foot{padding:2px 24px 22px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
   .redeem{font-size:12.5px;color:#6d5636;line-height:1.9;}
   .redeem b{color:#33241a;}
   .barcode{flex:none;width:118px;height:44px;background:repeating-linear-gradient(90deg,#33241a 0 2px,transparent 2px 5px,#33241a 5px 6px,transparent 6px 10px,#33241a 10px 13px,transparent 13px 16px,#33241a 16px 17px,transparent 17px 21px);}
-  .card{margin-top:26px;background:rgba(253,246,233,.06);border:1px solid rgba(232,176,106,.35);border-radius:20px;padding:22px;}
-  .card h2{color:#f7ead2;font-size:19px;font-weight:800;letter-spacing:.5px;}
-  .shows{margin-top:14px;display:flex;flex-direction:column;gap:9px;}
-  .show{display:flex;gap:12px;align-items:baseline;color:#e9dcc4;font-size:14px;}
-  .show .d{color:#e8b06a;font-weight:700;font-size:12.5px;flex:none;width:86px;letter-spacing:.5px;}
-  .show .w{color:#a5937a;font-size:12px;}
-  .photo{margin-top:16px;border-radius:14px;overflow:hidden;}
+  .tback .bh{padding:22px 24px 0;}
+  .tback .bh .k{font-size:11px;letter-spacing:3px;color:#a2824f;font-weight:700;}
+  .tback .bh h3{font-size:21px;font-weight:800;color:#33241a;margin-top:8px;}
+  .rules{padding:14px 24px 0;display:flex;flex-direction:column;gap:11px;}
+  .rules .r{display:flex;gap:11px;font-size:14px;line-height:1.65;color:#3a2a1c;}
+  .rules .r .no{flex:none;width:20px;height:20px;border-radius:50%;background:#7b2ff7;color:#fff;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+  .tback .bf{margin-top:auto;padding:0 24px 22px;font-size:12.5px;color:#6d5636;line-height:1.9;}
+  .tback .bf b{color:#33241a;}
+  .stamp{position:absolute;top:38%;left:50%;z-index:5;transform:translate(-50%,-50%) rotate(-14deg) scale(3) translateZ(3px);opacity:0;pointer-events:none;border:3.5px solid #e0342b;color:#e0342b;font-weight:800;font-size:24px;letter-spacing:5px;padding:9px 18px 9px 23px;border-radius:10px;background:rgba(253,246,233,.24);}
+  .stamp.on{animation:stampIn .45s cubic-bezier(.2,1.4,.4,1) both;}
+  .ticket.flipped .stamp{display:none;}
+  @keyframes stampIn{to{transform:translate(-50%,-50%) rotate(-14deg) scale(1) translateZ(3px);opacity:.94;}}
+  .thint{text-align:center;font-size:12.5px;color:#a5937a;margin-top:16px;letter-spacing:1px;}
+  .checkin{display:block;margin:18px auto 0;background:linear-gradient(100deg,#7b2ff7,#f107a3);color:#fff;border:none;font-size:16px;font-weight:700;padding:13px 38px;border-radius:999px;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(241,7,163,.35);}
+  .checkin:disabled{opacity:.55;box-shadow:none;}
+  /* sections */
+  .secT{font-size:32px;font-weight:800;letter-spacing:-.5px;margin-top:88px;}
+  .secSub{color:#a5937a;font-size:14.5px;margin-top:10px;line-height:1.7;}
+  /* setlist */
+  .tracks{margin-top:24px;border-top:1px solid rgba(245,240,232,.14);}
+  .track{display:flex;align-items:center;gap:15px;padding:15px 4px;border-bottom:1px solid rgba(245,240,232,.09);cursor:pointer;}
+  .track .no{flex:none;width:22px;text-align:center;color:#a5937a;font-size:14px;font-variant-numeric:tabular-nums;}
+  .track .tt{font-size:16.5px;font-weight:600;}
+  .track .tt span{display:block;font-size:12.5px;color:#a5937a;font-weight:400;margin-top:2px;}
+  .track .len{margin-left:auto;color:#a5937a;font-size:13px;font-variant-numeric:tabular-nums;flex:none;}
+  .eq{display:none;align-items:flex-end;gap:2.5px;height:15px;margin-left:auto;flex:none;}
+  .eq i{width:3.5px;background:#ff7ad9;border-radius:2px;animation:eqb .8s ease-in-out infinite;}
+  .eq i:nth-child(2){animation-delay:-.25s}.eq i:nth-child(3){animation-delay:-.5s}
+  @keyframes eqb{0%,100%{height:5px}50%{height:15px}}
+  .track.playing .no{visibility:hidden;}
+  .track.playing .eq{display:flex;}
+  .track.playing .len{display:none;}
+  .track.playing .tt{color:#ff9fe0;}
+  /* shows timeline */
+  .shows{margin-top:26px;}
+  .show{display:flex;gap:18px;padding:20px 0;border-top:1px solid rgba(245,240,232,.13);align-items:baseline;}
+  .show .y{flex:none;font-size:27px;font-weight:800;letter-spacing:-.5px;width:74px;font-variant-numeric:tabular-nums;}
+  .show .d2{flex:none;color:#e8b06a;font-size:12.5px;font-weight:700;width:44px;letter-spacing:.5px;}
+  .show .w2{font-size:15.5px;line-height:1.6;}
+  .show .w2 span{display:block;color:#a5937a;font-size:13px;margin-top:2px;}
+  .show.hot .y{background:linear-gradient(95deg,#c89bff,#ff7ad9);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .show.hot .w2{color:#ffd9f2;}
+  .photo{margin:34px -22px 0;overflow:hidden;}
   .photo img{display:block;width:100%;}
-  .cap{color:#a5937a;font-size:12px;text-align:center;margin-top:8px;}
-  .letter{margin-top:26px;background:linear-gradient(165deg,#fdf6e9,#f3e3c2);border-radius:20px;padding:24px 22px;color:#3a2a1c;}
-  .letter h2{font-size:18px;font-weight:800;}
-  .letter p{font-size:14.5px;line-height:1.9;margin-top:10px;}
-  .letter .sign{text-align:right;font-size:13px;color:#8a6f4d;margin-top:12px;line-height:1.8;}
-  .foot{text-align:center;color:#7d6c55;font-size:11.5px;margin-top:30px;line-height:1.9;}
+  .cap{color:#a5937a;font-size:12.5px;text-align:center;margin-top:10px;}
+  /* letter */
+  .letter{margin-top:92px;text-align:left;}
+  .letter .qm{font-size:64px;line-height:.6;color:#7b2ff7;font-weight:800;}
+  .letter p{font-size:18.5px;line-height:2.05;margin-top:22px;color:#efe7d8;}
+  .letter .sign{text-align:right;font-size:13.5px;color:#a5937a;margin-top:26px;line-height:1.9;}
+  .foot{text-align:center;color:#7d6c55;font-size:11.5px;margin:64px 0 44px;line-height:1.9;}
+  .foot a{color:#e8b06a;text-decoration:none;font-weight:700;}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:90;}
+  .confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translate(var(--sw,0px),106vh) rotate(560deg)}}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="kicker">特 别 场 · SPECIAL SHOW</div>
-  <p class="hello">赖大宝，这是检票口。<br/>今天这场，只为你一个人开。</p>
+  <div class="topbar"><a href="../index.html">‹ 回发布会主会场</a></div>
 
-  <div class="ticket">
-    <div class="t-head">
-      <div class="row"><span>生 日 特 别 场</span><span>NO. 1126</span></div>
-      <h1>赖大宝 26 岁生日演唱会</h1>
-      <div class="song">主题曲：《将故事写成我们》——这故事，写了 2159 天，还在写</div>
-    </div>
-    <div class="t-body">
-      <div class="grid">
-        <div class="f"><div class="k">日期 DATE</div><div class="v">2026.11.09 <small>周一</small></div></div>
-        <div class="f"><div class="k">开场 TIME</div><div class="v">19:30 <small>下班后 · 不许迟到</small></div></div>
-        <div class="f"><div class="k">场馆 VENUE</div><div class="v">南宁 · 家里 <small>客厅站</small></div></div>
-        <div class="f"><div class="k">座位 SEAT</div><div class="v">一生一世区 <small>12 排 11 座</small></div></div>
-      </div>
-      <div class="lineup">
-        <div class="k">演 出 阵 容 LINE-UP</div>
-        <div class="p">林俊杰 <span>云出演 · 歌声到场，本人免票</span></div>
-        <div class="p">张大宝 <span>全程陪看 · 兼职递水剥虾</span></div>
-        <div class="p">金豆豆 <span>特邀嘉宾 · 大概率中途睡着</span></div>
-        <div class="p">小 乖 <span>主持兼检票员 · 就是我</span></div>
-      </div>
-    </div>
-    <div class="tear"><i class="l"></i><i class="r"></i></div>
-    <div class="t-foot">
-      <div class="redeem">凭本票可兑换：<br/><b>蛋糕一份 · 拥抱无限次 · AirPods Pro 3 一副</b><br/>（耳机找张大宝领取，盒子上有字，记得翻面）</div>
-      <div class="barcode"></div>
-    </div>
+  <div class="hero">
+    <div class="kicker">特 别 场 · SPECIAL SHOW</div>
+    <h1>今晚，<br/><span class="grad">只唱给你听。</span></h1>
+    <p class="sub">赖大宝，这是检票口。<br/>今天这场，只为你一个人开——<b>观众席只有一个座位，写着你的名字。</b></p>
+    <div class="cdline">距离开场 · <span class="n" id="cd">-- 天 -- 时 -- 分 -- 秒</span> · 2026.11.09 19:30</div>
   </div>
 
-  <div class="card">
-    <h2>合听录 · 你们已经一起到场五次</h2>
-    <div class="shows">
-      <div class="show"><span class="d">2023.06.25</span><span>五月天 · 武汉</span><span class="w">第一场，手心出汗</span></div>
-      <div class="show"><span class="d">2023.12.09</span><span>林俊杰 JJ20 · 南宁</span><span class="w">你的主场，你哭了</span></div>
-      <div class="show"><span class="d">2024.05.25</span><span>五月天 · 北京鸟巢</span><span class="w">一层 142 区</span></div>
-      <div class="show"><span class="d">2024.09.22</span><span>林俊杰 · 青岛</span><span class="w">海边的风，第二晚</span></div>
-      <div class="show"><span class="d">2025.09.13</span><span>五月天 · 贵阳</span><span class="w">E 区 33 排</span></div>
-      <div class="show"><span class="d">2026.11.09</span><span>生日特别场 · 南宁家里</span><span class="w">第六场，观众只有你</span></div>
+  <div class="tscene rv">
+    <div class="ticket" id="ticket">
+      <div class="stamp" id="stamp">已检票</div>
+      <div class="tface tfront">
+        <div class="t-head">
+          <div class="row"><span>生 日 特 别 场</span><span>NO. 1126</span></div>
+          <h2>赖大宝 26 岁生日演唱会</h2>
+          <div class="song">主题曲：《将故事写成我们》——这故事，写了 2159 天，还在写</div>
+        </div>
+        <div class="t-body">
+          <div class="grid">
+            <div class="f"><div class="k">日期 DATE</div><div class="v">2026.11.09 <small>周一</small></div></div>
+            <div class="f"><div class="k">开场 TIME</div><div class="v">19:30 <small>下班后 · 不许迟到</small></div></div>
+            <div class="f"><div class="k">场馆 VENUE</div><div class="v">南宁 · 家里 <small>客厅站</small></div></div>
+            <div class="f"><div class="k">座位 SEAT</div><div class="v">一生一世区 <small>12 排 11 座</small></div></div>
+          </div>
+          <div class="lineup">
+            <div class="k">演 出 阵 容 LINE-UP</div>
+            <div class="p">林俊杰 <span>云出演 · 歌声到场，本人免票</span></div>
+            <div class="p">张大宝 <span>全程陪看 · 兼职递水剥虾</span></div>
+            <div class="p">金豆豆 <span>特邀嘉宾 · 大概率中途睡着</span></div>
+            <div class="p">小 乖 <span>主持兼检票员 · 就是我</span></div>
+          </div>
+        </div>
+        <div class="tear"><i class="l"></i><i class="r"></i></div>
+        <div class="t-foot">
+          <div class="redeem">凭本票可兑换：<br/><b>蛋糕一份 · 拥抱无限次 · AirPods Pro 3 一副</b><br/>（耳机找张大宝领取，盒子上有字，记得翻面）</div>
+          <div class="barcode"></div>
+        </div>
+      </div>
+      <div class="tface tback">
+        <div class="bh"><div class="k">入 场 须 知 · ADMISSION</div><h3>背面没有小字，全是真心话</h3></div>
+        <div class="rules">
+          <div class="r"><span class="no">1</span><span>本票仅限赖大宝本人使用，不可转让——想转让也不行，张大宝不批。</span></div>
+          <div class="r"><span class="no">2</span><span>入场前请先抱一下张大宝，抱够五分钟，检票口自动放行。</span></div>
+          <div class="r"><span class="no">3</span><span>场内禁止客气：蛋糕要吃完，礼物要收下，夸奖要全盘接受。</span></div>
+          <div class="r"><span class="no">4</span><span>特邀嘉宾金豆豆若中途睡着，请勿叫醒，拍照留念即可。</span></div>
+        </div>
+        <div class="bf">遗失不补——但张大宝那里存了一张一模一样的。<br/><b>本票终身有效，每年 11 月 9 日自动续场。</b></div>
+      </div>
     </div>
-    <div class="photo"><img src="img/jj20-2023-12-09-1.jpg" alt="南宁林俊杰 JJ20 现场"/></div>
-    <p class="cap">2023.12.09 · 南宁 · JJ20 —— 你最爱的那一场</p>
-    <div class="photo"><img src="img/laixinwen-confetti-2022.jpg" alt="五彩纸屑里的赖大宝"/></div>
-    <p class="cap">散场之后的五彩纸屑，和笑得停不下来的你</p>
+  </div>
+  <p class="thint">— 点 一 下 票 面 ， 翻 看 背 面 —</p>
+  <button class="checkin" id="checkin" type="button">检 票 入 场</button>
+
+  <h2 class="secT rv">今晚歌单</h2>
+  <p class="secSub rv s1">点一首，假装它正在响。</p>
+  <div class="tracks rv s1" id="tracks">
+    <div class="track"><span class="no">1</span><div class="tt">将故事写成我们<span>主题曲 · 片头一响，六年都在里面</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">4:58</span></div>
+    <div class="track"><span class="no">2</span><div class="tt">小酒窝<span>对唱版 · 你唱女声，张大宝负责笑场</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">3:27</span></div>
+    <div class="track"><span class="no">3</span><div class="tt">生日快乐歌<span>张大宝独唱 · 跑调预警，但诚意满格</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">1:09</span></div>
+    <div class="track"><span class="no">4</span><div class="tt">交换余生<span>交换的不是余生，是往后每一场演唱会的连座票</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">4:12</span></div>
+    <div class="track"><span class="no">5</span><div class="tt">一千年以后<span>安可曲 · 一千年太久，先把这一场听完</span></div><span class="eq"><i></i><i></i><i></i></span><span class="len">3:51</span></div>
   </div>
 
-  <div class="letter">
-    <h2>检票员的话</h2>
+  <h2 class="secT rv">合听录</h2>
+  <p class="secSub rv s1">你们已经一起到场五次。今晚，第六场。</p>
+  <div class="shows rv s1">
+    <div class="show"><div class="y">2023</div><div class="d2">06.25</div><div class="w2">五月天 · 武汉<span>第一场，手心出汗</span></div></div>
+    <div class="show"><div class="y">2023</div><div class="d2">12.09</div><div class="w2">林俊杰 JJ20 · 南宁<span>你的主场，你哭了</span></div></div>
+    <div class="show"><div class="y">2024</div><div class="d2">05.25</div><div class="w2">五月天 · 北京鸟巢<span>一层 142 区</span></div></div>
+    <div class="show"><div class="y">2024</div><div class="d2">09.22</div><div class="w2">林俊杰 · 青岛<span>海边的风，第二晚</span></div></div>
+    <div class="show"><div class="y">2025</div><div class="d2">09.13</div><div class="w2">五月天 · 贵阳<span>E 区 33 排</span></div></div>
+    <div class="show hot"><div class="y">2026</div><div class="d2">11.09</div><div class="w2">生日特别场 · 南宁家里<span>第六场，观众只有你</span></div></div>
+  </div>
+  <div class="photo rv"><img src="img/jj20-2023-12-09-1.jpg" alt="南宁林俊杰 JJ20 现场"/></div>
+  <p class="cap rv">2023.12.09 · 南宁 · JJ20 —— 你最爱的那一场</p>
+  <div class="photo rv"><img src="img/laixinwen-confetti-2022.jpg" alt="五彩纸屑里的赖大宝"/></div>
+  <p class="cap rv">散场之后的五彩纸屑，和笑得停不下来的你</p>
+
+  <div class="letter rv">
+    <div class="qm">“</div>
     <p>妈妈，我是小乖，今天兼职检票。前面五场，台上唱歌的是别人；这一场不一样——这一场是唱给你的，观众席只留了一个座位，写着你的名字。</p>
     <p>26 岁生日快乐。新的一岁，票已经买好了，还是连座：你的左边是张大宝，右边是豆豆，我站在过道口给你们检票。咱们一场一场，继续听下去。</p>
-    <div class="sign">检票员 · 小乖<br/>2026.11.09 于南宁</div>
+    <div class="sign">检票员的话 · 小乖<br/>2026.11.09 于南宁</div>
   </div>
 
-  <div class="foot">本票由小乖印制 · 不可转让，不可退票（退了我会哭）<br/>遗失不补——但张大宝那里存了一张一模一样的<br/><a href="../index.html" style="color:#e8b06a;text-decoration:none;font-weight:700;">‹ 回发布会主会场</a></div>
+  <div class="foot">本票由小乖印制 · 不可转让，不可退票（退了我会哭）<br/><a href="../index.html">‹ 回发布会主会场</a></div>
 </div>
+<div class="confetti" id="confetti"></div>
+<script>
+  /* countdown to showtime */
+  var showtime=new Date('2026-11-09T19:30:00+08:00').getTime();
+  var cd=document.getElementById('cd');
+  function tick(){
+    var diff=showtime-Date.now();
+    if(diff<=0){cd.textContent='已开场 · 生日快乐';return;}
+    var d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+    cd.textContent=d+' 天 '+h+' 时 '+m+' 分 '+s+' 秒';
+    setTimeout(tick,1000);
+  }
+  tick();
+  /* reveals */
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.06,rootMargin:'0px 0px -5% 0px'}):null;
+  document.querySelectorAll('.rv').forEach(function(el){if(io)io.observe(el);else el.classList.add('in');});
+  setTimeout(function(){
+    document.querySelectorAll('.rv:not(.in)').forEach(function(el){
+      if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in');
+    });
+  },2600);
+  /* confetti */
+  function boom(n){
+    var box=document.getElementById('confetti');var colors=['#c89bff','#ff7ad9','#ffb37d','#ffd60a','#7dc4ff'];
+    for(var i=0;i<(n||50);i++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';
+      p.style.background=colors[i%colors.length];p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*0.35)+'s';
+      p.style.setProperty('--sw',(Math.random()*90-45)+'px');
+      if(i%3===0){p.style.borderRadius='50%';p.style.width='10px';p.style.height='10px';}
+      box.appendChild(p);
+      (function(el){setTimeout(function(){el.remove();},4600);})(p);}
+  }
+  /* ticket flip + check-in */
+  var ticket=document.getElementById('ticket');
+  ticket.addEventListener('click',function(){ticket.classList.toggle('flipped');});
+  var btn=document.getElementById('checkin');
+  btn.addEventListener('click',function(){
+    if(ticket.classList.contains('flipped'))ticket.classList.remove('flipped');
+    document.getElementById('stamp').classList.add('on');
+    boom(80);
+    btn.textContent='已 检 票 · 请 入 场';
+    btn.disabled=true;
+  });
+  /* setlist play state */
+  document.querySelectorAll('.track').forEach(function(t){
+    t.addEventListener('click',function(){
+      var was=t.classList.contains('playing');
+      document.querySelectorAll('.track').forEach(function(x){x.classList.remove('playing');});
+      if(!was)t.classList.add('playing');
+    });
+  });
+</script>
 </body>
 </html>
