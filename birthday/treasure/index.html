@@ -4,11 +4,12 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <script>(function(){var U=new Date('2026-11-09T00:00:00+08:00').getTime();var pv=new URLSearchParams(location.search).get('preview')==='1';if(pv){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a').forEach(function(a){if(a.getAttribute('href')==='../index.html'){a.href='../index.html?preview=1';}});});}if(!pv&&Date.now()<U){location.replace('../index.html');}})();</script>
-<title>小乖的寻宝任务 · 给妈妈的生日</title>
+<title>小乖的寻宝任务 · 升级版</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:#fdf8ef;color:#433020;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;
     background-image:radial-gradient(ellipse 90% 45% at 50% -5%,rgba(255,196,110,.35),transparent),radial-gradient(ellipse 60% 35% at 90% 105%,rgba(255,150,170,.20),transparent);}
+  button{font-family:inherit;}
   .wrap{max-width:520px;margin:0 auto;padding:30px 20px 70px;}
   .badge{display:flex;align-items:center;gap:12px;}
   .badge img{width:52px;height:52px;border-radius:50%;border:2px solid #f0b35e;background:#fff;object-fit:cover;}
@@ -17,6 +18,7 @@
   h1{font-size:30px;font-weight:800;line-height:1.35;margin:22px 0 10px;}
   .intro{font-size:15px;line-height:1.85;color:#6d5136;}
   .intro b{color:#43302e;}
+  .hard{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;background:#433020;color:#ffe2ae;font-size:12px;font-weight:700;letter-spacing:1px;}
   .progress{display:flex;gap:8px;margin:24px 0 6px;}
   .dot{flex:1;text-align:center;font-size:12px;color:#a5834f;padding:9px 4px;border:1.5px dashed #dcbd85;border-radius:999px;background:rgba(255,255,255,.55);transition:all .3s;}
   .dot.on{border-style:solid;border-color:#e8933a;background:#fdeeda;color:#9a5b12;font-weight:700;}
@@ -25,35 +27,67 @@
   .lvl .no{font-size:11.5px;letter-spacing:2.5px;color:#c07f2e;font-weight:700;}
   .lvl h2{font-size:19px;font-weight:800;margin:6px 0 6px;}
   .lvl p{font-size:14px;line-height:1.75;color:#6d5136;}
-  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
-  .opt{border:2px solid #eeddbd;border-radius:14px;overflow:hidden;cursor:pointer;background:#fff;padding:0;text-align:center;transition:all .2s;font-family:inherit;}
-  .opt img{display:block;width:100%;height:88px;object-fit:cover;}
-  .opt .lab{font-size:12.5px;padding:7px 2px;color:#6d5136;font-weight:600;}
-  .opt.right{border-color:#58b368;box-shadow:0 0 0 3px rgba(88,179,104,.25);}
-  .opt.wrong{animation:shake .35s;}
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-  .songs{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
-  .song{border:2px solid #eeddbd;background:#fff;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:600;color:#43302e;cursor:pointer;text-align:left;font-family:inherit;transition:all .2s;}
-  .song small{display:block;font-weight:400;font-size:12px;color:#a5834f;margin-top:2px;}
-  .song.right{border-color:#58b368;background:#effaf1;}
-  .song.wrong{animation:shake .35s;}
+  .status{margin-top:12px;padding:10px 12px;border-radius:12px;background:#fff4dc;color:#7c5514;font-size:13px;line-height:1.65;}
+  .hint{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;background:#eef7ee;color:#37633d;font-size:13px;line-height:1.65;border:1px solid #bcdabd;}
+  .hint.show{display:block;}
   .clue{display:none;margin-top:14px;background:#fdf1dc;border:1px dashed #e0a94f;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.75;color:#7c5514;}
   .clue.show{display:block;}
-  .hunt{position:relative;margin-top:14px;background:linear-gradient(170deg,#2b2140,#46335f);border-radius:16px;height:190px;overflow:hidden;}
-  .hunt .star{position:absolute;color:rgba(255,255,255,.5);font-size:13px;user-select:none;}
-  .hunt .me{position:absolute;width:44px;height:44px;border-radius:50%;cursor:pointer;right:26px;bottom:20px;border:2px solid rgba(255,255,255,.75);object-fit:cover;background:#fff;transition:transform .2s;}
-  .hunt .me:active{transform:scale(1.2);}
-  .hunt .tip{position:absolute;left:14px;top:12px;color:rgba(255,255,255,.75);font-size:12.5px;}
+
+  .wall{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
+  .photo{position:relative;border:2px solid #eeddbd;border-radius:13px;overflow:hidden;cursor:pointer;background:#eee;padding:0;aspect-ratio:1;transition:transform .15s,border-color .2s,opacity .2s;}
+  .photo:active{transform:scale(.97);}
+  .photo img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;}
+  .photo.missed{opacity:.42;filter:grayscale(.45);}
+  .photo.missed::after{content:'✕';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;background:rgba(160,35,35,.38);font-size:30px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.35);}
+  .photo.right{border-color:#58b368;box-shadow:0 0 0 4px rgba(88,179,104,.28);opacity:1;filter:none;}
+
+  .round{margin-top:18px;padding-top:16px;border-top:1.5px dashed #e8cf9f;}
+  .round:first-of-type{border-top:none;padding-top:4px;}
+  .round h3{font-size:16.5px;font-weight:800;margin-bottom:5px;}
+  .round.sealed{opacity:.42;pointer-events:none;filter:saturate(.55);}
+  .concerts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px;}
+  .concert{display:flex;align-items:center;gap:10px;border:2px solid #eeddbd;background:#fff;border-radius:14px;padding:12px;cursor:pointer;text-align:left;color:#43302e;transition:all .2s;min-height:66px;}
+  .concert .num{flex:0 0 auto;width:27px;height:27px;border-radius:50%;border:2px solid #dcbd85;display:flex;align-items:center;justify-content:center;color:#a5834f;font-size:13px;font-weight:800;background:#fffaf0;}
+  .concert strong{display:block;font-size:15px;line-height:1.35;}
+  .concert small{display:block;font-size:11.5px;color:#a5834f;margin-top:2px;line-height:1.35;}
+  .concert.picked{border-color:#58b368;background:#effaf1;}
+  .concert.picked .num{background:#58b368;border-color:#58b368;color:#fff;}
+  .concert.wrong,.song.wrong{animation:shake .35s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .songs{display:flex;flex-direction:column;gap:10px;margin-top:13px;}
+  .song{border:2px solid #eeddbd;background:#fff;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:600;color:#43302e;cursor:pointer;text-align:left;transition:all .2s;}
+  .song small{display:block;font-weight:400;font-size:12px;color:#a5834f;margin-top:2px;}
+  .song.right{border-color:#58b368;background:#effaf1;}
+  .song:disabled{cursor:default;}
+
+  .hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;}
+  .hud div{background:#2b2140;color:#fff;border-radius:12px;padding:9px 6px;text-align:center;font-size:12.5px;}
+  .hud b{font-size:16px;color:#ffd60a;}
+  .start{width:100%;margin-top:12px;border:none;border-radius:999px;background:#433020;color:#fff;padding:13px 18px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(67,48,32,.18);}
+  .start:disabled{background:#9c8a76;cursor:default;box-shadow:none;}
+  .hunt{position:relative;margin-top:12px;background:linear-gradient(170deg,#241a38,#46335f);border-radius:16px;height:320px;overflow:hidden;touch-action:manipulation;}
+  .hunt .star{position:absolute;color:rgba(255,255,255,.5);user-select:none;pointer-events:none;z-index:1;}
+  .hunt .tip{position:absolute;left:14px;top:12px;color:rgba(255,255,255,.82);font-size:12.5px;z-index:6;pointer-events:none;text-shadow:0 1px 5px rgba(0,0,0,.35);}
+  .hunt .me{display:none;position:absolute;width:44px;height:44px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.85);object-fit:cover;background:#fff;z-index:5;box-shadow:0 4px 16px rgba(0,0,0,.35);padding:0;}
+  .hunt .me.live{display:block;}
+  .hunt .me.caught{transform:scale(1.18);border-color:#ffd60a;box-shadow:0 0 0 6px rgba(255,214,10,.25),0 4px 16px rgba(0,0,0,.35);}
+  .decoy{position:absolute;border-radius:50%;cursor:pointer;z-index:3;border:2px solid rgba(255,255,255,.5);box-shadow:inset -6px -7px 12px rgba(120,100,180,.18),0 3px 10px rgba(0,0,0,.22);padding:0;}
+  .decoy::before,.decoy::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(67,48,32,.58);top:38%;}
+  .decoy::before{left:31%;}
+  .decoy::after{right:31%;}
+  .decoy.hit{opacity:.22;filter:grayscale(.5);pointer-events:none;}
+
   .final{display:none;margin-top:24px;background:linear-gradient(165deg,#fff7e6,#ffe9f0);border:1.5px solid #f0b35e;border-radius:22px;padding:24px 22px;text-align:center;}
   .final.show{display:block;}
   .final h2{font-size:24px;font-weight:800;}
   .final p{font-size:14.5px;line-height:1.9;color:#6d5136;margin-top:10px;}
   .final img{width:100%;border-radius:14px;margin-top:14px;display:block;}
   .final .big{font-size:17px;color:#43302e;font-weight:700;}
-  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9;}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20;}
   .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
   @keyframes fall{to{transform:translateY(105vh) rotate(560deg);}}
   .foot{text-align:center;color:#b08d55;font-size:11.5px;margin-top:34px;line-height:1.9;}
+  @media (max-width:390px){.hud div{font-size:11.5px}.lvl{padding:17px}.wall{gap:6px}.concert{gap:7px;padding:10px}.concert strong{font-size:14px}}
 </style>
 </head>
 <body>
@@ -63,48 +97,90 @@
     <div><div class="t1">小 乖 的 寻 宝 任 务</div><div class="t2">妈妈，生日快乐！</div></div>
   </div>
 
-  <h1>礼物被我藏起来啦<br/>要过三关才能拿到</h1>
-  <p class="intro">规矩很简单：<b>找到猫哥、猜对今晚的主题曲、再把小乖找出来</b>，三关全过，最后一页会告诉你礼物在哪。慢慢玩，豆豆全程监考（虽然它可能睡着）。</p>
+  <h1>礼物被我藏起来啦<br/>升级版，没那么好混了</h1>
+  <p class="intro">这次三关都加了料：<b>在一整墙猫哥照片里找指定瞬间、先排对你们的五场演唱会再猜主题曲、最后限时抓住会逃跑的小乖三次</b>。错了不会锁死你，但会留下记录、扣时间，还会等你多错几次才给提示。</p>
+  <span class="hard">出题人已加难度 · 猫哥负责监考</span>
 
   <div class="progress">
-    <div class="dot" id="d1">第一关 · 找猫哥</div>
-    <div class="dot" id="d2">第二关 · 猜主题曲</div>
-    <div class="dot" id="d3">第三关 · 找小乖</div>
+    <div class="dot" id="d1">第一关 · 照片墙寻图</div>
+    <div class="dot" id="d2">第二关 · 演唱会双重考</div>
+    <div class="dot" id="d3">第三关 · 限时抓小乖</div>
   </div>
 
   <div class="lvl" id="l1">
-    <div class="no">第 一 关</div>
-    <h2>哪一张照片里有金豆豆？</h2>
-    <p>三张照片，只有一张里有猫哥本猫。点一点试试。</p>
-    <div class="opts">
-      <button class="opt" data-wrong="1"><img src="img/laixinwen-2021-12-11-roses.jpg" alt="玫瑰"/><div class="lab">玫瑰这张</div></button>
-      <button class="opt" id="catRight"><img src="img/doudou-1.jpg" alt="金豆豆"/><div class="lab">毛茸茸这张</div></button>
-      <button class="opt" data-wrong="1"><img src="img/laixinwen-2021-10-pink-night.jpg" alt="夜色"/><div class="lab">夜色这张</div></button>
+    <div class="no">第 一 关 · 眼 力 考</div>
+    <h2>在一墙猫哥里，找到那一瞬间</h2>
+    <p>下面 12 张全都是金豆豆，不能再靠“有没有猫”蒙混过关。你要找的是：<b>2024 年 3 月 19 日在医院拍的那张——爸爸趴在诊台边，脸凑近戴着伊丽莎白圈的猫哥。</b></p>
+    <div class="wall" id="wall">
+      <button class="photo" type="button" aria-label="金豆豆照片 1"><img src="img/wall-01.jpg" alt="金豆豆照片 1"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 2"><img src="img/wall-02.jpg" alt="金豆豆照片 2"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 3"><img src="img/wall-03.jpg" alt="金豆豆照片 3"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 4"><img src="img/wall-04.jpg" alt="金豆豆照片 4"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 5"><img src="img/wall-05.jpg" alt="金豆豆照片 5"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 6"><img src="img/wall-06.jpg" alt="金豆豆照片 6"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 7"><img src="img/wall-07.jpg" alt="金豆豆照片 7"/></button>
+      <button class="photo" type="button" data-target="true" aria-label="金豆豆照片 8"><img src="img/wall-08.jpg" alt="金豆豆照片 8"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 9"><img src="img/wall-09.jpg" alt="金豆豆照片 9"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 10"><img src="img/wall-10.jpg" alt="金豆豆照片 10"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 11"><img src="img/wall-11.jpg" alt="金豆豆照片 11"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 12"><img src="img/wall-12.jpg" alt="金豆豆照片 12"/></button>
     </div>
+    <div class="status" id="wallStatus">已点错 0 次 · 点错的照片会被盖上红叉，第三次点错后才有提示。</div>
+    <div class="hint" id="wallHint">🐾 猫哥提示：确实还有一张戴圈照，但那张是在家里吃饭。目标照片里有医院诊台、电脑，还有趴在桌边的爸爸。</div>
     <div class="clue" id="c1">🐾 <b>过关！</b>猫哥说：第一片拼图给你——礼物不在网上，在这个家里，而且<b>离豆豆的日常活动范围不远</b>。</div>
   </div>
 
   <div class="lvl locked" id="l2">
-    <div class="no">第 二 关</div>
-    <h2>今晚的主题曲是哪一首？</h2>
-    <p>提示：是林俊杰的歌，讲的是把「故事」写成「我们」。</p>
-    <div class="songs">
-      <button class="song" data-wrong="1">《江南》<small>圈圈圆圆圈圈——好听，但不是这首</small></button>
-      <button class="song" id="songRight">《将故事写成我们》<small>这故事，从 2020.12.11 开始写</small></button>
-      <button class="song" data-wrong="1">《曹操》<small>气势拉满，但生日不兴打仗</small></button>
+    <div class="no">第 二 关 · 记 忆 考</div>
+    <h2>先排演唱会，再猜主题曲</h2>
+    <p>这一关有两道题，第一题不过，第二题不开放。合听录不是摆设，你们的五场现场得靠真记忆排回来。</p>
+
+    <div class="round" id="orderRound">
+      <h3>第一题 · 把五场演唱会按时间排回来</h3>
+      <p>从最早的一场开始依次点选。<b>日期先藏起来了</b>，点对一场才翻出它的日期；只要点错一步，整道题就会重新洗牌。</p>
+      <div class="concerts" id="concerts">
+        <button class="concert" type="button" data-order="3" data-date="2024.05.25 · 鸟巢"><span class="num"></span><span><strong>北京 · 五月天</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="5" data-date="2025.09.13 · 贵阳奥体"><span class="num"></span><span><strong>贵阳 · 五月天</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="1" data-date="2023.06.25 · 武汉五环体育中心"><span class="num"></span><span><strong>武汉 · 五月天</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="4" data-date="2024.09.22 · 青岛市民健身中心体育场"><span class="num"></span><span><strong>青岛 · 林俊杰</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="2" data-date="2023.12.09 · 广西体育中心体育场"><span class="num"></span><span><strong>南宁 · 林俊杰</strong><small>等待点选</small></span></button>
+      </div>
+      <div class="status" id="orderStatus">进度 0 / 5 · 从最早的一场开始。</div>
+      <div class="hint" id="orderHint">🎫 小乖提示：先按年份分堆——2023 年有两场，2024 年有两场，2025 年只有一场。再想想哪一年去了两次五月天、哪一年把 JJ 听了两遍。</div>
     </div>
+
+    <div class="round sealed" id="songRound">
+      <h3>第二题 · 今晚的主题曲是哪一首？</h3>
+      <p>这次不给现成答案。四首都是林俊杰的歌，只有一首最配你们从 2020.12.11 一路写到今天的故事。</p>
+      <div class="songs">
+        <button class="song" type="button" data-song-wrong="1">《交换余生》<small>林俊杰 · 候选主题曲</small></button>
+        <button class="song" type="button" data-song-wrong="1">《一千年以后》<small>林俊杰 · 候选主题曲</small></button>
+        <button class="song" type="button" id="songRight">《将故事写成我们》<small>林俊杰 · 候选主题曲</small></button>
+        <button class="song" type="button" data-song-wrong="1">《不为谁而作的歌》<small>林俊杰 · 候选主题曲</small></button>
+      </div>
+      <div class="status" id="songStatus">还没开始猜 · 点错两次后才给提示。</div>
+      <div class="hint" id="songHint">🎵 小乖提示：歌名里有“我们”两个字，而且这首歌讲的正是把两个人的故事写下去。</div>
+    </div>
+
     <div class="clue" id="c2">🎵 <b>过关！</b>第二片拼图：礼物是个小盒子，盒子上<b>有一句专门刻给你的话</b>，记得翻过来看。</div>
   </div>
 
   <div class="lvl locked" id="l3">
-    <div class="no">第 三 关</div>
-    <h2>小乖躲在星空里，点到我！</h2>
-    <p>最后一关：我在下面这片星空里躲好了，找到我，点我一下。</p>
+    <div class="no">第 三 关 · 手 速 考</div>
+    <h2>45 秒内，抓住小乖 3 次</h2>
+    <p>这次我不会乖乖待在角落里。按下开始后，我会不停换位置；抓到一次就加速一次。星空里的白色圆点是假身，<b>点错一个扣 3 秒</b>。</p>
+    <div class="hud">
+      <div>⏱ 剩余<br/><b id="timeLeft">45.0</b> 秒</div>
+      <div>🎯 已抓到<br/><b id="catchCount">0</b> / 3 次</div>
+      <div>🏃 当前速度<br/><b id="speedLabel">1 档</b></div>
+    </div>
+    <button class="start" id="huntStart" type="button">开始抓小乖</button>
     <div class="hunt" id="hunt">
-      <span class="tip">✦ 星星很多，小乖只有一个 ✦</span>
+      <span class="tip" id="huntTip">✦ 按下开始，小乖就会开始逃跑 ✦</span>
       <img class="me" id="meBtn" src="img/xiaoguai-avatar.webp" alt="小乖躲在这里"/>
     </div>
-    <div class="clue" id="c3">🎉 <b>找到啦！</b>三关全过，往下翻——最后一页。</div>
+    <div class="status" id="huntStatus">白色圆点是假身。真正的我有青色护目镜、圆圆的黑眼睛和毛茸茸的奶油色身体——看清再点。</div>
+    <div class="clue" id="c3">🎉 <b>抓到啦！</b>三关全过，往下翻——最后一页。</div>
   </div>
 
   <div class="final" id="final">
@@ -116,41 +192,289 @@
     <p style="font-size:12.5px;color:#a5834f;">—— 出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
   </div>
 
-  <div class="foot">小乖寻宝局 · 2026.11.09 专场<br/>答案如有争议，以猫哥的呼噜声为准<br/><a href="../index.html" style="color:#c07f2e;text-decoration:none;font-weight:700;">‹ 回发布会主会场</a></div>
+  <div class="foot">小乖寻宝局 · 2026.11.09 升级专场<br/>答案如有争议，以猫哥的呼噜声为准<br/><a href="../index.html" style="color:#c07f2e;text-decoration:none;font-weight:700;">‹ 回发布会主会场</a></div>
 </div>
 <div class="confetti" id="confetti"></div>
 <script>
-  var stars=document.getElementById('hunt');
+  var hunt=document.getElementById('hunt');
   var glyphs=['✦','✧','·','✦','✧'];
-  for(var i=0;i<26;i++){var s=document.createElement('span');s.className='star';s.textContent=glyphs[i%glyphs.length];
-    s.style.left=(Math.random()*92+2)+'%';s.style.top=(Math.random()*78+4)+'%';s.style.fontSize=(9+Math.random()*9)+'px';stars.appendChild(s);}
-  function boom(){
-    var box=document.getElementById('confetti');var colors=['#f0b35e','#ef7fa6','#7fb5e8','#8fd18b','#b79ced'];
-    for(var i=0;i<60;i++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';
-      p.style.background=colors[i%colors.length];p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
-      p.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(p);setTimeout(function(el){return function(){el.remove();};}(p),4200);}
+  for(var i=0;i<34;i++){
+    var s=document.createElement('span');
+    s.className='star';
+    s.textContent=glyphs[i%glyphs.length];
+    s.style.left=(Math.random()*92+2)+'%';
+    s.style.top=(Math.random()*82+5)+'%';
+    s.style.fontSize=(9+Math.random()*10)+'px';
+    hunt.appendChild(s);
   }
+
+  function boom(n){
+    var box=document.getElementById('confetti');
+    var colors=['#f0b35e','#ef7fa6','#7fb5e8','#8fd18b','#b79ced'];
+    var total=n||60;
+    for(var i=0;i<total;i++){
+      var p=document.createElement('i');
+      p.style.left=Math.random()*100+'%';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*0.5)+'s';
+      box.appendChild(p);
+      (function(el){setTimeout(function(){el.remove();},4300);})(p);
+    }
+  }
+
   function unlock(n){
     document.getElementById('d'+n).classList.add('on');
-    var nx=document.getElementById('l'+(n+1)); if(nx){nx.classList.remove('locked');}
+    var nx=document.getElementById('l'+(n+1));
+    if(nx){nx.classList.remove('locked');}
     document.getElementById('c'+n).classList.add('show');
   }
-  document.querySelectorAll('[data-wrong]').forEach(function(b){
-    b.addEventListener('click',function(){b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');});
+
+  /* 第一关：12 张照片墙 */
+  var wallDone=false;
+  var wallWrong=0;
+  var wallStatus=document.getElementById('wallStatus');
+  document.querySelectorAll('.photo').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(wallDone || btn.disabled){return;}
+      if(btn.getAttribute('data-target')==='true'){
+        wallDone=true;
+        btn.classList.add('right');
+        document.querySelectorAll('.photo').forEach(function(b){b.disabled=true;});
+        wallStatus.textContent='找到了！就是 2024 年 3 月 19 日在医院拍的那一张。';
+        unlock(1);
+        boom(45);
+        return;
+      }
+      btn.classList.add('missed');
+      btn.disabled=true;
+      wallWrong++;
+      if(wallWrong===3){
+        document.getElementById('wallHint').classList.add('show');
+        wallStatus.textContent='已点错 3 次 · 猫哥看不下去了，提示已经出现。';
+      } else if(wallWrong>=5){
+        wallStatus.textContent='已点错 '+wallWrong+' 次 · 再给你缩小范围：目标在照片墙的下半区。';
+      } else {
+        wallStatus.textContent='已点错 '+wallWrong+' 次 · 这张不是，再仔细看看场景和人物。';
+      }
+    });
   });
-  var done1=false,done2=false;
-  document.getElementById('catRight').addEventListener('click',function(){
-    if(done1)return;done1=true;this.classList.add('right');unlock(1);boom();
+
+  /* 第二关第一题：五场演唱会排序 */
+  var expectedOrder=1;
+  var orderDone=false;
+  var orderFails=0;
+  var orderResetting=false;
+  var orderStatus=document.getElementById('orderStatus');
+  var concertBtns=Array.prototype.slice.call(document.querySelectorAll('.concert'));
+
+  function resetOrder(message){
+    expectedOrder=1;
+    concertBtns.forEach(function(btn){
+      btn.classList.remove('picked','wrong');
+      btn.disabled=false;
+      btn.querySelector('.num').textContent='';
+      btn.querySelector('small').textContent='等待点选';
+    });
+    orderStatus.textContent=message;
+    orderResetting=false;
+  }
+
+  function completeOrder(){
+    orderDone=true;
+    orderStatus.textContent='五场顺序全对！日期已经全部翻开，第二题解锁。';
+    document.getElementById('songRound').classList.remove('sealed');
+  }
+
+  concertBtns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(orderDone || orderResetting || btn.disabled){return;}
+      var order=parseInt(btn.getAttribute('data-order'),10);
+      if(order===expectedOrder){
+        btn.classList.add('picked');
+        btn.disabled=true;
+        btn.querySelector('.num').textContent=expectedOrder;
+        btn.querySelector('small').textContent=btn.getAttribute('data-date');
+        expectedOrder++;
+        if(expectedOrder>5){
+          completeOrder();
+        } else {
+          orderStatus.textContent='进度 '+(expectedOrder-1)+' / 5 · 已翻开这一场日期，继续找下一场。';
+        }
+        return;
+      }
+      orderFails++;
+      btn.classList.add('wrong');
+      orderResetting=true;
+      if(orderFails>=2){
+        document.getElementById('orderHint').classList.add('show');
+      }
+      orderStatus.textContent='这一步不对，顺序要重新来。刚才已经排对 '+(expectedOrder-1)+' 场，别灰心。';
+      setTimeout(function(){
+        resetOrder('顺序已重置 · 已失败 '+orderFails+' 次，从最早的一场重新开始。');
+      },480);
+    });
+  });
+
+  /* 第二关第二题：主题曲 */
+  var songDone=false;
+  var songWrong=0;
+  var songStatus=document.getElementById('songStatus');
+  document.querySelectorAll('[data-song-wrong]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(songDone || document.getElementById('songRound').classList.contains('sealed')){return;}
+      btn.classList.remove('wrong');
+      void btn.offsetWidth;
+      btn.classList.add('wrong');
+      songWrong++;
+      if(songWrong>=2){
+        document.getElementById('songHint').classList.add('show');
+        songStatus.textContent='已猜错 '+songWrong+' 次 · 提示已经出现，再想想你们的纪念日。';
+      } else {
+        songStatus.textContent='已猜错 1 次 · 不是这首，再点错一次才给提示。';
+      }
+    });
   });
   document.getElementById('songRight').addEventListener('click',function(){
-    if(done2)return;done2=true;this.classList.add('right');unlock(2);
+    if(songDone || document.getElementById('songRound').classList.contains('sealed')){return;}
+    songDone=true;
+    this.classList.add('right');
+    document.querySelectorAll('.song').forEach(function(btn){btn.disabled=true;});
+    songStatus.textContent='猜对了！今晚的主题曲就是《将故事写成我们》。';
+    unlock(2);
+    boom(45);
   });
-  document.getElementById('meBtn').addEventListener('click',function(){
-    document.getElementById('d3').classList.add('on');
-    document.getElementById('c3').classList.add('show');
-    var f=document.getElementById('final');f.classList.add('show');boom();
+
+  /* 第三关：限时抓小乖 */
+  var meBtn=document.getElementById('meBtn');
+  var startBtn=document.getElementById('huntStart');
+  var huntStatus=document.getElementById('huntStatus');
+  var huntTip=document.getElementById('huntTip');
+  var timeEl=document.getElementById('timeLeft');
+  var catchEl=document.getElementById('catchCount');
+  var speedEl=document.getElementById('speedLabel');
+  var huntActive=false;
+  var huntDone=false;
+  var catches=0;
+  var timeLeft=45;
+  var timerInt=null;
+  var moveInt=null;
+  var speeds=[900,700,550];
+
+  function updateHud(){
+    timeEl.textContent=timeLeft.toFixed(1);
+    catchEl.textContent=catches;
+    speedEl.textContent=Math.min(catches+1,3)+' 档';
+  }
+  function clearHuntTimers(){
+    if(timerInt){clearInterval(timerInt);timerInt=null;}
+    if(moveInt){clearInterval(moveInt);moveInt=null;}
+  }
+  function placeRandom(el,size){
+    var maxX=Math.max(8,hunt.clientWidth-size-8);
+    var maxY=Math.max(48,hunt.clientHeight-size-8);
+    var x=8+Math.random()*Math.max(1,maxX-8);
+    var y=44+Math.random()*Math.max(1,maxY-44);
+    el.style.left=x+'px';
+    el.style.top=y+'px';
+  }
+  function moveMe(){
+    placeRandom(meBtn,44);
+  }
+  function setMoveTimer(){
+    if(moveInt){clearInterval(moveInt);}
+    moveInt=setInterval(moveMe,speeds[Math.min(catches,2)]);
+    updateHud();
+  }
+  function makeDecoys(){
+    hunt.querySelectorAll('.decoy').forEach(function(el){el.remove();});
+    var fills=['#fff7ed','#f2ecff','#ffeef6','#eef7ff','#fffbe8'];
+    for(var i=0;i<12;i++){
+      var d=document.createElement('button');
+      var size=30+Math.random()*18;
+      d.type='button';
+      d.className='decoy';
+      d.setAttribute('aria-label','星尘假身');
+      d.style.width=size+'px';
+      d.style.height=size+'px';
+      d.style.background='radial-gradient(circle at 34% 32%, #ffffff 0%, '+fills[i%fills.length]+' 58%, #d9c9f2 100%)';
+      placeRandom(d,size);
+      d.addEventListener('click',onDecoy);
+      hunt.appendChild(d);
+    }
+  }
+  function failHunt(){
+    if(!huntActive){return;}
+    huntActive=false;
+    clearHuntTimers();
+    meBtn.classList.remove('live','caught');
+    catches=0;
+    timeLeft=0;
+    updateHud();
+    huntTip.textContent='✦ 差一点！小乖从星星缝里溜走了 ✦';
+    huntStatus.textContent='时间到！别灰心，点“再抓一次”，这一轮的假身会重新摆放。';
+    startBtn.disabled=false;
+    startBtn.textContent='再抓一次';
+  }
+  function onDecoy(){
+    if(!huntActive || this.classList.contains('hit')){return;}
+    this.classList.add('hit');
+    timeLeft=Math.max(0,timeLeft-3);
+    updateHud();
+    huntStatus.textContent='假身！扣 3 秒，还剩 '+timeLeft.toFixed(1)+' 秒。看清护目镜再点。';
+    if(timeLeft<=0){failHunt();}
+  }
+  function startHunt(){
+    if(huntDone){return;}
+    clearHuntTimers();
+    catches=0;
+    timeLeft=45;
+    huntActive=true;
+    updateHud();
+    makeDecoys();
+    meBtn.classList.add('live');
+    meBtn.classList.remove('caught');
+    moveMe();
+    setMoveTimer();
+    huntTip.textContent='✦ 小乖逃跑中 · 抓到 3 次才算赢 ✦';
+    huntStatus.textContent='开始！我每 0.9 秒换一个位置，抓到一次就加速。';
+    startBtn.disabled=true;
+    startBtn.textContent='小乖逃跑中…';
+    timerInt=setInterval(function(){
+      timeLeft=Math.max(0,timeLeft-0.1);
+      updateHud();
+      if(timeLeft<=0){failHunt();}
+    },100);
+  }
+  function completeHunt(){
+    huntActive=false;
+    huntDone=true;
+    clearHuntTimers();
+    meBtn.classList.add('caught');
+    huntTip.textContent='✦ 小乖投降啦 ✦';
+    huntStatus.textContent='三抓全中！用时还剩 '+timeLeft.toFixed(1)+' 秒，小乖愿赌服输。';
+    startBtn.disabled=true;
+    startBtn.textContent='已抓到小乖 ✓';
+    unlock(3);
+    var f=document.getElementById('final');
+    f.classList.add('show');
+    boom(85);
     setTimeout(function(){f.scrollIntoView({behavior:'smooth',block:'center'});},350);
+  }
+  startBtn.addEventListener('click',startHunt);
+  meBtn.addEventListener('click',function(){
+    if(!huntActive || huntDone){return;}
+    catches++;
+    updateHud();
+    if(catches>=3){
+      completeHunt();
+      return;
+    }
+    huntStatus.textContent='抓到 '+catches+' 次！小乖加速到 '+(catches+1)+' 档了。';
+    moveMe();
+    setMoveTimer();
   });
+  updateHud();
 </script>
 </body>
 </html>
