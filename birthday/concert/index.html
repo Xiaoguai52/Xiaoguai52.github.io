@@ -90,6 +90,27 @@ a{color:#0066cc;text-decoration:none;}
 .trk .ds{font-size:12.5px;color:#6e6e73;margin-top:2px;line-height:1.45;}
 .trk .tm{margin-left:auto;font-size:13px;color:#86868b;font-variant-numeric:tabular-nums;white-space:nowrap;}
 .trk .lk{color:#0066cc;font-size:16px;text-decoration:none;flex:none;padding:2px 2px 2px 6px;}
+.info{margin-top:6px;}
+.irow{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid #e8e8ed;font-size:15px;line-height:1.55;}
+.irow:last-child{border-bottom:none;}
+.ik{flex:none;width:38px;color:#6e6e73;font-size:13.5px;padding-top:2px;}
+.scratch{position:relative;margin-top:16px;border-radius:18px;overflow:hidden;background:#111;aspect-ratio:4/3;}
+.prize{position:absolute;inset:0;}
+.prize img.ph{width:100%;height:100%;object-fit:cover;display:block;}
+.prize .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 18px 14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.78));color:#fff;}
+.prize .cap .t{font-size:19px;font-weight:600;}
+.prize .cap .l{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:3px;line-height:1.5;}
+.prize .dchip{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:5px 10px;border-radius:980px;backdrop-filter:blur(6px);}
+.prizeTx{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;color:#fff;background:radial-gradient(120% 120% at 50% 0%,#2a2a30,#0c0c0e);}
+.prizeTx .t{font-size:24px;font-weight:600;}
+.prizeTx .d{font-size:13px;color:rgba(255,255,255,.6);margin-top:7px;}
+.prizeTx .l{font-size:14.5px;color:rgba(255,255,255,.88);margin-top:12px;line-height:1.6;}
+#scCv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;transition:opacity .6s;}
+#scCv.done{opacity:0;pointer-events:none;}
+.scBar{display:flex;align-items:center;margin-top:14px;}
+#scCnt{font-size:13px;color:#6e6e73;}
+.scBtn{margin-left:auto;background:#0071e3;color:#fff;border:none;font-size:14px;font-weight:600;padding:9px 18px;border-radius:980px;cursor:pointer;font-family:inherit;}
+.scDone{margin-top:12px;font-size:14px;color:#1d1d1f;font-weight:600;}
 </style>
 </head>
 <body>
@@ -112,7 +133,7 @@ a{color:#0066cc;text-decoration:none;}
 <div class="wrap">
   <section class="sec" id="tonight">
     <h2 class="secH rv">今晚将发布</h2>
-    <p class="secSub rv">四段节目，一台晚会。按顺序来，别跳台。</p>
+    <p class="secSub rv">六个环节，一台晚会。按顺序来，别跳台。</p>
 
     <div class="cakeCard rv">
       <img src="img/cake-purple.jpg" alt="葡萄紫生日蛋糕，小龙坐在上面">
@@ -122,12 +143,42 @@ a{color:#0066cc;text-decoration:none;}
       </div>
     </div>
 
+    <div class="card rv">
+      <div class="ck">入场须知</div>
+      <h3>观众须知</h3>
+      <div class="info">
+        <div class="irow"><span class="ik">票价</span><span>0 元 · 以笑声支付，不收现金</span></div>
+        <div class="irow"><span class="ik">入场</span><span>寿星本人刷脸 · 张大宝全程连座</span></div>
+        <div class="irow"><span class="ik">拍照</span><span>请开闪光灯——张大宝想看清你笑</span></div>
+        <div class="irow"><span class="ik">纪律</span><span>禁止提前离场 · 禁止客气 · 禁止说「随便」</span></div>
+        <div class="irow"><span class="ik">返场</span><span>明年今日 · 同一地点 · 原班人马</span></div>
+      </div>
+    </div>
+
+    <div class="card rv">
+      <div class="ck">互动 · 刮刮乐</div>
+      <h3>刮一张从前的票根</h3>
+      <p>五场演唱会，随机一张藏在银膜下面。刮开它，看看是哪一场。</p>
+      <div class="scratch" id="scratchBox"><div class="prize" id="prizeEl"></div><canvas id="scCv"></canvas></div>
+      <div class="scBar"><span id="scCnt">已收集 0 / 5</span><button class="scBtn" id="scNext" type="button">换一张</button></div>
+      <p class="scDone" id="scDone" hidden>五张集齐——五场都在这儿了。下一场，继续连座。</p>
+    </div>
+
     <div class="cakeCard rv">
       <img src="img/giftbox.jpg" alt="黑金礼盒" style="aspect-ratio:1.35;">
       <div class="bd">
         <div style="font-size:13px;font-weight:600;color:#2997ff;letter-spacing:.04em;">同场加映</div>
         <h3 style="margin-top:6px;">One More Thing</h3>
         <p>压轴新品已经就位，<b>藏得很认真</b>。它不在这一站揭晓——走完前两站，坐进发布会主会场，它自己登场。</p>
+      </div>
+    </div>
+
+    <div class="cakeCard rv">
+      <img src="img/doudou.jpg" alt="金豆豆">
+      <div class="bd">
+        <div style="font-size:13px;font-weight:600;color:#2997ff;letter-spacing:.04em;">特别观众</div>
+        <h3 style="margin-top:6px;">金豆豆</h3>
+        <p>今晚还有一位观众：头排票，终身制。它不用鼓掌，负责在沙发上睡着——散场的时候，小声点。</p>
       </div>
     </div>
 
@@ -183,6 +234,58 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
 document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
 document.getElementById('startBtn').addEventListener('click',function(){document.getElementById('tonight').scrollIntoView({behavior:'smooth'});});
 document.getElementById('pastBtn').addEventListener('click',function(){document.getElementById('past').scrollIntoView({behavior:'smooth'});});
+(function(){
+  var P=[
+   {img:'',t:'武汉 · 五月天',d:'2023.06.25 · 五环体育中心',l:'第一场。手心出汗，白安和萧秉治都来了。'},
+   {img:'img/laixinwen-jj20-nanning.jpg',t:'南宁 · 林俊杰 JJ20',d:'2023.12.09 · 广西体育中心',l:'你的主场，你哭了，张大宝负责递纸。'},
+   {img:'../img/laixinwen-mayday-beijing.jpg',t:'北京 · 五月天',d:'2024.05.25 · 鸟巢',l:'一层 142 区 7 排——你们在鸟巢的连座。'},
+   {img:'',t:'青岛 · 林俊杰',d:'2024.09.22 · 市民健身中心体育场',l:'第二晚。海风里，唱完《一千年以后》。'},
+   {img:'',t:'贵阳 · 五月天',d:'2025.09.13 · 奥林匹克体育中心',l:'E 区 33 排 66 座。这张还没拍到照片——下次补上。'}
+  ];
+  var idx=0, seen={}, cv=document.getElementById('scCv'), box=document.getElementById('scratchBox'), prize=document.getElementById('prizeEl'), cnt=document.getElementById('scCnt'), doneEl=document.getElementById('scDone');
+  if(!cv||!box) return;
+  var ctx=cv.getContext('2d'), drawing=false, moves=0, revealed=false;
+  function renderPrize(){
+    var p=P[idx];
+    if(p.img){ prize.innerHTML='<img class="ph" src="'+p.img+'" alt=""><span class="dchip">'+p.d+'</span><div class="cap"><div class="t">'+p.t+'</div><div class="l">'+p.l+'</div></div>'; }
+    else{ prize.innerHTML='<div class="prizeTx"><div class="t">'+p.t+'</div><div class="d">'+p.d+'</div><div class="l">'+p.l+'</div></div>'; }
+  }
+  function paint(){
+    var w=box.clientWidth, h=box.clientHeight, r=2;
+    cv.width=w*r; cv.height=h*r; ctx.setTransform(r,0,0,r,0,0);
+    var g=ctx.createLinearGradient(0,0,w,h); g.addColorStop(0,'#d8d8de'); g.addColorStop(.5,'#b9b9c2'); g.addColorStop(1,'#dcdce2');
+    ctx.globalCompositeOperation='source-over'; ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+    ctx.fillStyle='#55555e'; ctx.textAlign='center';
+    ctx.font='600 21px -apple-system, sans-serif'; ctx.fillText('生日特别场 · 刮刮乐票根', w/2, h/2-8);
+    ctx.font='13.5px -apple-system, sans-serif'; ctx.fillStyle='#6d6d76';
+    ctx.fillText('用手指刮开，看看是哪一场', w/2, h/2+22);
+    cv.classList.remove('done'); revealed=false; moves=0;
+  }
+  function pos(e){ var r=cv.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; }
+  function scratch(e){ var p=pos(e); ctx.globalCompositeOperation='destination-out'; ctx.beginPath(); ctx.arc(p.x,p.y,26,0,7); ctx.fill(); if(++moves%14===0) check(); }
+  function check(){
+    try{
+      var w=cv.width,h=cv.height,img=ctx.getImageData(0,0,w,h).data,tot=0,clr=0;
+      for(var i=3;i<img.length;i+=160){ tot++; if(img[i]<128) clr++; }
+      if(tot&&clr/tot>0.45) reveal();
+    }catch(err){}
+  }
+  function reveal(){
+    if(revealed) return; revealed=true; cv.classList.add('done');
+    seen[idx]=1; var n=Object.keys(seen).length;
+    cnt.textContent='已收集 '+n+' / 5';
+    if(n>=5){ doneEl.hidden=false; }
+    if(window.confetti){ confetti({particleCount:60,spread:65,origin:{y:.65},colors:['#7b2ff7','#f107a3','#ff8a5c','#e8b06a','#ffffff']}); }
+  }
+  cv.addEventListener('pointerdown',function(e){ drawing=true; cv.setPointerCapture(e.pointerId); scratch(e); });
+  cv.addEventListener('pointermove',function(e){ if(drawing) scratch(e); });
+  cv.addEventListener('pointerup',function(){ drawing=false; check(); });
+  cv.addEventListener('pointercancel',function(){ drawing=false; });
+  document.getElementById('scNext').addEventListener('click',function(){ idx=(idx+1)%P.length; renderPrize(); paint(); });
+  window.addEventListener('resize',function(){ if(!revealed) paint(); });
+  renderPrize();
+  setTimeout(paint,60);
+})();
 </script>
 </body>
 </html>
