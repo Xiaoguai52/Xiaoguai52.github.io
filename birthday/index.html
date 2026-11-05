@@ -148,6 +148,15 @@
   .twist{margin-top:44px;font-size:18px;line-height:1.85;}
   .twist b{background:linear-gradient(transparent 64%,#ffe9a8 64%);}
   .podcard{margin:26px auto 0;max-width:560px;border:1px solid #d2d2d7;border-radius:20px;padding:22px;cursor:pointer;background:#fbfbfd;}
+  /* mystery product teaser (locked until the treasure reveal) */
+  .giftbox{margin:30px auto 0;width:158px;height:158px;border-radius:36px;background:radial-gradient(circle at 50% 38%,#2c2c30,#131315 72%);display:flex;align-items:center;justify-content:center;font-size:74px;box-shadow:0 24px 60px rgba(0,0,0,.28),inset 0 0 0 1px #3a3a3f;animation:giftfloat 3.6s ease-in-out infinite;}
+  @keyframes giftfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .teaserTx{margin-top:26px;font-size:16.5px;line-height:1.9;color:#424245;}
+  .teaserTx b{color:#1d1d1f;}
+  .teaserCd{margin-top:18px;display:inline-block;font-size:13px;color:#6e6e73;border:1px solid #d2d2d7;border-radius:999px;padding:8px 18px;letter-spacing:1px;}
+  .teaserCd .n{color:#1d1d1f;font-weight:700;font-variant-numeric:tabular-nums;}
+  #podsUnlock{margin-top:22px;background:#0071e3;color:#fff;border:none;font-size:15px;font-weight:600;padding:12px 30px;border-radius:999px;cursor:pointer;font-family:inherit;}
+  .teaserWarn{margin:14px auto 0;max-width:420px;font-size:13px;color:#b23a48;line-height:1.8;}
   .podcard .hint{font-size:12.5px;color:#6e6e73;letter-spacing:2px;}
   .podcard .secret{display:none;margin-top:10px;font-size:15.5px;line-height:1.85;}
   .podcard.open .secret{display:block;animation:up .6s cubic-bezier(.2,.7,.2,1) both;}
@@ -337,7 +346,18 @@
     </div>
   </div>
 
-  <div class="pods">
+  <div class="pods" id="podsTeaser">
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">还有一件新品</h2>
+    <p class="tag2 rv s2">今晚的第二位主角，先卖个关子。</p>
+    <div class="giftbox rv s2">🎁</div>
+    <p class="teaserTx rv">它已经被张大宝藏好了，藏得很认真。<br/>今晚 <b>20:11</b>，在寻宝的终点，它自己登场。</p>
+    <div class="teaserCd rv">距离发布 · <span class="n" id="podsCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
+    <button class="rv" id="podsUnlock" type="button">我已经找到它了 · 提前发布</button>
+    <p class="teaserWarn" id="podsWarn" hidden>真的找到了？没找到先别点——点开，今晚的惊喜就提前散场了。<br/>确认已经在手里了，就再点一次。</p>
+  </div>
+
+  <div class="pods" id="podsReal" hidden>
     <div class="eyebrow rv">同 场 加 映</div>
     <h2 class="rv s1 gradtext">AirPods Pro 3</h2>
     <p class="tag2 rv s2">入耳式主动降噪，入主新声代。</p>
@@ -425,7 +445,7 @@
   <li>撒娇与好看的提升倍数由小乖筹备组凭六年经验估算，未经第三方检测，但张大宝本人表示「只多不少」。</li>
   <li>「全款付清」指张大宝已付出全部真心，不接受退款，不支持七天无理由——一辈子也不行。</li>
   <li>抱抱快充需张大宝本人在场执行；异地时可用视频通话临时替代，功率略有下降。</li>
-  <li>降噪数据来自苹果官网对 AirPods Pro 3 的描述；但对张大宝的呼噜声无效，建议佩戴耳机入睡。</li>
+  <li id="note4">本条涉及今晚的神秘新品，20:11 发布后自动解码——没解码之前，谁也不许猜中。</li>
   <li>本页面所有「官方数据」均为小乖发布会筹备组单方面宣布，张大宝的保留意见不影响发布效力。</li>
 </ol></div>
 
@@ -562,6 +582,38 @@
     if(pc.classList.contains('open'))return;
     pc.classList.add('open');boom(70);
   });
+</script>
+<script>
+/* mystery product gate: reveals at the treasure finale (20:11) or when she confirms she found it */
+(function(){
+  var T=document.getElementById('podsTeaser'),R=document.getElementById('podsReal'),N=document.getElementById('note4');
+  if(!T||!R)return;
+  var U=new Date('2026-11-09T20:11:00+08:00').getTime();
+  var q=new URLSearchParams(location.search);
+  var unlocked=(q.get('preview')==='1'||q.get('party')==='1');
+  try{if(localStorage.getItem('xg_pods')==='1')unlocked=true;}catch(e){}
+  function reveal(){
+    T.hidden=true;R.hidden=false;
+    if(N)N.textContent='降噪数据来自苹果官网对 AirPods Pro 3 的描述；但对张大宝的呼噜声无效，建议佩戴耳机入睡。';
+    R.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+    try{localStorage.setItem('xg_pods','1');}catch(e){}
+  }
+  if(unlocked||Date.now()>=U){reveal();return;}
+  var cd=document.getElementById('podsCd');
+  function tick(){
+    var diff=U-Date.now();
+    if(diff<=0){reveal();return;}
+    var d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+    if(cd)cd.textContent=d+' 天 '+h+' 时 '+m+' 分 '+s+' 秒';
+    setTimeout(tick,1000);
+  }
+  tick();
+  var b=document.getElementById('podsUnlock'),w=document.getElementById('podsWarn'),armed=false;
+  if(b)b.addEventListener('click',function(){
+    if(!armed){armed=true;if(w)w.hidden=false;b.textContent='确认发布 · 它已经在我手里了';return;}
+    reveal();
+  });
+})();
 </script>
 </body>
 </html>
