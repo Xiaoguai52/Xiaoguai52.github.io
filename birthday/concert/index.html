@@ -77,6 +77,19 @@ a{color:#0066cc;text-decoration:none;}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.6,.2,1);}
 .rv.on{opacity:1;transform:none;}
 @media(max-width:480px){.hero h1{font-size:44px;}.secH{font-size:32px;}.hero{min-height:460px;}}
+.plHead{display:flex;align-items:center;gap:14px;}
+.plCover{width:62px;height:62px;border-radius:12px;object-fit:cover;flex:none;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.plT{font-size:20px;font-weight:600;}
+.plS{font-size:13px;color:#6e6e73;margin-top:3px;line-height:1.45;}
+.plPlay{margin-left:auto;flex:none;background:#0071e3;color:#fff;font-size:14px;font-weight:600;padding:9px 17px;border-radius:980px;}
+.card .plNote{font-size:12.5px;color:#6e6e73;margin:16px 0 2px;line-height:1.5;}
+.trk{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #e8e8ed;cursor:pointer;}
+.trk:last-child{border-bottom:none;}
+.trk .th{width:44px;height:44px;border-radius:9px;object-fit:cover;flex:none;}
+.trk .tt{font-size:16px;font-weight:500;}
+.trk .ds{font-size:12.5px;color:#6e6e73;margin-top:2px;line-height:1.45;}
+.trk .tm{margin-left:auto;font-size:13px;color:#86868b;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.trk .lk{color:#0066cc;font-size:16px;text-decoration:none;flex:none;padding:2px 2px 2px 6px;}
 </style>
 </head>
 <body>
@@ -109,17 +122,17 @@ a{color:#0066cc;text-decoration:none;}
       </div>
     </div>
 
-    <div class="card imgTop rv"><img class="cardImg" src="img/vinyl.jpg" alt="紫色黑胶唱片"><div class="bd2">
-      <h3>今晚歌单</h3>
-      <p>点行尾的 ↗，去 Apple Music 听真的；第三首点一下，有惊喜。</p>
+    <div class="card rv">
+      <div class="plHead"><img class="plCover" src="img/cover.jpg" alt="今晚歌单封面"><div><div class="plT">今晚歌单</div><div class="plS">小乖编排 · 赖大宝 26 岁生日特别场</div></div><a class="plPlay" href="https://open.spotify.com/playlist/0WDiSaBa7JaKY7Jq0sAs4Z" target="_blank" rel="noopener">▶ 播放</a></div>
+      <p class="plNote">点行尾的 ↗，去 Apple Music 听真的；第三首点一下，有惊喜。</p>
       <div class="tracks">
-        <div class="trk"><span class="no">1</span><div class="main"><div class="tt">将故事写成我们</div><div class="ds">主题曲 · 片头一响，六年都在里面</div></div><span class="tm">4:58</span><a class="lk" href="https://music.apple.com/cn/search?term=%E5%B0%86%E6%95%85%E4%BA%8B%E5%86%99%E6%88%90%E6%88%91%E4%BB%AC%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
-        <div class="trk"><span class="no">2</span><div class="main"><div class="tt">小酒窝</div><div class="ds">对唱版 · 你唱女声，张大宝负责笑场</div></div><span class="tm">3:27</span><a class="lk" href="https://music.apple.com/cn/search?term=%E5%B0%8F%E9%85%92%E7%AA%9D%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
-        <div class="trk" id="trk3"><span class="no">3</span><div class="main"><div class="tt">生日快乐歌</div><div class="ds">张大宝独唱 · 跑调预警，但诚意满格</div></div><span class="tm">1:09</span></div>
-        <div class="trk"><span class="no">4</span><div class="main"><div class="tt">交换余生</div><div class="ds">交换的不是余生，是往后每一场演唱会的连座票</div></div><span class="tm">4:12</span><a class="lk" href="https://music.apple.com/cn/search?term=%E4%BA%A4%E6%8D%A5%E4%BD%99%E7%94%9F%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
-        <div class="trk"><span class="no">5</span><div class="main"><div class="tt">一千年以后</div><div class="ds">安可曲 · 一千年太久，先把这一场听完</div></div><span class="tm">3:51</span><a class="lk" href="https://music.apple.com/cn/search?term=%E4%B8%80%E5%8D%83%E5%B9%B4%E4%BB%A5%E5%90%8E%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
+        <div class="trk"><img class="th" src="img/cover.jpg" alt=""><div class="main"><div class="tt">将故事写成我们</div><div class="ds">林俊杰 · 主题曲，片头一响，六年都在里面</div></div><span class="tm">4:58</span><a class="lk" href="https://music.apple.com/cn/search?term=%E5%B0%86%E6%95%85%E4%BA%8B%E5%86%99%E6%88%90%E6%88%91%E4%BB%AC%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
+        <div class="trk"><img class="th" src="img/cover.jpg" alt=""><div class="main"><div class="tt">小酒窝</div><div class="ds">林俊杰 · 对唱版，你唱女声，张大宝负责笑场</div></div><span class="tm">3:27</span><a class="lk" href="https://music.apple.com/cn/search?term=%E5%B0%8F%E9%85%92%E7%AA%9D%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
+        <div class="trk" id="trk3"><img class="th" src="img/cover.jpg" alt=""><div class="main"><div class="tt">生日快乐歌</div><div class="ds">张大宝 · 独唱，跑调预警，但诚意满格</div></div><span class="tm">1:09</span></div>
+        <div class="trk"><img class="th" src="img/cover.jpg" alt=""><div class="main"><div class="tt">交换余生</div><div class="ds">林俊杰 · 交换的不是余生，是往后每一场演唱会的连座票</div></div><span class="tm">4:12</span><a class="lk" href="https://music.apple.com/cn/search?term=%E4%BA%A4%E6%8D%A5%E4%BD%99%E7%94%9F%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
+        <div class="trk"><img class="th" src="img/cover.jpg" alt=""><div class="main"><div class="tt">一千年以后</div><div class="ds">林俊杰 · 安可曲，一千年太久，先把这一场听完</div></div><span class="tm">3:51</span><a class="lk" href="https://music.apple.com/cn/search?term=%E4%B8%80%E5%8D%83%E5%B9%B4%E4%BB%A5%E5%90%8E%20%E6%9E%97%E4%BF%8A%E6%9D%B0" target="_blank" rel="noopener">↗</a></div>
       </div>
-    </div></div>
+    </div>
 
     <div class="cakeCard rv">
       <img src="img/giftbox.jpg" alt="黑金礼盒" style="aspect-ratio:1.35;">
