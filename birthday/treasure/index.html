@@ -158,13 +158,15 @@
 .finPhoto .t{font-size:16.5px;font-weight:600;}
 .finPhoto .d{font-size:14px;color:#6e6e73;margin-top:4px;line-height:1.6;}
 .finCredit{font-size:12.5px;color:#86868b;margin-top:16px;}
+.hud div{background:transparent;border:none;border-radius:0;padding:0;text-align:left;}
+.hud div+div{border-left:1px solid #e8e8ed;padding-left:14px;}
 </style>
 </head>
 <body>
 <div class="subnav">寻宝局<span class="r">第二站 · 寻宝</span></div>
 <div class="wrap">
   <div class="tbanner">
-    <img class="bg" src="img/wall-01.jpg" alt="金豆豆"/>
+    <img class="bg" src="img/doudou-1.jpg" alt="金豆豆" style="object-position:50% 12%;"/>
     <div class="scrim"></div>
     <div class="in">
       <div class="k">小乖的寻宝任务 · 妈妈，生日快乐！</div>
@@ -175,14 +177,14 @@
   <p class="intro" style="margin-top:18px;">三关都加了料：<b>照片墙里找指定瞬间、五场演唱会排对顺序再猜主题曲、限时抓住逃跑的小乖三次</b>。错了不会锁死你，但会留下记录、扣时间，多错几次才给提示。</p>
 
   <div class="progress">
-    <div class="dot" id="d1">第一关 · 照片墙寻图</div>
-    <div class="dot" id="d2">第二关 · 演唱会双重考</div>
-    <div class="dot" id="d3">第三关 · 限时抓小乖</div>
+    <div class="dot" id="d1">第一关</div>
+    <div class="dot" id="d2">第二关</div>
+    <div class="dot" id="d3">第三关</div>
   </div>
 
   <div class="lvl" id="l1">
     <div class="no">第 一 关 · 眼 力 考</div>
-    <h2>在一墙猫哥里，找到那一瞬间</h2>
+    <h2>在一墙猫哥里，找到<span style="white-space:nowrap;">那一瞬间</span></h2>
     <p>下面 12 张全都是金豆豆，不能再靠“有没有猫”蒙混过关。你要找的是：<b>2024 年 3 月 19 日在医院拍的那张——爸爸趴在诊台边，脸凑近戴着伊丽莎白圈的猫哥。</b></p>
     <div class="wall" id="wall">
       <button class="photo" type="button" aria-label="金豆豆照片 1"><img src="img/wall-01.jpg" alt="金豆豆照片 1"/></button>
