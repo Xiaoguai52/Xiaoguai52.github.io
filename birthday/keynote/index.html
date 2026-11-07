@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>赖大宝 Pro 26 · 发布会幻灯</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; background:#000; overflow:hidden; }
+  body {
+    font-family:-apple-system, "SF Pro Display", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    color:#f5f5f7; display:flex; align-items:center; justify-content:center;
+  }
+  [hidden] { display:none !important; }
+
+  /* ---------- gate ---------- */
+  #gate { position:fixed; inset:0; background:#000; z-index:50; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center; padding:24px; }
+  #gate .k { font-size:13px; letter-spacing:.42em; color:#86868b; }
+  #gate .t { font-size:clamp(34px, 8vw, 64px); font-weight:700; letter-spacing:.06em;
+    background:linear-gradient(100deg,#e9d5ff,#a259ff 55%,#ff8fab); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  #gate .c { font-size:15px; color:#a1a1a6; font-variant-numeric:tabular-nums; }
+
+  /* ---------- stage ---------- */
+  #stage { position:relative; width:min(100vw, 177.78vh); aspect-ratio:16/9; background:#000; overflow:hidden;
+    container-type:size; }
+  .slide { position:absolute; inset:0; opacity:0; pointer-events:none; transform:scale(1.025);
+    transition:opacity .55s ease, transform .55s ease; overflow:hidden; background:#000; }
+  .slide.active { opacity:1; pointer-events:auto; transform:scale(1); }
+  .slide .pad { position:absolute; inset:0; padding:6cqh 7cqw; display:flex; flex-direction:column; }
+
+  .eyebrow { font-size:1.55cqw; letter-spacing:.38em; color:#a78bfa; font-weight:600; text-transform:uppercase; }
+  .h-mega { font-size:8.2cqw; font-weight:800; line-height:1.04; letter-spacing:-.01em; }
+  .h-big  { font-size:5.6cqw; font-weight:800; line-height:1.1; }
+  .h-mid  { font-size:3.4cqw; font-weight:700; line-height:1.25; }
+  .sub    { font-size:2.1cqw; color:#a1a1a6; line-height:1.55; font-weight:500; }
+  .tiny   { font-size:1.35cqw; color:#6e6e73; line-height:1.6; }
+  .grad { background:linear-gradient(96deg,#f5f5f7 10%,#cdb4ff 45%,#a259ff 75%,#ff8fab 105%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .violet { color:#cdb4ff; }
+  .glow { position:absolute; border-radius:50%; filter:blur(60px); opacity:.5; pointer-events:none; }
+
+  .fullimg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .scrim { position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.18) 46%, rgba(0,0,0,.05) 70%); }
+
+  /* slide 3 photo trio */
+  .trio { display:flex; gap:1.6cqw; flex:1; min-height:0; }
+  .trio figure { flex:1; border-radius:1.6cqw; overflow:hidden; position:relative; box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 18px 50px rgba(0,0,0,.6); }
+  .trio img { width:100%; height:100%; object-fit:cover; display:block; }
+  .trio figcaption { position:absolute; left:0; right:0; bottom:0; padding:2.2cqh 1.4cqw; font-size:1.5cqw; font-weight:600;
+    background:linear-gradient(to top, rgba(0,0,0,.66), transparent); }
+
+  /* slide 4 chip */
+  .split { display:flex; gap:4cqw; flex:1; align-items:center; min-height:0; }
+  .chipimg { width:34cqw; aspect-ratio:1; object-fit:cover; border-radius:2cqw;
+    box-shadow:0 0 90px rgba(162,89,255,.35), 0 0 0 1px rgba(255,255,255,.08); }
+  .spec { display:flex; flex-direction:column; gap:2.6cqh; }
+  .spec .row { border-top:1px solid rgba(255,255,255,.14); padding-top:1.8cqh; }
+  .spec .k { font-size:1.6cqw; color:#86868b; letter-spacing:.12em; }
+  .spec .v { font-size:2.9cqw; font-weight:700; margin-top:.4cqh; }
+
+  /* slide 5 stats */
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:4cqh 5cqw; flex:1; align-content:center; }
+  .stat .n { font-size:7.4cqw; font-weight:800; line-height:1; font-variant-numeric:tabular-nums; }
+  .stat .l { font-size:1.9cqw; color:#a1a1a6; margin-top:1.2cqh; }
+
+  /* slide 8 omt */
+  .omtimg { width:30cqw; aspect-ratio:4/3.4; object-fit:cover; border-radius:1.8cqw; filter:brightness(.62) saturate(.85);
+    box-shadow:0 0 110px rgba(162,89,255,.30), 0 0 0 1px rgba(255,255,255,.07); }
+
+  /* ---------- chrome ---------- */
+  #hud { position:absolute; left:0; right:0; bottom:2.6cqh; display:flex; align-items:center; justify-content:center; gap:1.1cqw; z-index:20; }
+  #hud .dot { width:.85cqw; height:.85cqw; min-width:6px; min-height:6px; border-radius:50%; background:rgba(255,255,255,.28); transition:all .3s; }
+  #hud .dot.on { background:#cdb4ff; transform:scale(1.25); }
+  #count { position:absolute; right:3cqw; bottom:2.4cqh; font-size:1.4cqw; color:#6e6e73; z-index:20; font-variant-numeric:tabular-nums; }
+  #brand { position:absolute; left:3cqw; bottom:2.4cqh; font-size:1.4cqw; color:#6e6e73; z-index:20; letter-spacing:.18em; }
+  .zone { position:absolute; top:0; bottom:0; width:18%; z-index:15; cursor:pointer; }
+  #zprev { left:0; } #znext { right:0; }
+  #hint { position:absolute; left:50%; transform:translateX(-50%); bottom:8cqh; font-size:1.5cqw; color:#86868b; z-index:20;
+    animation:pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:.9} }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="k">XIAOGUAI SPECIAL EVENT</div>
+  <div class="t">好戏将至</div>
+  <div class="c" id="gateCount">—</div>
+</div>
+
+<div id="app" hidden>
+  <div id="stage">
+
+    <!-- 1 开场 -->
+    <section class="slide">
+      <div class="glow" style="width:56cqw;height:56cqw;left:22cqw;top:-24cqw;background:#5b21b6;"></div>
+      <div class="pad" style="align-items:center;justify-content:center;text-align:center;gap:3.2cqh;">
+        <div class="eyebrow">Xiaoguai Special Event · 2026.11.09</div>
+        <h1 class="h-mega grad">赖大宝 Pro 26</h1>
+        <p class="sub">专为一个人发布。</p>
+      </div>
+    </section>
+
+    <!-- 2 主角 -->
+    <section class="slide">
+      <div class="glow" style="width:38cqw;height:38cqw;left:2cqw;top:20cqh;background:#4c1d95;"></div>
+      <div class="pad" style="flex-direction:row;align-items:center;gap:5cqw;">
+        <figure style="flex:1;display:flex;justify-content:center;">
+          <img src="../img/laixinwen-glasses.jpg" alt="赖大宝"
+               style="height:74cqh;aspect-ratio:3/4;object-fit:cover;object-position:center 22%;border-radius:1.8cqw;
+                      box-shadow:0 0 80px rgba(162,89,255,.35), 0 0 0 1px rgba(255,255,255,.10);">
+        </figure>
+        <div style="flex:1.25;display:flex;flex-direction:column;gap:2.2cqh;">
+          <div class="eyebrow">The Protagonist</div>
+          <h2 class="h-big">Pro 的主角。</h2>
+          <p class="sub">无需介绍。她一到场，参数自动拉满。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 每一块屏 -->
+    <section class="slide">
+      <div class="pad" style="gap:3.4cqh;">
+        <div>
+          <div class="eyebrow">Every Display</div>
+          <h2 class="h-big" style="margin-top:1.2cqh;">每一块屏幕，<span class="violet">都是她。</span></h2>
+        </div>
+        <div class="trio">
+          <figure><img src="../img/laixinwen-confetti.jpg" alt="五彩纸屑里的她"><figcaption>开场 · 五彩纸屑</figcaption></figure>
+          <figure><img src="../img/laixinwen-field.jpg" alt="外景的她"><figcaption>日常 · 晴天模式</figcaption></figure>
+          <figure><img src="../img/laixinwen-2021-10-pink-night.jpg" alt="粉色夜晚的她"><figcaption>夜晚 · 粉色氛围</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 芯片 -->
+    <section class="slide">
+      <div class="glow" style="width:40cqw;height:40cqw;right:-8cqw;top:8cqh;background:#4c1d95;"></div>
+      <div class="pad">
+        <div class="split">
+          <div style="flex:1;">
+            <div class="eyebrow">Inside</div>
+            <h2 class="h-big" style="margin:1.4cqh 0 3.6cqh;">A26 Pro</h2>
+            <div class="spec">
+              <div class="row"><div class="k">快乐引擎</div><div class="v">26 核 · 全速运行</div></div>
+              <div class="row"><div class="k">心动频率</div><div class="v">较上代 +200%</div></div>
+              <div class="row"><div class="k">笑容显示</div><div class="v">常亮 · 24 小时不熄屏</div></div>
+            </div>
+          </div>
+          <img class="chipimg" src="../img/chip-a26.jpg" alt="A26 Pro 芯片">
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 数字 -->
+    <section class="slide">
+      <div class="pad">
+        <div class="eyebrow">By the Numbers</div>
+        <div class="stats">
+          <div class="stat"><div class="n grad">2159</div><div class="l">天 · 在一起的日子（截至今天）</div></div>
+          <div class="stat"><div class="n grad">5</div><div class="l">场 · 一起听过的演唱会</div></div>
+          <div class="stat"><div class="n grad">26</div><div class="l">岁 · 正当红的年纪</div></div>
+          <div class="stat"><div class="n grad">1</div><div class="l">个 · 独一无二，不可复购</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 那一夜 -->
+    <section class="slide">
+      <div class="glow" style="width:38cqw;height:38cqw;right:2cqw;top:20cqh;background:#4c1d95;"></div>
+      <div class="pad" style="flex-direction:row;align-items:center;gap:5cqw;">
+        <div style="flex:1.25;display:flex;flex-direction:column;gap:2.2cqh;">
+          <div class="eyebrow">2023.12.09 · 南宁 · JJ20</div>
+          <h2 class="h-big" style="font-size:4.9cqw;">舞台灯光，1 分。</h2>
+          <h2 class="h-big grad" style="font-size:4.9cqw;">她，10 分。</h2>
+          <p class="sub" style="font-size:1.8cqw;">所以今晚撤了舞台。所有屏幕，只放她。</p>
+        </div>
+        <figure style="flex:1;display:flex;justify-content:center;">
+          <img src="../concert/img/jj20-2023-12-09-1.jpg" alt="2023 年南宁 JJ20 那晚的她"
+               style="height:74cqh;aspect-ratio:3/4;object-fit:cover;border-radius:1.8cqw;
+                      box-shadow:0 0 80px rgba(162,89,255,.35), 0 0 0 1px rgba(255,255,255,.10);">
+        </figure>
+      </div>
+    </section>
+
+    <!-- 7 生日快乐 -->
+    <section class="slide">
+      <img class="fullimg" src="../treasure/img/laixinwen-2021-12-11-roses.jpg" alt="抱着玫瑰的她" style="filter:brightness(.72);">
+      <div class="scrim"></div>
+      <div class="pad" style="align-items:center;justify-content:flex-end;text-align:center;gap:1.8cqh;padding-bottom:9cqh;">
+        <h2 class="h-mega grad" style="font-size:9.6cqw;">生日快乐</h2>
+        <p class="sub" style="color:#e9d5ff;">赖大宝 · 26 岁 · 2026.11.09</p>
+      </div>
+    </section>
+
+    <!-- 8 One more thing -->
+    <section class="slide">
+      <div class="glow" style="width:44cqw;height:44cqw;left:28cqw;top:16cqh;background:#4c1d95;"></div>
+      <div class="pad" style="align-items:center;justify-content:center;text-align:center;gap:3cqh;">
+        <h2 class="h-big">One more thing.</h2>
+        <img class="omtimg" src="../img/giftbox.jpg" alt="神秘礼盒">
+        <p class="sub">神秘新品 · 明晚揭晓</p>
+      </div>
+    </section>
+
+    <!-- 9 谢幕 -->
+    <section class="slide">
+      <div class="glow" style="width:50cqw;height:50cqw;left:25cqw;bottom:-26cqw;background:#5b21b6;"></div>
+      <div class="pad" style="align-items:center;justify-content:center;text-align:center;gap:3cqh;">
+        <h2 class="h-big grad">生日快乐，赖大宝。</h2>
+        <p class="sub">张大宝 · 金豆豆 · 小乖 联合发布</p>
+        <p class="tiny">本场发布会无录播 —— 因为她就在现场。<br>南宁 · 2026.11.09</p>
+      </div>
+    </section>
+
+    <div id="zprev" class="zone"></div>
+    <div id="znext" class="zone"></div>
+    <div id="brand">LAIDABAO PRO 26</div>
+    <div id="hud"></div>
+    <div id="count">1 / 9</div>
+    <div id="hint">点按两侧或按方向键翻页</div>
+  </div>
+</div>
+
+<script>
+  var UNLOCK = new Date("2026-11-09T00:00:00+08:00").getTime();
+  var qs = new URLSearchParams(location.search);
+  var unlocked = qs.get("preview") === "1" || qs.get("party") === "1";
+
+  var gate = document.getElementById("gate");
+  var app = document.getElementById("app");
+  var gc = document.getElementById("gateCount");
+
+  function tickGate() {
+    var ms = UNLOCK - Date.now();
+    if (ms <= 0) { openSite(); return; }
+    var s = Math.floor(ms / 1000);
+    var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
+    gc.textContent = "距离解锁还有 " + d + " 天 " + h + " 小时 " + m + " 分 " + ss + " 秒";
+    setTimeout(tickGate, 1000);
+  }
+  function openSite() {
+    gate.hidden = true;
+    app.hidden = false;
+  }
+  if (unlocked || Date.now() >= UNLOCK) openSite(); else tickGate();
+
+  /* ---------- deck ---------- */
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var hud = document.getElementById("hud");
+  var count = document.getElementById("count");
+  var hint = document.getElementById("hint");
+  var cur = 0;
+  slides.forEach(function (_, i) {
+    var d = document.createElement("div");
+    d.className = "dot" + (i === 0 ? " on" : "");
+    hud.appendChild(d);
+  });
+  var dots = hud.children;
+  function go(n) {
+    cur = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, i) { s.classList.toggle("active", i === cur); });
+    for (var i = 0; i < dots.length; i++) dots[i].classList.toggle("on", i === cur);
+    count.textContent = (cur + 1) + " / " + slides.length;
+    if (cur > 0) hint.style.display = "none";
+  }
+  go(0);
+  document.getElementById("znext").addEventListener("click", function () { go(cur + 1); });
+  document.getElementById("zprev").addEventListener("click", function () { go(cur - 1); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === " ") go(cur + 1);
+    if (e.key === "ArrowLeft") go(cur - 1);
+  });
+  var tx = null;
+  document.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener("touchend", function (e) {
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 48) go(cur + (dx < 0 ? 1 : -1));
+    tx = null;
+  }, { passive: true });
+</script>
+</body>
+</html>
