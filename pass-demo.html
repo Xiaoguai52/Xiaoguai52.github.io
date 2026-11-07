@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>数字副卡 · 样板 — 寻宝局</title>
+<style>
+  :root{
+    --violet:#c89bff; --violet-deep:#8b5cf6; --ink:#050508; --panel:#101016;
+    --line:rgba(200,155,255,.22); --txt:#f2eefc; --dim:#9a93ad;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--ink);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+  body{padding:28px 18px 60px;max-width:460px;margin:0 auto;
+    background:
+      radial-gradient(120% 60% at 50% -10%, rgba(139,92,246,.28), transparent 60%),
+      radial-gradient(90% 40% at 85% 30%, rgba(200,155,255,.10), transparent 60%),
+      var(--ink)}
+  .kicker{font-size:11px;letter-spacing:.34em;color:var(--violet);text-transform:uppercase;text-align:center}
+  h1{font-size:25px;line-height:1.3;text-align:center;margin:12px 0 8px;font-weight:800}
+  .sub{text-align:center;color:var(--dim);font-size:13.5px;line-height:1.65;margin:0 8px 26px}
+
+  /* ---------- THE PASS ---------- */
+  .pass{position:relative;border-radius:22px;padding:22px 20px 18px;color:#fff;
+    background:linear-gradient(150deg,#1b1b22 0%,#000 55%,#14101f 100%);
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 24px 60px rgba(0,0,0,.65), 0 0 0 1px rgba(200,155,255,.10), 0 0 44px rgba(139,92,246,.20)}
+  .pass-top{display:flex;justify-content:space-between;align-items:center;
+    font-size:10.5px;letter-spacing:.26em;color:#bdb4d4}
+  .pass-title{font-size:21px;font-weight:800;margin:14px 0 4px}
+  .pass-meta{display:flex;gap:18px;margin-top:10px}
+  .pass-meta div span{display:block;font-size:9.5px;letter-spacing:.2em;color:#8f87a3}
+  .pass-meta div b{font-size:13.5px;font-weight:600}
+  .punches{display:flex;justify-content:space-between;margin:20px 2px 6px}
+  .punch{display:flex;flex-direction:column;align-items:center;gap:7px;width:25%}
+  .hole{width:46px;height:46px;border-radius:50%;border:1.5px dashed rgba(255,255,255,.35);
+    display:flex;align-items:center;justify-content:center;font-size:19px;color:transparent;
+    transition:all .35s cubic-bezier(.2,1.6,.4,1)}
+  .punch small{font-size:11px;color:#8f87a3}
+  .punch.done .hole{border:1.5px solid var(--violet);color:#14092b;background:var(--violet);
+    box-shadow:0 0 18px rgba(200,155,255,.75);transform:scale(1.06)}
+  .punch.done small{color:var(--violet)}
+  .punch.pop .hole{animation:pop .45s cubic-bezier(.2,1.8,.4,1)}
+  @keyframes pop{0%{transform:scale(.4)}60%{transform:scale(1.3)}100%{transform:scale(1.06)}}
+  .barcode{margin-top:16px;background:#fff;border-radius:10px;padding:10px 12px 7px}
+  .barcode .stripes{height:38px;border-radius:3px;
+    background:repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 4px,#111 4px 7px,transparent 7px 9px,#111 9px 10px,transparent 10px 14px,#111 14px 17px,transparent 17px 19px)}
+  .barcode .code{text-align:center;color:#111;font-size:11px;letter-spacing:.3em;margin-top:6px;font-weight:600}
+  .pass-status{text-align:center;margin-top:14px;font-size:13px;color:#bdb4d4}
+  .pass-status b{color:var(--violet)}
+  .pass.complete{box-shadow:0 24px 60px rgba(0,0,0,.65),0 0 70px rgba(200,155,255,.5)}
+  .pass.complete .pass-status{color:#fff}
+
+  /* ---------- STATIONS ---------- */
+  .route{margin-top:34px;display:flex;flex-direction:column;gap:14px}
+  .station{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;
+    transition:opacity .3s, filter .3s}
+  .station.locked{opacity:.42;filter:saturate(.4)}
+  .station.done{border-color:rgba(200,155,255,.55)}
+  .st-head{display:flex;align-items:baseline;gap:10px}
+  .st-no{font-size:11px;letter-spacing:.2em;color:var(--violet);border:1px solid var(--line);
+    border-radius:999px;padding:3px 9px;white-space:nowrap}
+  .st-name{font-size:17px;font-weight:700}
+  .st-place{margin-left:auto;font-size:11.5px;color:var(--dim);white-space:nowrap}
+  .st-story{color:var(--dim);font-size:13px;line-height:1.6;margin:9px 0 14px}
+  .st-state{font-size:12px;color:var(--dim);margin-top:12px}
+  .station.done .st-state{color:var(--violet)}
+  button.act{appearance:none;border:0;cursor:pointer;width:100%;padding:14px;border-radius:13px;
+    background:linear-gradient(135deg,var(--violet),var(--violet-deep));color:#170b31;
+    font-size:15px;font-weight:800;letter-spacing:.04em;position:relative;overflow:hidden}
+  button.act:disabled{filter:grayscale(.7);opacity:.5;cursor:default}
+  button.act .fill{position:absolute;inset:0;width:0%;background:rgba(255,255,255,.45)}
+  button.act span{position:relative}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .tile{appearance:none;border:1px solid var(--line);background:#17171f;border-radius:13px;
+    font-size:27px;padding:13px 0;cursor:pointer;color:#fff}
+  .tile:active{transform:scale(.95)}
+  .tile.wrong{animation:shake .3s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  .chips{display:flex;flex-direction:column;gap:9px}
+  .chip{appearance:none;border:1px solid var(--line);background:#17171f;color:var(--txt);
+    border-radius:13px;padding:13px;font-size:14.5px;cursor:pointer;text-align:left}
+  .chip.picked{border-color:var(--violet);background:rgba(200,155,255,.14);color:var(--violet)}
+  .chip.wrong{animation:shake .3s}
+  .arena{position:relative;height:190px;border:1px dashed var(--line);border-radius:14px;
+    background:radial-gradient(80% 90% at 50% 0%,rgba(139,92,246,.12),transparent 70%);overflow:hidden}
+  .ghost{position:absolute;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;
+    background:radial-gradient(circle at 35% 32%,#fff,#d9c8ff 60%,#b18cff);
+    font-size:29px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 22px rgba(200,155,255,.65);transition:left .18s,top .18s}
+  .arena .hits{position:absolute;top:9px;right:12px;font-size:12px;color:var(--dim)}
+
+  /* ---------- FINALE ---------- */
+  .finale{display:none;margin-top:26px;border-radius:20px;padding:24px 20px;text-align:center;
+    background:linear-gradient(160deg,rgba(200,155,255,.16),rgba(139,92,246,.06));
+    border:1px solid rgba(200,155,255,.5);box-shadow:0 0 44px rgba(139,92,246,.3)}
+  .finale.show{display:block;animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
+  .finale h2{font-size:20px;margin-bottom:9px}
+  .finale p{color:var(--dim);font-size:13.5px;line-height:1.7}
+  .finale p b{color:var(--txt)}
+  .reset{margin-top:26px;width:100%;padding:12px;border-radius:12px;background:transparent;
+    border:1px solid var(--line);color:var(--dim);font-size:13.5px;cursor:pointer}
+  .foot{margin-top:30px;color:#5f5970;font-size:11.5px;line-height:1.7;text-align:center}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9}
+  .confetti i{position:absolute;top:-12px;width:8px;height:13px;border-radius:2px;opacity:.95;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(560deg)}}
+</style>
+</head>
+<body>
+  <div class="kicker">寻宝局 · 数字副卡</div>
+  <h1>一张跟着线下卡链<br>一起走完的入场券</h1>
+  <p class="sub">样板演示：副卡就是寻宝局的本体。线下每走完一站，卡上打一个孔；<br>四孔集齐，这张卡才是一张完整的入场券。</p>
+
+  <!-- PASS -->
+  <section class="pass" id="pass">
+    <div class="pass-top"><span>DIGITAL PASS · 数字副卡</span><span>🎫 XG PASS</span></div>
+    <div class="pass-title">赖大宝 Pro 26 · 寻宝入场券</div>
+    <div class="pass-meta">
+      <div><span>持卡人</span><b>赖大宝</b></div>
+      <div><span>日期</span><b>2026.11.09</b></div>
+      <div><span>场次</span><b>午夜场</b></div>
+    </div>
+    <div class="punches">
+      <div class="punch" id="punch1"><div class="hole">✓</div><small>抱抱站</small></div>
+      <div class="punch" id="punch2"><div class="hole">✓</div><small>冰箱站</small></div>
+      <div class="punch" id="punch3"><div class="hole">✓</div><small>豆豆站</small></div>
+      <div class="punch" id="punch4"><div class="hole">✓</div><small>沙发站</small></div>
+    </div>
+    <div class="barcode"><div class="stripes"></div><div class="code">XG · 20261109 · LDB26</div></div>
+    <div class="pass-status" id="passStatus">未集齐 · 还差 <b>4</b> 站</div>
+  </section>
+
+  <!-- STATIONS -->
+  <div class="route">
+    <section class="station" id="st1">
+      <div class="st-head"><span class="st-no">站 1 / 4</span><span class="st-name">抱抱站</span><span class="st-place">线下 · 他本人</span></div>
+      <p class="st-story">第一张卡在他身上，抱一下才能领。线上同步：按住按钮，把这个抱抱按满。</p>
+      <button class="act" id="holdBtn"><i class="fill" id="holdFill"></i><span>按住 · 抱一下 🤗</span></button>
+      <div class="st-state" id="state1">进行中 · 按住 1.2 秒</div>
+    </section>
+
+    <section class="station locked" id="st2">
+      <div class="st-head"><span class="st-no">站 2 / 4</span><span class="st-name">冰箱站</span><span class="st-place">线下 · 冰箱冷藏层</span></div>
+      <p class="st-story">第二张卡藏在冰箱里。线上同步：在冰箱格子里找到今晚的蛋糕。（正式版是照片墙寻图，样板先用格子演示）</p>
+      <div class="grid3" id="fridgeGrid"></div>
+      <div class="st-state" id="state2">待解锁</div>
+    </section>
+
+    <section class="station locked" id="st3">
+      <div class="st-head"><span class="st-no">站 3 / 4</span><span class="st-name">豆豆地盘站</span><span class="st-place">线下 · 金豆豆的领地</span></div>
+      <p class="st-story">第三张卡在猫哥哥的地盘上。线上同步：把三场五月天按年份从早到晚点一遍——豆豆在旁边监考。</p>
+      <div class="chips" id="sortChips"></div>
+      <div class="st-state" id="state3">待解锁</div>
+    </section>
+
+    <section class="station locked" id="st4">
+      <div class="st-head"><span class="st-no">站 4 / 4</span><span class="st-name">沙发终点站</span><span class="st-place">线下 · 客厅沙发 · 发布会席位</span></div>
+      <p class="st-story">终点卡在沙发上等她入座。线上同步：最后一关，抓住乱跑的小乖 3 次——和现在寻宝局的 Boss 关同一个玩法。</p>
+      <div class="arena" id="arena"><span class="hits" id="hits">已抓 0 / 3</span><button class="ghost" id="ghost" aria-label="小乖">👻</button></div>
+      <div class="st-state" id="state4">待解锁</div>
+    </section>
+  </div>
+
+  <!-- FINALE -->
+  <section class="finale" id="finale">
+    <h2>✦ 入场券已完整 ✦</h2>
+    <p>四个孔集齐，副卡点亮。<br>当晚的动线就此合流：<b>线上副卡打孔 = 线下卡链进度</b>，<br>走到沙发终点入座后，直接打开主站《赖大宝 Pro 26》发布会，<br>滑到新品区——他亲手把礼物递给她。</p>
+  </section>
+
+  <button class="reset" id="resetBtn">↺ 重置样板，再走一遍</button>
+  <p class="foot">数字副卡 · 样板（DEMO）<br>玩法为演示强度；正式版将接入寻宝局现有三关（照片墙寻图 / 演唱会排序 / 抓小乖）。<br>视觉语言：午夜场 · 黑 + 紫，与生日站三页统一。</p>
+
+  <div class="confetti" id="confetti"></div>
+
+<script>
+(function(){
+  var done = [false,false,false,false];
+  var passEl = document.getElementById('pass');
+  var statusEl = document.getElementById('passStatus');
+
+  function refresh(){
+    var left = done.filter(function(d){return !d}).length;
+    if(left>0){ statusEl.innerHTML = '未集齐 · 还差 <b>'+left+'</b> 站'; }
+    else{
+      statusEl.innerHTML = '<b>✦ 入场券已完整 ✦</b>';
+      passEl.classList.add('complete');
+      document.getElementById('finale').classList.add('show');
+      confetti();
+    }
+    for(var i=0;i<4;i++){
+      var st = document.getElementById('st'+(i+1));
+      var shouldLock = i>0 && !done[i-1] && !done[i];
+      st.classList.toggle('locked', shouldLock);
+      if(done[i]) st.classList.add('done');
+    }
+  }
+  function punch(n){
+    if(done[n-1]) return;
+    done[n-1] = true;
+    var p = document.getElementById('punch'+n);
+    p.classList.add('done','pop');
+    document.getElementById('state'+n).textContent = '✓ 已打孔';
+    refresh();
+    var next = document.getElementById('st'+(n+1));
+    if(next) setTimeout(function(){ next.scrollIntoView({behavior:'smooth', block:'center'}); }, 450);
+    else setTimeout(function(){ document.getElementById('finale').scrollIntoView({behavior:'smooth', block:'center'}); }, 450);
+  }
+  function confetti(){
+    var box = document.getElementById('confetti');
+    var colors = ['#c89bff','#8b5cf6','#ffffff','#ffd7ef'];
+    for(var i=0;i<70;i++){
+      var it = document.createElement('i');
+      it.style.left = Math.random()*100+'%';
+      it.style.background = colors[i%4];
+      it.style.animationDuration = (1.6+Math.random()*1.6)+'s';
+      it.style.animationDelay = (Math.random()*0.5)+'s';
+      box.appendChild(it);
+      (function(el){ setTimeout(function(){ el.remove(); }, 3800); })(it);
+    }
+  }
+
+  /* --- Station 1: press & hold --- */
+  var holdBtn = document.getElementById('holdBtn'), holdFill = document.getElementById('holdFill');
+  var holdStart = null, holdRAF = null, HOLD_MS = 1200;
+  function holdTick(){
+    if(!holdStart) return;
+    var pct = Math.min(100, (Date.now()-holdStart)/HOLD_MS*100);
+    holdFill.style.width = pct+'%';
+    if(pct>=100){ endHold(); punch(1); holdBtn.disabled = true; return; }
+    holdRAF = requestAnimationFrame(holdTick);
+  }
+  function startHold(e){ if(done[0]) return; e.preventDefault(); holdStart = Date.now(); holdTick(); }
+  function endHold(){ if(holdRAF) cancelAnimationFrame(holdRAF); holdRAF=null; holdStart=null; if(!done[0]) holdFill.style.width='0%'; }
+  holdBtn.addEventListener('pointerdown', startHold);
+  holdBtn.addEventListener('pointerup', endHold);
+  holdBtn.addEventListener('pointerleave', endHold);
+  holdBtn.addEventListener('pointercancel', endHold);
+
+  /* --- Station 2: find the cake in the fridge grid --- */
+  var foods = ['🥛','🥚','🧀','🥬','🍎','🧈','🍇','🥤'];
+  var grid = document.getElementById('fridgeGrid');
+  var cakePos = Math.floor(Math.random()*9);
+  var tiles = foods.slice(0,8); tiles.splice(cakePos, 0, '🎂');
+  // if cakePos == 8 the slice already has 8 items + cake appended = 9
+  tiles = tiles.slice(0,9);
+  tiles.forEach(function(f){
+    var b = document.createElement('button');
+    b.className = 'tile'; b.textContent = f;
+    b.addEventListener('click', function(){
+      if(done[1] || (done[0]===false)) return;
+      if(f==='🎂'){ punch(2); }
+      else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); }
+    });
+    grid.appendChild(b);
+  });
+
+  /* --- Station 3: sort three Mayday concerts by year --- */
+  var concerts = [
+    {label:'2024 · 北京五月天', year:2024},
+    {label:'2023 · 武汉五月天', year:2023},
+    {label:'2025 · 贵阳五月天', year:2025}
+  ];
+  var order = [2023,2024,2025], picked = [];
+  var chipsBox = document.getElementById('sortChips');
+  concerts.forEach(function(c){
+    var b = document.createElement('button');
+    b.className = 'chip'; b.textContent = '🎤 ' + c.label;
+    b.addEventListener('click', function(){
+      if(done[2] || !done[1] || b.classList.contains('picked')) return;
+      if(c.year === order[picked.length]){
+        picked.push(c.year); b.classList.add('picked');
+        if(picked.length===3) punch(3);
+      } else {
+        b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong');
+        document.getElementById('state3').textContent = '顺序不对，豆豆摇头了 · 从最早的一场开始';
+      }
+    });
+    chipsBox.appendChild(b);
+  });
+
+  /* --- Station 4: catch Xiaoguai 3 times --- */
+  var arena = document.getElementById('arena'), ghost = document.getElementById('ghost');
+  var hitsEl = document.getElementById('hits'), hits = 0, jumpTimer = null;
+  function jump(){
+    var w = arena.clientWidth - 66, h = arena.clientHeight - 66;
+    ghost.style.left = Math.max(4, Math.random()*w)+'px';
+    ghost.style.top = Math.max(4, Math.random()*h)+'px';
+  }
+  function armGhost(){
+    if(jumpTimer) return;
+    jump();
+    jumpTimer = setInterval(function(){ if(done[1]&&done[2]&&!done[3]) jump(); }, 1100);
+  }
+  ghost.addEventListener('click', function(){
+    if(done[3] || !done[2]) return;
+    hits++; hitsEl.textContent = '已抓 '+hits+' / 3';
+    if(hits>=3){ clearInterval(jumpTimer); punch(4); }
+    else jump();
+  });
+  var st4watch = setInterval(function(){ if(done[2] && !done[3]) armGhost(); }, 600);
+
+  /* --- Reset --- */
+  document.getElementById('resetBtn').addEventListener('click', function(){ location.reload(); });
+
+  refresh();
+})();
+</script>
+</body>
+</html>
