@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JJ20 · 3D 舞台模型 — 可旋转的舞台</title>
+<style>
+  :root{ --violet:#c89bff; --txt:#f2eefc; --dim:#9a93ad; }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;background:#040409;color:var(--txt);overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+  #scene{position:fixed;inset:0}
+  canvas{display:block}
+  .ui{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:space-between;
+    pointer-events:none;padding:20px 16px calc(16px + env(safe-area-inset-bottom))}
+  .top{text-align:center}
+  .kicker{font-size:10.5px;letter-spacing:.4em;color:var(--violet);text-transform:uppercase}
+  .top h1{font-size:21px;font-weight:800;margin-top:7px;text-shadow:0 2px 18px rgba(0,0,0,.85)}
+  .top p{color:var(--dim);font-size:11.5px;margin-top:5px;text-shadow:0 1px 8px rgba(0,0,0,.9)}
+  .bottom{pointer-events:auto}
+  .now{text-align:center;margin-bottom:11px;text-shadow:0 2px 14px rgba(0,0,0,.85)}
+  .now b{font-size:16px}
+  .now span{display:block;color:var(--dim);font-size:11.5px;margin-top:2px}
+  .btns{display:flex;gap:8px;justify-content:flex-start;overflow-x:auto;padding:2px 2px 6px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .btns::-webkit-scrollbar{display:none}
+  .btns button{flex:0 0 auto;appearance:none;cursor:pointer;border-radius:999px;
+    padding:10px 16px;font-size:13.5px;color:var(--txt);
+    background:rgba(16,14,26,.72);border:1px solid rgba(200,155,255,.32);
+    backdrop-filter:blur(8px);transition:all .25s}
+  .btns button.on{border-color:var(--violet);background:rgba(139,92,246,.35);
+    box-shadow:0 0 18px rgba(139,92,246,.45);color:#fff}
+  .btns button.climax{border-color:rgba(255,183,222,.55)}
+  .btns button.climax.on{background:rgba(190,90,160,.4);box-shadow:0 0 20px rgba(255,150,210,.5)}
+  .foot{text-align:center;color:#5f5970;font-size:10.5px;margin-top:7px;line-height:1.6}
+  .err{position:fixed;inset:0;display:none;place-items:center;text-align:center;padding:24px;color:var(--dim);font-size:14px;line-height:1.8}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div class="err" id="err">这个页面需要 WebGL 才能显示 3D 舞台，<br>换个浏览器（Safari / Chrome）打开试试。</div>
+
+<div class="ui">
+  <div class="top">
+    <div class="kicker">JJ20 · 3D Stage Model</div>
+    <h1>林俊杰演唱会 · 3D 舞台模型</h1>
+    <p>2023.12.09 · 南宁 · 广西体育中心 — 结构按粉丝实拍对版</p>
+  </div>
+  <div class="bottom">
+    <div class="now"><b id="nowTitle">开场 · JJ20</b><span id="nowSub">宽横主屏 + 长延伸台 + 粉紫激光 + 紫海</span></div>
+    <div class="btns" id="btns">
+      <button data-mode="open" class="on">🎤 开场</button>
+      <button data-mode="jiangnan">🌧 江南</button>
+      <button data-mode="millennium">✨ 一千年以后</button>
+      <button data-mode="tasay">🌙 她说</button>
+      <button data-mode="request">🎹 点歌</button>
+      <button data-mode="story" class="climax">💜 将故事写成我们</button>
+    </div>
+    <p class="foot">粉丝自制 3D 模型（结构参考，非一比一复刻）· 单指拖动旋转 · 双指缩放 · 大屏终幕 = 她在 JJ20 现场的原图</p>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "./three.module.min.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from './OrbitControls.js';
+
+try { init(); } catch(e){ document.getElementById('err').style.display = 'grid'; console.error(e); }
+
+function init(){
+  var container = document.getElementById('scene');
+  var renderer = new THREE.WebGLRenderer({ antialias:true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x040409);
+  scene.fog = new THREE.Fog(0x040409, 34, 78);
+
+  var camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.set(7.5, 6.4, 27);
+
+  var controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 3.2, -2);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.maxPolarAngle = Math.PI * 0.52;
+  controls.minDistance = 9; controls.maxDistance = 46;
+  controls.autoRotate = true; controls.autoRotateSpeed = 0.55;
+  renderer.domElement.addEventListener('pointerdown', function(){ controls.autoRotate = false; }, { once:true });
+
+  scene.add(new THREE.AmbientLight(0x8877bb, 0.55));
+  var stageLight = new THREE.PointLight(0x8b5cf6, 900, 60, 1.9);
+  stageLight.position.set(0, 9, -4);
+  scene.add(stageLight);
+  var tipSpot = new THREE.SpotLight(0xdde6ff, 0, 40, 0.5, 0.6, 1.2);
+  tipSpot.position.set(0, 10, -6);
+  tipSpot.target.position.set(0, 1, 11.5);
+  scene.add(tipSpot); scene.add(tipSpot.target);
+
+  var darkMat = new THREE.MeshStandardMaterial({ color:0x14121e, roughness:0.85, metalness:0.25 });
+  var frameMat = new THREE.MeshStandardMaterial({ color:0x0a0a12, roughness:0.6, metalness:0.5 });
+
+  // ---------- ground ----------
+  var ground = new THREE.Mesh(new THREE.PlaneGeometry(90, 90),
+    new THREE.MeshStandardMaterial({ color:0x06060c, roughness:1 }));
+  ground.rotation.x = -Math.PI / 2; ground.position.y = -0.02;
+  scene.add(ground);
+
+  // ---------- deck ----------
+  var deck = new THREE.Mesh(new THREE.BoxGeometry(19, 1, 6.4), darkMat);
+  deck.position.set(0, 0.5, -6);
+  scene.add(deck);
+  var deckEdge = new THREE.Mesh(new THREE.BoxGeometry(19, 0.08, 0.08),
+    new THREE.MeshBasicMaterial({ color:0x8b5cf6 }));
+  deckEdge.position.set(0, 0.98, -2.85);
+  scene.add(deckEdge);
+  // colourful front light strip （台口灯带）
+  var stripCols = [0x6eaaFF, 0xff96d2, 0xffd76e, 0x8cffB4].map(function(c){ return new THREE.Color(c); });
+  var stripDots = [];
+  for(var sd = 0; sd < 18; sd++){
+    var sdot = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 8),
+      new THREE.MeshBasicMaterial({ color: stripCols[sd % 4] }));
+    sdot.position.set(-8.5 + sd * (17 / 17), 0.82, -2.78);
+    scene.add(sdot); stripDots.push(sdot);
+  }
+
+  // ---------- screens ----------
+  function makeCanvas(w, h){ var c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+  var mainCanvas = makeCanvas(1024, 480);
+  var mainCtx = mainCanvas.getContext('2d');
+  var mainTex = new THREE.CanvasTexture(mainCanvas);
+  mainTex.colorSpace = THREE.SRGBColorSpace;
+
+  var SCR = {
+    open:      { a:'#3e2078', b:'#100826', t:'JJ20', s:'林俊杰 · JJ20 世界巡回', tc:'#ffffff' },
+    jiangnan:  { a:'#16346e', b:'#060e28', t:'江 南', s:'烟雨里的一把伞', tc:'#dbeafe' },
+    millennium:{ a:'#6e4614', b:'#221204', t:'一千年以后', s:'因为在一千年以后', tc:'#fff7e0' },
+    tasay:     { a:'#602c4a', b:'#1a0a18', t:'她 说', s:'她静悄悄地来过', tc:'#ffeef6' },
+    request:   { a:'#0a0e22', b:'#04050c', t:'翅 膀', s:'点歌环节 · 害怕', tc:'#cdd8ff' },
+    story:     { a:'#502484', b:'#14082c', t:'将故事写成我们', s:'JJ20 · 彼此圆满 You complete me', tc:'#ffffff' }
+  };
+  function drawScreen(key){
+    var d = SCR[key], g = mainCtx.createLinearGradient(0, 0, 0, 480);
+    g.addColorStop(0, d.a); g.addColorStop(1, d.b);
+    mainCtx.fillStyle = g; mainCtx.fillRect(0, 0, 1024, 480);
+    mainCtx.strokeStyle = 'rgba(255,255,255,.20)'; mainCtx.lineWidth = 3;
+    for(var wy = 0; wy < 3; wy++){
+      mainCtx.beginPath();
+      for(var wx = 0; wx <= 1024; wx += 16){
+        var wyy = 330 + wy * 42 + Math.sin(wx * 0.012 + wy * 2.1) * 13;
+        if(wx === 0) mainCtx.moveTo(wx, wyy); else mainCtx.lineTo(wx, wyy);
+      }
+      mainCtx.stroke();
+    }
+    mainCtx.textAlign = 'center';
+    mainCtx.fillStyle = d.tc;
+    mainCtx.shadowColor = 'rgba(160,110,255,.95)'; mainCtx.shadowBlur = 34;
+    mainCtx.font = '800 ' + (d.t.length > 5 ? 92 : 128) + 'px "PingFang SC", sans-serif';
+    mainCtx.fillText(d.t, 512, 218);
+    mainCtx.shadowBlur = 0;
+    mainCtx.font = '500 40px "PingFang SC", sans-serif';
+    mainCtx.fillStyle = 'rgba(255,255,255,.78)';
+    mainCtx.fillText(d.s, 512, 292);
+    mainTex.needsUpdate = true;
+  }
+  drawScreen('open');
+
+  var screenFrame = new THREE.Mesh(new THREE.BoxGeometry(15.2, 7.3, 0.35), frameMat);
+  screenFrame.position.set(0, 4.7, -9.55);
+  scene.add(screenFrame);
+  var mainScreen = new THREE.Mesh(new THREE.PlaneGeometry(14.6, 6.85),
+    new THREE.MeshBasicMaterial({ map: mainTex }));
+  mainScreen.position.set(0, 4.7, -9.35);
+  scene.add(mainScreen);
+
+  // photo texture for the finale (falls back to canvas if it cannot load)
+  var photoTex = null;
+  new THREE.TextureLoader().load(
+    'https://www.teslaxg.top/birthday/concert/img/jj20-2023-12-09-1.jpg',
+    function(tex){ tex.colorSpace = THREE.SRGBColorSpace; photoTex = tex; if(modeKey === 'story') applyScreen(); },
+    undefined, function(){ photoTex = null; }
+  );
+  function applyScreen(){
+    if(modeKey === 'story' && photoTex){ mainScreen.material.map = photoTex; }
+    else { drawScreen(modeKey); mainScreen.material.map = mainTex; }
+    mainScreen.material.needsUpdate = true;
+  }
+
+  // side screens
+  function sideTexture(){
+    var c = makeCanvas(360, 540), x = c.getContext('2d');
+    var g = x.createLinearGradient(0, 0, 0, 540);
+    g.addColorStop(0, '#3a1c6e'); g.addColorStop(1, '#0d0620');
+    x.fillStyle = g; x.fillRect(0, 0, 360, 540);
+    x.textAlign = 'center'; x.fillStyle = '#fff';
+    x.font = '800 74px "PingFang SC", sans-serif';
+    x.shadowColor = 'rgba(170,120,255,.9)'; x.shadowBlur = 22;
+    x.fillText('JJ', 180, 250); x.fillText('20', 180, 335);
+    var t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  }
+  var sideTex = sideTexture();
+  [-1, 1].forEach(function(side){
+    var fr = new THREE.Mesh(new THREE.BoxGeometry(3.9, 5.9, 0.3), frameMat);
+    fr.position.set(side * 9.3, 4.3, -8.7); fr.rotation.y = -side * 0.42;
+    scene.add(fr);
+    var sc = new THREE.Mesh(new THREE.PlaneGeometry(3.5, 5.5),
+      new THREE.MeshBasicMaterial({ map: sideTex }));
+    sc.position.set(side * 9.13, 4.3, -8.52); sc.rotation.y = -side * 0.42;
+    scene.add(sc);
+  });
+
+  // ---------- truss + towers ----------
+  var truss = new THREE.Mesh(new THREE.BoxGeometry(17.5, 0.45, 0.45), frameMat);
+  truss.position.set(0, 8.75, -8.9);
+  scene.add(truss);
+  [-1, 1].forEach(function(side){
+    var tower = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8.8, 0.5), frameMat);
+    tower.position.set(side * 9.0, 4.4, -8.7);
+    scene.add(tower);
+  });
+
+  // ---------- beams ----------
+  var beamMat = new THREE.MeshBasicMaterial({ color:0xc89bff, transparent:true, opacity:0.13,
+    blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide, fog:false });
+  var beams = [];
+  for(var bi = 0; bi < 6; bi++){
+    var geo = new THREE.ConeGeometry(1.9, 11.5, 20, 1, true);
+    geo.translate(0, -5.75, 0);
+    var cone = new THREE.Mesh(geo, beamMat);
+    cone.position.set(-6.2 + bi * 2.5, 8.5, -8.9);
+    scene.add(cone); beams.push(cone);
+  }
+  // runway tip spotlight cone
+  var spotMat = new THREE.MeshBasicMaterial({ color:0xfff2d8, transparent:true, opacity:0.0,
+    blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide, fog:false });
+  var spotGeo = new THREE.ConeGeometry(2.6, 10.5, 20, 1, true); spotGeo.translate(0, -5.25, 0);
+  var spotCone = new THREE.Mesh(spotGeo, spotMat);
+  spotCone.position.set(0, 9.6, 2.5); spotCone.rotation.x = 0.62;
+  scene.add(spotCone);
+
+  // ---------- lasers ----------
+  var laserMat = new THREE.LineBasicMaterial({ color:0xf0abfc, transparent:true, opacity:0.0,
+    blending:THREE.AdditiveBlending, fog:false });
+  var laserPts = [];
+  [-1, 1].forEach(function(side){
+    for(var li = 0; li < 4; li++){
+      laserPts.push(new THREE.Vector3(side * 9.0, 6.6, -8.6));
+      laserPts.push(new THREE.Vector3(-side * (2.5 + li * 1.9), 12.5 + li * 0.4, -11 - li));
+    }
+  });
+  var laserGeo = new THREE.BufferGeometry().setFromPoints(laserPts);
+  var lasers = new THREE.LineSegments(laserGeo, laserMat);
+  scene.add(lasers);
+
+  // ---------- runway + sub-stage ----------
+  var runway = new THREE.Mesh(new THREE.BoxGeometry(3.4, 0.72, 13.5), darkMat);
+  runway.position.set(0, 0.36, 3.9);
+  scene.add(runway);
+  var subStage = new THREE.Mesh(new THREE.CylinderGeometry(2.9, 2.9, 0.72, 36), darkMat);
+  subStage.position.set(0, 0.36, 11.6);
+  scene.add(subStage);
+  var edgeMat = new THREE.MeshBasicMaterial({ color:0xb78bfa });
+  for(var ei = 0; ei <= 10; ei++){
+    [-1, 1].forEach(function(side){
+      var dot = new THREE.Mesh(new THREE.SphereGeometry(0.085, 8, 8), edgeMat);
+      dot.position.set(side * 1.62, 0.78, -2.4 + ei * 1.28);
+      scene.add(dot);
+    });
+  }
+  for(var ri = 0; ri < 14; ri++){
+    var ra = (ri / 14) * Math.PI * 2;
+    var rdot = new THREE.Mesh(new THREE.SphereGeometry(0.085, 8, 8), edgeMat);
+    rdot.position.set(Math.cos(ra) * 2.78, 0.78, 11.6 + Math.sin(ra) * 2.78);
+    scene.add(rdot);
+  }
+  // mic stand at the tip
+  var micGroup = new THREE.Group();
+  var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.5, 8),
+    new THREE.MeshStandardMaterial({ color:0x05050a, roughness:0.4 }));
+  pole.position.y = 0.75; micGroup.add(pole);
+  var micHead = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 10),
+    new THREE.MeshStandardMaterial({ color:0x111118, roughness:0.35 }));
+  micHead.position.y = 1.55; micGroup.add(micHead);
+  micGroup.position.set(0, 0.72, 11.6);
+  scene.add(micGroup);
+
+  // crystal piano (request segment) — hidden unless that mode
+  var piano = new THREE.Group();
+  var pianoMat = new THREE.MeshStandardMaterial({ color:0x0a0a14, roughness:0.25, metalness:0.4 });
+  var pBody = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.22, 1.05), pianoMat); pBody.position.y = 0.62; piano.add(pBody);
+  var pLid = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.05, 1.0), pianoMat);
+  pLid.position.set(0, 0.95, -0.22); pLid.rotation.x = -0.5; piano.add(pLid);
+  var pKeys = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.05, 0.2),
+    new THREE.MeshBasicMaterial({ color:0xeef2ff }));
+  pKeys.position.set(0, 0.66, 0.56); piano.add(pKeys);
+  [-0.7, 0.7].forEach(function(lx){ var leg = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.55, 0.09), pianoMat); leg.position.set(lx, 0.28, 0.3); piano.add(leg); });
+  var leg3 = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.55, 0.09), pianoMat); leg3.position.set(0, 0.28, -0.35); piano.add(leg3);
+  piano.position.set(0, 0.72, 11.6);
+  piano.visible = false;
+  scene.add(piano);
+
+  // ---------- light sea ----------
+  var SEA_N = 1500;
+  var seaPos = new Float32Array(SEA_N * 3);
+  var seaCol = new Float32Array(SEA_N * 3);
+  var seaBase = new Float32Array(SEA_N * 2); // x, z kept for the wave
+  var seaPalette = [new THREE.Color(0xba8cff), new THREE.Color(0xdcc2ff), new THREE.Color(0x9664f0)];
+  for(var si = 0; si < SEA_N; si++){
+    var sx, sz;
+    var zone = Math.random();
+    if(zone < 0.42){ sx = -15 + Math.random() * 11.2; sz = -2 + Math.random() * 17; }
+    else if(zone < 0.84){ sx = 3.8 + Math.random() * 11.2; sz = -2 + Math.random() * 17; }
+    else { sx = -15 + Math.random() * 30; sz = 15 + Math.random() * 6; }
+    seaPos[si * 3] = sx; seaPos[si * 3 + 1] = 0.55; seaPos[si * 3 + 2] = sz;
+    seaBase[si * 2] = sx; seaBase[si * 2 + 1] = sz;
+    var cc = seaPalette[(Math.random() * 3) | 0];
+    seaCol[si * 3] = cc.r; seaCol[si * 3 + 1] = cc.g; seaCol[si * 3 + 2] = cc.b;
+  }
+  var seaGeo = new THREE.BufferGeometry();
+  seaGeo.setAttribute('position', new THREE.BufferAttribute(seaPos, 3));
+  seaGeo.setAttribute('color', new THREE.BufferAttribute(seaCol, 3));
+  // soft round glow sprite so near points read as light dots, not squares
+  var dotCanvas = makeCanvas(64, 64);
+  var dctx = dotCanvas.getContext('2d');
+  var dg2 = dctx.createRadialGradient(32, 32, 2, 32, 32, 30);
+  dg2.addColorStop(0, 'rgba(255,255,255,1)');
+  dg2.addColorStop(0.45, 'rgba(255,255,255,.75)');
+  dg2.addColorStop(1, 'rgba(255,255,255,0)');
+  dctx.fillStyle = dg2; dctx.fillRect(0, 0, 64, 64);
+  var dotTex = new THREE.CanvasTexture(dotCanvas);
+  var seaMat = new THREE.PointsMaterial({ size:0.36, map:dotTex, vertexColors:true, transparent:true, opacity:0.95,
+    blending:THREE.AdditiveBlending, depthWrite:false, sizeAttenuation:true });
+  var sea = new THREE.Points(seaGeo, seaMat);
+  scene.add(sea);
+
+  // ---------- confetti (purple paper rain) ----------
+  var CONF_N = 260;
+  var confPos = new Float32Array(CONF_N * 3);
+  var confCol = new Float32Array(CONF_N * 3);
+  var confPalette = [new THREE.Color(0xc89bff), new THREE.Color(0xffb7de), new THREE.Color(0xffffff), new THREE.Color(0x9678fa)];
+  for(var ci = 0; ci < CONF_N; ci++){
+    confPos[ci * 3] = -13 + Math.random() * 26;
+    confPos[ci * 3 + 1] = Math.random() * 16;
+    confPos[ci * 3 + 2] = -9 + Math.random() * 22;
+    var c2 = confPalette[(Math.random() * 4) | 0];
+    confCol[ci * 3] = c2.r; confCol[ci * 3 + 1] = c2.g; confCol[ci * 3 + 2] = c2.b;
+  }
+  var confGeo = new THREE.BufferGeometry();
+  confGeo.setAttribute('position', new THREE.BufferAttribute(confPos, 3));
+  confGeo.setAttribute('color', new THREE.BufferAttribute(confCol, 3));
+  var confMat = new THREE.PointsMaterial({ size:0.17, vertexColors:true, transparent:true, opacity:0,
+    blending:THREE.AdditiveBlending, depthWrite:false });
+  var confetti = new THREE.Points(confGeo, confMat);
+  scene.add(confetti);
+
+  // ---------- modes ----------
+  var MODES = {
+    open:      { beam:new THREE.Color(0xc89bff), beamOp:0.13, laser:0.55, wave:0.55, seaOp:0.95, glow:new THREE.Color(0x8b5cf6) },
+    jiangnan:  { beam:new THREE.Color(0x78b4ff), beamOp:0.10, laser:0.0,  wave:0.35, seaOp:0.9,  glow:new THREE.Color(0x5082ff) },
+    millennium:{ beam:new THREE.Color(0xffcd6e), beamOp:0.14, laser:0.4,  wave:0.6,  seaOp:0.95, glow:new THREE.Color(0xffb450) },
+    tasay:     { beam:new THREE.Color(0xffbed7), beamOp:0.09, laser:0.0,  wave:0.3,  seaOp:0.85, glow:new THREE.Color(0xffa0c8) },
+    request:   { beam:new THREE.Color(0x96aaff), beamOp:0.015, laser:0.0, wave:0.12, seaOp:0.4,  glow:new THREE.Color(0x8296ff) },
+    story:     { beam:new THREE.Color(0xd896ff), beamOp:0.16, laser:0.6,  wave:1.0,  seaOp:1.0,  glow:new THREE.Color(0xbe78ff) }
+  };
+  var LABELS = {
+    open: ['开场 · JJ20', '宽横主屏 + 长延伸台 + 粉紫激光 + 紫海'],
+    jiangnan: ['江南', '蓝调时刻 · 从这个角度看，雨丝落在光束里'],
+    millennium: ['一千年以后', '金色时刻 · 光束和激光一起亮'],
+    tasay: ['她说', '粉白慢光 · 转到侧面看看副屏'],
+    request: ['点歌环节', '暗场 + 水晶钢琴——南宁的帖子里，点到的是《翅膀》和《害怕》'],
+    story: ['将故事写成我们', '终幕：大屏亮出她在 JJ20 的照片 · 紫纸片雨落下']
+  };
+  var modeKey = 'open';
+  var nowTitle = document.getElementById('nowTitle');
+  var nowSub = document.getElementById('nowSub');
+  var btns = document.querySelectorAll('#btns button[data-mode]');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = b.dataset.mode;
+      if(k === modeKey) return;
+      modeKey = k;
+      btns.forEach(function(x){ x.classList.toggle('on', x === b); });
+      nowTitle.textContent = LABELS[k][0];
+      nowSub.textContent = LABELS[k][1];
+      piano.visible = (k === 'request');
+      micGroup.visible = (k !== 'request');
+      tipSpot.intensity = (k === 'request') ? 1500 : 0;
+      applyScreen();
+    });
+  });
+
+  window.addEventListener('resize', function(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  var clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    var t = clock.getElapsedTime();
+    var M = MODES[modeKey];
+
+    // eased look changes
+    beamMat.color.lerp(M.beam, 0.045);
+    beamMat.opacity += (M.beamOp - beamMat.opacity) * 0.045;
+    laserMat.opacity += ((M.laser * (0.75 + 0.25 * Math.sin(t * 2.3))) - laserMat.opacity) * 0.08;
+    seaMat.opacity += (M.seaOp - seaMat.opacity) * 0.045;
+    stageLight.color.lerp(M.glow, 0.045);
+    spotMat.opacity += (((modeKey === 'request' || modeKey === 'tasay') ? 0.10 : 0.02) - spotMat.opacity) * 0.05;
+
+    // beams sway
+    for(var i = 0; i < beams.length; i++){
+      beams[i].rotation.z = Math.sin(t * 0.7 + i * 1.13) * 0.16;
+      beams[i].rotation.x = Math.cos(t * 0.55 + i * 0.7) * 0.07;
+    }
+    // light strip chase
+    for(var d = 0; d < stripDots.length; d++){
+      stripDots[d].material.color.copy(stripCols[(d + Math.floor(t * 2.2)) % 4]);
+    }
+    // sea wave （人浪）
+    var pos = seaGeo.attributes.position.array;
+    var amp = M.wave;
+    for(var p = 0; p < SEA_N; p++){
+      var x = seaBase[p * 2], z = seaBase[p * 2 + 1];
+      pos[p * 3 + 1] = 0.55 + Math.max(0, Math.sin(x * 0.45 - t * 2.1 + z * 0.30)) * 0.34 * amp
+                     + Math.sin(t * 1.7 + p) * 0.03;
+    }
+    seaGeo.attributes.position.needsUpdate = true;
+    // confetti in story mode
+    var targetConf = (modeKey === 'story') ? 0.95 : 0.0;
+    confMat.opacity += (targetConf - confMat.opacity) * 0.03;
+    if(confMat.opacity > 0.03){
+      var cp = confGeo.attributes.position.array;
+      for(var q = 0; q < CONF_N; q++){
+        cp[q * 3 + 1] -= 0.028 + (q % 5) * 0.004;
+        cp[q * 3] += Math.sin(t * 2 + q) * 0.008;
+        if(cp[q * 3 + 1] < 0.1){ cp[q * 3 + 1] = 13 + Math.random() * 3; }
+      }
+      confGeo.attributes.position.needsUpdate = true;
+    }
+
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+}
+</script>
+</body>
+</html>
