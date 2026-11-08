@@ -428,11 +428,11 @@ void loop() {
   if (!a && k0Was && k0Down && now - k0Down > 1200) {   // K0 长按松开 → 抽签
     fortuneIdx = esp_random() % 7; page = P_FORTUNE; drawPage(); lastPage = now; k0Down = 0;
   } else if (anyPress) {                                 // 短按 → 下一页（抽签页按任意键回开场）
-    if (page == P_FORTUNE) page = P_FACE; else page = (page + 1) % P_NUM;
+    if (page == P_FORTUNE) page = P_FACE; else page = (page + 1) % P_FORTUNE;  // 轮播只循环 0–5 页，抽签页不进轮播
     drawPage(); lastPage = now;
   }
   k0Was = a; k1Was = b; k2Was = c;
-  if (page != P_FORTUNE && now - lastPage > PAGE_MS) { page = (page + 1) % P_NUM; lastPage = now; drawPage(); }
+  if (page != P_FORTUNE && now - lastPage > PAGE_MS) { page = (page + 1) % P_FORTUNE; lastPage = now; drawPage(); }  // 同上：自动轮播跳过抽签页
   if (page == P_FACE && now - lastBlink > 2600) {        // 待机页眨眼 + 时钟走字
     lastBlink = now; blinkState = !blinkState;
     if (blinkState || (now / 1000) % 30 < 2) drawPage();
