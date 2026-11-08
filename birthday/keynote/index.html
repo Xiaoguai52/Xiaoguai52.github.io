@@ -353,6 +353,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   var UNLOCK = new Date("2026-11-09T00:00:00+08:00").getTime();
   var qs = new URLSearchParams(location.search);
   var unlocked = qs.get("preview") === "1" || qs.get("party") === "1";
+  try { if (localStorage.getItem("xg_vip") === "1") unlocked = true; } catch (e) {}
 
   var gate = document.getElementById("gate");
   var app = document.getElementById("app");
