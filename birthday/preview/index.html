@@ -599,7 +599,6 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
 <div class="gfoot"><span class="crumb">小乖发布会</span> › 赖大宝 Pro 26<br/>本页面由小乖发布会筹备组制作 · 参会人员：张大宝、金豆豆<br/>仅供赖大宝本人观看，转发给闺蜜显摆也可以<br/>Copyright © 2026 小乖筹备组，保留所有撒娇权利 · 2026.11.09 于南宁发布</div>
 </div><!-- /#app -->
 
-<button id="celReplay" style="position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:200;background:#7b2ff7;color:#fff;border:0;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:700;box-shadow:0 8px 30px rgba(123,47,247,.5);cursor:pointer">🎉 彩带测试 · 点我放一次</button>
 <div id="bdayPop"><div class="t">🎂 生日快乐<br/>赖大宝</div></div>
 <div class="confetti" id="confetti"></div>
 <script>
@@ -868,6 +867,5 @@ b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.c
 if(a.paused){a.volume=0.35;var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
 a.addEventListener('ended',function(){b.classList.remove('on');});})();
 </script>
-<script>document.getElementById('celReplay').addEventListener('click',function(){showCelebration();});</script>
 </body>
 </html>
