@@ -98,6 +98,33 @@
     .zone:hover::after { opacity:.6; }
   }
 
+  /* V2.2 照片墙：入口封面 + 全屏 3D 环幕 + 放大查看 */
+  .wallHero { position:relative; flex:1; min-height:0; width:100%; border:0; padding:0; cursor:pointer; border-radius:1.6cqw; overflow:hidden;
+    box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 18px 50px rgba(0,0,0,.6); background:#0a0a12; display:block; }
+  .wallHero img { width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; }
+  .wallEnterBtn { position:absolute; left:50%; bottom:4cqh; transform:translateX(-50%); background:rgba(20,14,34,.82); color:#f5f5f7;
+    border:1px solid rgba(200,155,255,.5); padding:1.6cqh 3.4cqw; border-radius:999px; font-size:2cqw; font-weight:600; letter-spacing:.04em;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); white-space:nowrap; }
+  #wallOv { position:fixed; inset:0; z-index:60; background:#000; }
+  #wallCv, #wallCv canvas { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  #wallBar { position:absolute; top:0; left:0; right:0; z-index:5; display:flex; align-items:center; justify-content:space-between;
+    padding:calc(10px + env(safe-area-inset-top)) 16px 10px; color:#a1a1a6; font-size:13px; letter-spacing:.14em; pointer-events:none; }
+  #wallClose { pointer-events:auto; width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.25);
+    background:rgba(28,28,30,.8); color:#f5f5f7; font-size:16px; cursor:pointer; }
+  #wallLoad { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:#a1a1a6; font-size:14px; letter-spacing:.2em; z-index:4; white-space:nowrap; }
+  #wallHint { position:absolute; left:50%; bottom:calc(14px + env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:5;
+    color:#86868b; font-size:12.5px; letter-spacing:.08em; background:rgba(0,0,0,.45); padding:7px 14px; border-radius:999px; pointer-events:none; white-space:nowrap; }
+  #wallGrid { position:absolute; inset:0; overflow-y:auto; padding:64px 10px 20px; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; z-index:3; }
+  #wallGrid img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:6px; display:block; }
+  #wallZoom { position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.96); display:flex; align-items:center; justify-content:center; }
+  #wallZoomImg { max-width:100%; max-height:100%; object-fit:contain; }
+  .wzNav { position:absolute; top:50%; transform:translateY(-50%); width:48px; height:48px; border-radius:50%; z-index:2;
+    border:1px solid rgba(255,255,255,.25); background:rgba(28,28,30,.75); color:#f5f5f7; font-size:26px; cursor:pointer; }
+  #wzPrev { left:12px; } #wzNext { right:12px; }
+  #wzCount { position:absolute; bottom:calc(14px + env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); color:#a1a1a6; font-size:13px; font-variant-numeric:tabular-nums; }
+  #wzTip { position:absolute; top:calc(12px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); color:#86868b; font-size:12.5px; display:none; }
+  @media (orientation:portrait) and (max-width:820px) { #wzTip { display:block; } }
+
   /* V2.0 数字页：数字轻微放大入场，逐个错开 */
   @keyframes numIn { from{opacity:0; transform:scale(.93)} to{opacity:1; transform:scale(1)} }
   .slide.active .stat .n { animation:numIn .65s cubic-bezier(.2,.7,.2,1) both; }
@@ -284,7 +311,22 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       </div>
     </section>
 
-    <!-- 7 那一夜 -->
+    <!-- 7 照片墙（V2.2 新增：120 张 3D 环幕） -->
+    <section class="slide" id="wallSlide">
+      <div class="pad" style="gap:3.2cqh;">
+        <div>
+          <div class="eyebrow">Interlude · 照片墙</div>
+          <h2 class="h-big" style="margin-top:1.2cqh;">120 张，<span class="violet">都是你。</span></h2>
+          <p class="sub" style="margin-top:1.4cqh;">从 2021 到今天，一面慢慢转的墙。点开任意一张，就是那一天。</p>
+        </div>
+        <button class="wallHero" id="wallEnter" type="button" aria-label="进入照片墙">
+          <img src="../img/wall3d/c060.jpg" alt="照片墙预览" loading="lazy" decoding="async">
+          <span class="wallEnterBtn">进入照片墙 ›</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 8 那一夜 -->
     <section class="slide">
       <div class="glow" style="width:38cqw;height:38cqw;right:2cqw;top:20cqh;background:#4c1d95;"></div>
       <div class="pad" style="flex-direction:row;align-items:center;gap:5cqw;">
@@ -416,6 +458,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   document.getElementById("znext").addEventListener("click", function () { go(cur + 1); });
   document.getElementById("zprev").addEventListener("click", function () { go(cur - 1); });
   document.addEventListener("keydown", function (e) {
+    if (document.body.classList.contains("wallOpen")) return;
     if (e.key === "ArrowRight" || e.key === " ") go(cur + 1);
     if (e.key === "ArrowLeft") go(cur - 1);
   });
@@ -423,6 +466,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   document.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; }, { passive: true });
   document.addEventListener("touchend", function (e) {
     if (tx === null) return;
+    if (document.body.classList.contains("wallOpen")) { tx = null; return; }
     var dx = e.changedTouches[0].clientX - tx;
     if (Math.abs(dx) > 48) go(cur + (dx < 0 ? 1 : -1));
     tx = null;
@@ -486,6 +530,20 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     },200);
   })();
 </script>
+<div id="wallOv" hidden>
+  <div id="wallCv"></div>
+  <div id="wallGrid" hidden></div>
+  <div id="wallBar"><span>照片墙 · 120 张</span><button id="wallClose" type="button" aria-label="关闭照片墙">✕</button></div>
+  <div id="wallLoad">正在展开照片墙…</div>
+  <div id="wallHint">拖动旋转 · 点一张放大</div>
+</div>
+<div id="wallZoom" hidden>
+  <img id="wallZoomImg" alt="放大的照片">
+  <button class="wzNav" id="wzPrev" type="button" aria-label="上一张">‹</button>
+  <button class="wzNav" id="wzNext" type="button" aria-label="下一张">›</button>
+  <div id="wzTip">横过手机看，更大</div>
+  <div id="wzCount"></div>
+</div>
 <!-- 音乐接口（V2.0 预留）：待接入音频文件后填 src；当前无源，点击仅切换按钮状态。切勿接入 concert/audio/ 下的旧语音文件。 -->
 <audio id="bgm" src="../bgm.mp3" loop preload="none"></audio>
 <button id="bgmBtn" type="button" aria-label="背景音乐开关" title="背景音乐">&#9834;</button>
@@ -499,6 +557,134 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
 b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.classList.toggle('on');return;}
 if(a.paused){a.volume=0.35;var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
 a.addEventListener('ended',function(){b.classList.remove('on');});})();
+</script>
+<script src="../js/three.min.js"></script>
+<script>
+/* V2.2 照片墙：三层环幕（three.js），拖动旋转+惯性自转，点按放大；WebGL 不可用时降级为网格 */
+(function(){
+  var N=120, files=[];
+  for(var i=1;i<=N;i++){ files.push('../img/wall3d/c'+('00'+i).slice(-3)+'.jpg'); }
+  var ov=document.getElementById('wallOv'), cv=document.getElementById('wallCv'),
+      grid=document.getElementById('wallGrid'), loadEl=document.getElementById('wallLoad'),
+      zoom=document.getElementById('wallZoom'), zoomImg=document.getElementById('wallZoomImg'),
+      wzCount=document.getElementById('wzCount');
+  var built=false, mode=null, renderer=null, scene=null, camera=null, group=null, raf=null, meshes=[];
+  var rotY=0, vel=0.0009, dragging=false, lastX=0, downX=0, downY=0, downT=0, zi=0;
+
+  function openZoom(i){
+    zi=(i+N)%N; zoomImg.src=files[zi]; wzCount.textContent=(zi+1)+' / '+N; zoom.hidden=false;
+  }
+  function closeZoom(){ zoom.hidden=true; }
+  document.getElementById('wzPrev').addEventListener('click',function(e){ e.stopPropagation(); openZoom(zi-1); });
+  document.getElementById('wzNext').addEventListener('click',function(e){ e.stopPropagation(); openZoom(zi+1); });
+  zoom.addEventListener('click',function(){ closeZoom(); });
+  document.addEventListener('keydown',function(e){
+    if(ov.hidden) return;
+    if(e.key==='Escape'){ if(!zoom.hidden)closeZoom(); else closeWall(); }
+    if(!zoom.hidden){ if(e.key==='ArrowRight')openZoom(zi+1); if(e.key==='ArrowLeft')openZoom(zi-1); }
+  });
+
+  function buildGrid(){
+    mode='grid'; loadEl.style.display='none'; grid.hidden=false;
+    if(grid.childElementCount) return;
+    files.forEach(function(f,i){
+      var im=document.createElement('img'); im.src=f; im.loading='lazy'; im.alt='照片 '+(i+1);
+      im.addEventListener('click',function(){ openZoom(i); });
+      grid.appendChild(im);
+    });
+  }
+
+  function buildGL(){
+    renderer=new THREE.WebGLRenderer({antialias:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    renderer.setSize(innerWidth,innerHeight);
+    cv.appendChild(renderer.domElement);
+    scene=new THREE.Scene(); scene.background=new THREE.Color(0x000000);
+    scene.fog=new THREE.Fog(0x000000, 30, 62);
+    camera=new THREE.PerspectiveCamera(68, innerWidth/innerHeight, 0.1, 120);
+    camera.position.set(0,0,0.5);
+    group=new THREE.Group(); scene.add(group);
+    var R=21, PW=3.15, PH=4.45, layers=[5.7,0,-5.7], per=40, loaded=0;
+    var manager=new THREE.LoadingManager();
+    manager.onLoad=function(){ loadEl.style.display='none'; };
+    setTimeout(function(){ loadEl.style.display='none'; }, 8000);
+    var loader=new THREE.TextureLoader(manager);
+    for(var l=0;l<3;l++){
+      for(var k=0;k<per;k++){
+        var idx=l*per+k, ang=(k/per)*Math.PI*2 + (l%2? Math.PI/per : 0);
+        var mesh=new THREE.Mesh(new THREE.PlaneGeometry(PW,PH), new THREE.MeshBasicMaterial({color:0x14141c}));
+        mesh.position.set(Math.sin(ang)*R, layers[l], -Math.cos(ang)*R);
+        mesh.lookAt(0, layers[l], 0);
+        mesh.userData.idx=idx;
+        group.add(mesh); meshes.push(mesh);
+        (function(m, src){
+          loader.load(src, function(tex){
+            var img=tex.image, a=img.width/img.height, p=PW/PH;
+            if(a>p){ tex.repeat.x=p/a; tex.offset.x=(1-tex.repeat.x)/2; }
+            else { tex.repeat.y=a/p; tex.offset.y=(1-tex.repeat.y)/2; }
+            tex.needsUpdate=true;
+            m.material=new THREE.MeshBasicMaterial({map:tex});
+            loaded++;
+            if(loaded>=N){ loadEl.style.display='none'; }
+            else if(loaded>=40){ loadEl.style.display='none'; }
+            else { loadEl.textContent='正在展开照片墙… '+Math.round(loaded/N*100)+'%'; }
+          });
+        })(mesh, files[idx]);
+      }
+    }
+    mode='gl';
+    animate();
+  }
+
+  function animate(){
+    if(ov.hidden){ raf=null; return; }
+    raf=requestAnimationFrame(animate);
+    if(!dragging){ rotY+=vel; vel += (0.0009-vel)*0.02; }
+    group.rotation.y=rotY;
+    renderer.render(scene,camera);
+  }
+
+  var ray=new THREE.Raycaster(), ptr=new THREE.Vector2();
+  cv.addEventListener('pointerdown',function(e){
+    dragging=true; lastX=e.clientX; downX=e.clientX; downY=e.clientY; downT=Date.now(); vel=0;
+    if(cv.setPointerCapture){ try{ cv.setPointerCapture(e.pointerId); }catch(err){} }
+  });
+  cv.addEventListener('pointermove',function(e){
+    if(!dragging) return;
+    var dx=e.clientX-lastX; lastX=e.clientX;
+    rotY+=dx*0.005; vel=dx*0.005;
+  });
+  function endPointer(e){
+    if(!dragging) return; dragging=false;
+    var moved=Math.hypot(e.clientX-downX, e.clientY-downY);
+    if(moved<7 && Date.now()-downT<350 && mode==='gl'){
+      ptr.x=(e.clientX/innerWidth)*2-1; ptr.y=-(e.clientY/innerHeight)*2+1;
+      ray.setFromCamera(ptr,camera);
+      var hits=ray.intersectObjects(meshes);
+      if(hits.length) openZoom(hits[0].object.userData.idx);
+    }
+  }
+  cv.addEventListener('pointerup',endPointer);
+  cv.addEventListener('pointercancel',function(){ dragging=false; });
+  window.addEventListener('resize',function(){
+    if(mode==='gl'&&renderer){ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); }
+  });
+
+  function openWall(){
+    ov.hidden=false; document.body.classList.add('wallOpen');
+    if(!built){
+      built=true;
+      var ok=false;
+      try{ ok=!!(window.THREE && window.WebGLRenderingContext); }catch(e){ ok=false; }
+      if(ok){ try{ buildGL(); }catch(e){ buildGrid(); } } else { buildGrid(); }
+    } else if(mode==='gl' && !raf){ animate(); }
+  }
+  function closeWall(){
+    ov.hidden=true; document.body.classList.remove('wallOpen'); closeZoom();
+  }
+  document.getElementById('wallEnter').addEventListener('click',openWall);
+  document.getElementById('wallClose').addEventListener('click',closeWall);
+})();
 </script>
 </body>
 </html>
