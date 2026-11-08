@@ -166,6 +166,10 @@ a{color:#2997ff;}
 .gfoot{border-top:1px solid rgba(255,255,255,.12);color:#86868b;}
 .finale p .nw{white-space:nowrap;}
 </style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
 </head>
 <body>
 <div class="subnav">生日特别场<span class="r">第一站 · 今晚的发布会</span></div>
@@ -200,7 +204,7 @@ a{color:#2997ff;}
     </div>
 
     <div class="cakeCard rv">
-      <img src="img/cake-purple.jpg" alt="葡萄紫生日蛋糕，小龙坐在上面">
+      <img src="img/cake-purple.jpg" alt="葡萄紫生日蛋糕，小龙坐在上面" loading="lazy" decoding="async">
       <div class="bd">
         <h3>蛋糕</h3>
         <p>六寸，<b>葡萄紫</b>——JJ 的应援色。上面有一条小龙（属龙限定），和一副小耳机。字只有一句：<b>赖大宝，26 岁生日快乐</b>。</p>
@@ -208,7 +212,7 @@ a{color:#2997ff;}
     </div>
 
     <div class="cakeCard rv">
-      <img src="img/giftbox.jpg" alt="黑金礼盒" style="aspect-ratio:1.35;">
+      <img src="img/giftbox.jpg" alt="黑金礼盒" style="aspect-ratio:1.35;" loading="lazy" decoding="async">
       <div class="bd">
         <div style="font-size:13px;font-weight:600;color:#2997ff;letter-spacing:.04em;">同场加映</div>
         <h3 style="margin-top:6px;">One More Thing</h3>
@@ -236,11 +240,11 @@ a{color:#2997ff;}
     </div>
 
     <div class="bigphoto rv">
-      <img src="img/jj20-2023-12-09-1.jpg" alt="JJ20 南宁场">
+      <img src="img/jj20-2023-12-09-1.jpg" alt="JJ20 南宁场" loading="lazy" decoding="async">
       <div class="cap"><div class="t">2023.12.09 · 南宁 · JJ20</div><div class="d">你最爱的那一场。</div></div>
     </div>
     <div class="bigphoto rv">
-      <img src="img/concert-2023-06-25-1.jpg" alt="第一场演唱会的赖欣闻">
+      <img src="img/concert-2023-06-25-1.jpg" alt="第一场演唱会的赖欣闻" loading="lazy" decoding="async">
       <div class="cap"><div class="t">2023.06.25 · 武汉 · 五月天</div><div class="d">第一场，你举着紫色的光。</div></div>
     </div>
   </section>
@@ -255,7 +259,7 @@ a{color:#2997ff;}
   </section>
 
     <div class="cakeCard rv" style="margin-top:88px;">
-      <img src="img/doudou.jpg" alt="金豆豆">
+      <img src="img/doudou.jpg" alt="金豆豆" loading="lazy" decoding="async">
       <div class="bd">
         <div style="font-size:13px;font-weight:600;color:#2997ff;letter-spacing:.04em;">特别观众</div>
         <h3 style="margin-top:6px;">金豆豆</h3>
