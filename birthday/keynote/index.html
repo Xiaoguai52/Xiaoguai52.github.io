@@ -100,6 +100,19 @@
   .fin { opacity:0; }
   .slide.active .fin { animation:finIn .85s cubic-bezier(.2,.7,.2,1) both; animation-delay:var(--d,0s); }
   @keyframes finIn { from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none} }
+
+  /* 动效 2.1：每页主图极缓慢推镜——仅在页面激活时运行（9s 推近到 1.06），离开页面自动重置；回忆页随轮播逐张推（5.2s，盖住 4.5s 轮播间隔，原有淡入淡出保留） */
+  @keyframes slideZoom { from{transform:scale(1)} to{transform:scale(1.06)} }
+  .slide.active .pad>figure img,
+  .slide.active .trio img,
+  .slide.active .chipimg,
+  .slide.active .omtimg,
+  .slide.active .fullimg { animation:slideZoom 9s ease-out both; }
+  .moments figure.on img { animation:slideZoom 5.2s ease-out both; }
+  @media (prefers-reduced-motion: reduce) {
+    .slide.active .pad>figure img, .slide.active .trio img, .slide.active .chipimg,
+    .slide.active .omtimg, .slide.active .fullimg, .moments figure.on img { animation:none; }
+  }
 </style>
 <script>
 /* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
