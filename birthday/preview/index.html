@@ -643,15 +643,23 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       box.appendChild(p);
       (function(el){setTimeout(function(){el.remove();},4600);})(p);}
   }
+  function showCelebration(){
+    var pop=document.getElementById('bdayPop');
+    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},6500);}
+    [0,400,800,1200,1600,2000].forEach(function(d){setTimeout(function(){boom(55);},d);});
+  }
   function celebrate(force){
     if(!force){
       var done=false;
       try{done=localStorage.getItem('xg_celebrated_26')==='1';if(!done)localStorage.setItem('xg_celebrated_26','1');}catch(e){}
       if(done)return;
     }
-    var pop=document.getElementById('bdayPop');
-    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},4000);}
-    [0,350,700,1050,1400].forEach(function(d){setTimeout(function(){boom(55);},d);});
+    if(document.hidden){
+      var onVis=function(){if(!document.hidden){document.removeEventListener('visibilitychange',onVis);showCelebration();}};
+      document.addEventListener('visibilitychange',onVis);
+    }else{
+      showCelebration();
+    }
   }
   /* countdown gate logic */
   (function(){
