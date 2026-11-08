@@ -30,6 +30,10 @@
   .rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);}
   .rv.in{opacity:1;transform:none;}
   .rv.s1{transition-delay:.08s}.rv.s2{transition-delay:.16s}.rv.s3{transition-delay:.24s}
+  /* 动效 2.1：.rv 分化——文字块改为纯淡入，图片块改为缩放+淡入，标题类保留默认的上移淡入，形成三种节奏 */
+  .secSub.rv,.stat.rv,.dcard.rv,.arow.rv,.row.rv,.cs.rv,.caseCap.rv,.teaserTx.rv,.faq.rv{transform:none;}
+  .chipImg.rv,.caseimg.rv,.teaserImg.rv,.bleed.rv,.imgwrap.rv{transform:scale(.96);}
+  .chipImg.rv.in,.caseimg.rv.in,.teaserImg.rv.in,.bleed.rv.in,.imgwrap.rv.in{transform:scale(1);}
   /* hero — apple product-page grammar: type first, visual full-bleed */
   .hero{text-align:center;padding:58px 0 0;}
   .chap{font-size:12px;letter-spacing:4px;color:#e8b06a;font-weight:700;margin-bottom:16px;}
@@ -146,6 +150,12 @@
   .arbadge{position:absolute;right:6px;bottom:10px;background:rgba(29,29,31,.82);color:#fff;font-size:12px;font-weight:600;border-radius:999px;padding:7px 13px;backdrop-filter:blur(6px);pointer-events:none;}
   .arhint{font-size:13px;color:#a1a1a6;margin-top:10px;}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  /* 动效 2.1：产品图悬浮家族——与 pods 的 float 同语言；用独立 translate 属性实现，与 .rv 的 transform 显现互不冲突；时长/幅度/相位各不相同，避免整页齐步走 */
+  @keyframes float2{0%,100%{translate:0 0}50%{translate:0 -6px}}
+  @keyframes float3{0%,100%{translate:0 0}50%{translate:0 -5px}}
+  .chipImg{animation:float2 6.5s ease-in-out infinite;}
+  .caseSec .caseimg{animation:float3 7.5s ease-in-out -2.6s infinite;}
+  .teaserImg{animation:float2 6.5s ease-in-out -4.1s infinite;}
   .podgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 24px;margin-top:40px;text-align:center;border-top:1px solid rgba(255,255,255,.14);padding-top:28px;}
   .podgrid .pg .n{font-size:24px;font-weight:600;letter-spacing:-.3px;}
   .pg:nth-child(2) .n{font-size:21px;letter-spacing:-1px;}
@@ -670,8 +680,24 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       if(img)img.style.transform='translateY('+(p*-18).toFixed(1)+'px) scale(1.14)';
     });
   }
-  addEventListener('scroll',function(){requestAnimationFrame(plx);},{passive:true});
-  plx();
+  /* 动效 2.1：满幅照片滚动擦洗——按滚动进度给 .bleed 图加 scale 1.08→1.0（独立 scale 属性，与 plx 的视差 transform 互不冲突）；与视差共用同一个节流后的 scroll 处理，只算可见元素；prefers-reduced-motion 时关闭 */
+  var scrubOK=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bleedImgs=document.querySelectorAll('.bleed img');
+  function scrub(){
+    bleedImgs.forEach(function(img){
+      var r=img.parentElement.getBoundingClientRect();
+      if(r.bottom<0||r.top>innerHeight)return;
+      var q=(innerHeight-r.top)/(innerHeight+r.height);
+      q=Math.max(0,Math.min(1,q));
+      img.style.scale=(1.08-0.08*q).toFixed(4);
+    });
+  }
+  var scrTick=false;
+  addEventListener('scroll',function(){
+    if(scrTick)return;scrTick=true;
+    requestAnimationFrame(function(){plx();if(scrubOK)scrub();scrTick=false;});
+  },{passive:true});
+  plx();if(scrubOK)scrub();
   var pc=document.getElementById('podcard');
   pc.addEventListener('click',function(){
     if(pc.classList.contains('open'))return;
