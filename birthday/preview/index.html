@@ -478,8 +478,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     <div class="eyebrow rv">同 场 加 映</div>
     <h2 class="rv s1 gradtext">Apple Watch Series 11</h2>
     <p class="tag2 rv s2">为健康，再进一步。</p>
-    <div class="imgwrap rv s2"><a rel="ar" href="../img/watch-s11.usdz"><img src="../img/watch-s11.webp" alt="Apple Watch Series 11，葡萄紫表带" loading="lazy" decoding="async"/></a><span class="arbadge">AR · 点图看 3D</span></div>
-    <p class="arhint rv s2">点一下手表，就能像在苹果官网那样，把它放到你的桌子上转着看</p>
+    <div class="imgwrap rv s2"><img src="../img/watch-s11.webp" alt="Apple Watch Series 11，葡萄紫表带" loading="lazy" decoding="async"/></div>
     <div class="podgrid rv">
       <div class="pg"><div class="n">血压提醒</div><div class="k">高血压的苗头<br/>替张大宝盯着</div></div>
       <div class="pg"><div class="n">睡眠评分</div><div class="k">睡得好不好<br/>它比金豆豆清楚</div></div>
@@ -685,7 +684,6 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       }
       if(pv){if(goConcert())return;openGate();setTimeout(function(){gate.remove();},950);return;}
       if(diff<=0){
-        if(goConcert())return;
         openGate();celebrate(true);
         setTimeout(function(){gate.remove();},950);return;
       }
