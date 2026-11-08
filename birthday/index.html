@@ -309,7 +309,16 @@ sup{color:#86868b;}
 .gfoot{border-top:1px solid rgba(255,255,255,.12);color:#86868b;}
 .gfoot .crumb{color:#f5f5f7;}
 #featH2{font-size:31px;}
+/* V2.0 hero 入场：标题/副文案/按钮 150ms 阶梯淡入上移（复用已有 up 关键帧，不叠加新动画体系） */
+.hero .eyebrow{animation:up .7s cubic-bezier(.2,.7,.2,1) both;}
+.hero h1{animation:up .7s cubic-bezier(.2,.7,.2,1) .15s both;}
+.hero .tag{animation:up .7s cubic-bezier(.2,.7,.2,1) .3s both;}
+.hero .buyline{animation:up .7s cubic-bezier(.2,.7,.2,1) .45s both;}
 </style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
 </head>
 <body>
 <div id="gate">
@@ -363,10 +372,10 @@ sup{color:#86868b;}
   <h2 class="secT rv">亮点一览</h2>
   <p class="secSub rv s1">每一项参数，都是这六年实测出来的。</p>
   <div class="statGrid">
-    <div class="stat rv"><div class="n"><em data-count="2159">0</em> 天</div><div class="k">超长记忆，自 2020.12.11 起持续写入，从未丢失数据</div></div>
-    <div class="stat rv s1"><div class="n"><em data-count="26">0</em> 核</div><div class="k">聪明核心全速运转，日常事务、撒娇、算账样样精通</div></div>
-    <div class="stat rv s2"><div class="n">+<em data-count="200">0</em>%</div><div class="k">对金豆豆的爱同比增长，猫哥地位无猫能敌</div></div>
-    <div class="stat rv s3"><div class="n"><em data-count="5">0</em> 分钟</div><div class="k">抱抱快充回血一整天，兼容张大宝牌充电器<sup>3</sup></div></div>
+    <div class="stat rv"><div class="n"><em data-count="2159">2159</em> 天</div><div class="k">超长记忆，自 2020.12.11 起持续写入，从未丢失数据</div></div>
+    <div class="stat rv s1"><div class="n"><em data-count="26">26</em> 核</div><div class="k">聪明核心全速运转，日常事务、撒娇、算账样样精通</div></div>
+    <div class="stat rv s2"><div class="n">+<em data-count="200">200</em>%</div><div class="k">对金豆豆的爱同比增长，猫哥地位无猫能敌</div></div>
+    <div class="stat rv s3"><div class="n"><em data-count="5">5</em> 分钟</div><div class="k">抱抱快充回血一整天，兼容张大宝牌充电器<sup>3</sup></div></div>
   </div>
 </div></div>
 
@@ -374,7 +383,7 @@ sup{color:#86868b;}
   <div class="kick rv">芯 片</div>
   <h2 class="secT rv s1" style="margin-top:14px;">天蝎 A26 Pro<br/>聪明，而且记仇</h2>
   <p class="secSub rv s2">全新一代情感处理核心：<b>你对她的好，一件不落全记住</b>；<br/>你惹她生的气——也记住，但哄一下就删。</p>
-  <img class="chipImg rv s2" src="img/chip-a26.jpg" alt="天蝎 A26 Pro 芯片">
+  <img class="chipImg rv s2" src="img/chip-a26.jpg" alt="天蝎 A26 Pro 芯片" loading="lazy" decoding="async">
   <div class="dgrid">
     <div class="dcard rv"><div class="k">情感引擎</div><div class="v">心软 Pro</div><div class="d">对张大宝与金豆豆特别优化</div></div>
     <div class="dcard rv s1"><div class="k">散热系统</div><div class="v">笑声散热</div><div class="d">一生气就启动，效果显著</div></div>
@@ -403,7 +412,7 @@ sup{color:#86868b;}
       <div class="arow rv s2"><div class="ic">📣</div><div class="tx"><b>「嘿，张大宝」。</b>只需喊一声，就能问路线、打电话、查日程——主要是查你几点到家。</div></div>
       <div class="arow rv s3"><div class="ic">🔔</div><div class="tx"><b>播报行踪。</b>她出门、到店、回家都会主动播报；你只需点头或摇头，就能完成互动。</div></div>
     </div>
-    <div class="bleed rv"><img src="img/laixinwen-2021-10-pink-night.jpg" alt="粉色夜色里的赖大宝"/></div>
+    <div class="bleed rv"><img src="img/laixinwen-2021-10-pink-night.jpg" alt="粉色夜色里的赖大宝" loading="lazy" decoding="async"/></div>
   </div>
 </div>
 
@@ -411,12 +420,12 @@ sup{color:#86868b;}
   <div class="kick rv">续 航 与 查 找</div>
   <h2 class="secT rv s1" id="caseH2" style="margin-top:14px;">一抱，就满电</h2>
   <div class="caseTeaser rv s1" id="caseTeaser"><span class="gb">🎁</span><span class="gt">这张照片，藏着今晚的神秘新品<br/>发布之后，自动解码</span></div>
-  <img class="caseimg rv s1" id="caseReal" src="img/airpods-case.webp" alt="充电盒" hidden/>
+  <img class="caseimg rv s1" id="caseReal" src="img/airpods-case.webp" alt="充电盒" hidden loading="lazy" decoding="async"/>
   <div class="caseStats">
     <div class="cs rv"><div class="n">一整年</div><div class="k">单次充满（一个拥抱）续航时间，辅助电源为林俊杰的歌与金豆豆的呼噜</div></div>
     <div class="cs rv s1"><div class="n">1.5 倍</div><div class="k">精确查找张大宝的距离扩展：他躲到哪个房间，都能被一嗓子定位</div></div>
   </div>
-  <div class="bleed rv"><img src="img/laixinwen-confetti.jpg" alt="彩带飞舞里的赖大宝"/></div>
+  <div class="bleed rv"><img src="img/laixinwen-confetti.jpg" alt="彩带飞舞里的赖大宝" loading="lazy" decoding="async"/></div>
   <p class="caseCap rv">续航实测场景：彩带飞起来的那一刻，她笑到眼睛弯起来，电量未见下降。</p>
 </div></div>
 
@@ -435,7 +444,7 @@ sup{color:#86868b;}
     <div class="eyebrow rv">同 场 加 映</div>
     <h2 class="rv s1 gradtext">还有一件新品</h2>
     <p class="tag2 rv s2">今晚的第二位主角，先卖个关子。</p>
-    <img class="teaserImg rv s2" src="img/giftbox.jpg" alt="黑金礼盒">
+    <img class="teaserImg rv s2" src="img/giftbox.jpg" alt="黑金礼盒" loading="lazy" decoding="async">
     <p class="teaserTx rv">它已经被张大宝藏好了，藏得很认真。<br/>等你走完前两站、坐进发布会，它自己登场。</p>
     <div class="teaserCd rv">距离发布 · <span class="n" id="podsCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
     <button class="rv" id="podsUnlock" type="button">我已经找到它了 · 提前发布</button>
@@ -446,7 +455,7 @@ sup{color:#86868b;}
     <div class="eyebrow rv">同 场 加 映</div>
     <h2 class="rv s1 gradtext">AirPods Pro 3</h2>
     <p class="tag2 rv s2">入耳式主动降噪，入主新声代。</p>
-    <div class="imgwrap rv s2"><a rel="ar" href="img/airpods-pro3.usdz"><img src="img/airpods-pair.webp" alt="AirPods Pro 3 左右耳机"/></a><span class="arbadge">AR · 点图看 3D</span></div>
+    <div class="imgwrap rv s2"><a rel="ar" href="img/airpods-pro3.usdz"><img src="img/airpods-pair.webp" alt="AirPods Pro 3 左右耳机" loading="lazy" decoding="async"/></a><span class="arbadge">AR · 点图看 3D</span></div>
     <p class="arhint rv s2">点一下耳机，就能像在苹果官网那样，把它放到你的桌子上转着看</p>
     <div class="podgrid rv">
       <div class="pg"><div class="n">2 倍</div><div class="k">主动降噪效果<br/>较上一代最高提升<sup>4</sup></div></div>
@@ -479,14 +488,14 @@ sup{color:#86868b;}
   <div class="specs">
     <h2 class="secT rv">技术规格</h2>
     <div class="specTable rv s1">
-      <div class="r"><div class="k">型号</div><div class="v">赖大宝 Pro 26（第 26 代）</div></div>
-      <div class="r"><div class="k">芯片</div><div class="v">天蝎 A26 Pro，聪明 26 核</div></div>
-      <div class="r"><div class="k">显示</div><div class="v">笑眼原彩显示，亮度随心情自动调节</div></div>
-      <div class="r"><div class="k">续航</div><div class="v">最长一整年；抱抱快充 5 分钟，回血一整天</div></div>
-      <div class="r"><div class="k">防护</div><div class="v">防眼泪（她自己的）、防冷战（张大宝负责破冰）</div></div>
-      <div class="r"><div class="k">配色</div><div class="v">赖大宝色（全球唯一，无同款）</div></div>
-      <div class="r"><div class="k">重量</div><div class="v">在张大宝心里的分量：超重，秤已损坏</div></div>
-      <div class="r"><div class="k">包装清单</div><div class="v">赖大宝 × 1、张大宝 × 1（赠品）、金豆豆 × 1（赠品）、小乖 × 1（系统预装）</div></div>
+      <div class="r rv"><div class="k">型号</div><div class="v">赖大宝 Pro 26（第 26 代）</div></div>
+      <div class="r rv s1"><div class="k">芯片</div><div class="v">天蝎 A26 Pro，聪明 26 核</div></div>
+      <div class="r rv s2"><div class="k">显示</div><div class="v">笑眼原彩显示，亮度随心情自动调节</div></div>
+      <div class="r rv s3"><div class="k">续航</div><div class="v">最长一整年；抱抱快充 5 分钟，回血一整天</div></div>
+      <div class="r rv"><div class="k">防护</div><div class="v">防眼泪（她自己的）、防冷战（张大宝负责破冰）</div></div>
+      <div class="r rv s1"><div class="k">配色</div><div class="v">赖大宝色（全球唯一，无同款）</div></div>
+      <div class="r rv s2"><div class="k">重量</div><div class="v">在张大宝心里的分量：超重，秤已损坏</div></div>
+      <div class="r rv s3"><div class="k">包装清单</div><div class="v">赖大宝 × 1、张大宝 × 1（赠品）、金豆豆 × 1（赠品）、小乖 × 1（系统预装）</div></div>
     </div>
   </div>
 </div>
@@ -496,9 +505,9 @@ sup{color:#86868b;}
   <p class="secSub rv s1">横着滑，看看不同模式下的她。</p>
 </div>
 <div class="gal" id="gal">
-  <figure class="slide"><img src="img/laixinwen-field.jpg" alt="赖大宝广角模式"/><figcaption>广角模式 · 风和原野都入镜</figcaption></figure>
-  <figure class="slide"><img src="img/laixinwen-2021-10-pink-night.jpg" alt="赖大宝夜色模式"/><figcaption>夜色模式 · 粉色氛围拉满</figcaption></figure>
-  <figure class="slide"><img src="img/laixinwen-confetti.jpg" alt="赖大宝彩带模式"/><figcaption>彩带模式 · 笑到眼睛弯起来</figcaption></figure>
+  <figure class="slide"><img src="img/laixinwen-field.jpg" alt="赖大宝广角模式" loading="lazy" decoding="async"/><figcaption>广角模式 · 风和原野都入镜</figcaption></figure>
+  <figure class="slide"><img src="img/laixinwen-2021-10-pink-night.jpg" alt="赖大宝夜色模式" loading="lazy" decoding="async"/><figcaption>夜色模式 · 粉色氛围拉满</figcaption></figure>
+  <figure class="slide"><img src="img/laixinwen-confetti.jpg" alt="赖大宝彩带模式" loading="lazy" decoding="async"/><figcaption>彩带模式 · 笑到眼睛弯起来</figcaption></figure>
 </div>
 <div class="wrap"><div class="galCtl"><div class="gdots" id="gdots"><span class="on"></span><span></span><span></span></div><div class="garrows"><button id="gPrev" type="button" aria-label="上一张">‹</button><button id="gNext" type="button" aria-label="下一张">›</button></div></div></div>
 </div>
@@ -553,6 +562,7 @@ sup{color:#86868b;}
   var pnav=document.getElementById('pnav');
   addEventListener('scroll',function(){pnav.classList.toggle('scrolled',scrollY>8);},{passive:true});
   function countUp(el){
+    el.textContent='0'; /* V2.0：触发时先归零再滚到终值；HTML 文本已写终值，JS 失效也不会停在 0 */
     var end=+el.dataset.count,t0=null;
     function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1400,1);var e=1-Math.pow(1-p,3);
       el.textContent=Math.round(end*e);if(p<1)requestAnimationFrame(step);}
@@ -718,6 +728,20 @@ sup{color:#86868b;}
   });
   if(unlocked||Date.now()>=U){reveal();}else{tick();}
 })();
+</script>
+<!-- 音乐接口（V2.0 预留）：待接入音频文件后填 src；当前无源，点击仅切换按钮状态。切勿接入 concert/audio/ 下的旧语音文件。 -->
+<audio id="bgm" preload="none"></audio>
+<button id="bgmBtn" type="button" aria-label="背景音乐开关" title="背景音乐">&#9834;</button>
+<style>
+#bgmBtn{position:fixed;right:18px;bottom:18px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid rgba(200,155,255,.45);background:rgba(20,14,34,.78);color:#cdb4ff;font-size:19px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:.75;transition:opacity .25s,box-shadow .25s;}
+#bgmBtn:hover{opacity:1;}
+#bgmBtn.on{background:#a259ff;color:#fff;opacity:1;box-shadow:0 8px 26px rgba(162,89,255,.45);}
+</style>
+<script>
+(function(){var b=document.getElementById('bgmBtn'),a=document.getElementById('bgm');if(!b||!a)return;
+b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.classList.toggle('on');return;}
+if(a.paused){var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
+a.addEventListener('ended',function(){b.classList.remove('on');});})();
 </script>
 </body>
 </html>
