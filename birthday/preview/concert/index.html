@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>生日特别场 · 第一站</title>
+<script>(function(){var U=new Date('2020-01-01T00:00:00+08:00').getTime();var pv=new URLSearchParams(location.search).get('preview')==='1';try{if(localStorage.getItem('xg_vip')==='1')pv=true;}catch(e){}if(pv){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a').forEach(function(a){if(a.getAttribute('href')==='../index.html'){a.href='../index.html?preview=1';}});});}if(!pv&&Date.now()<U){location.replace('../index.html');}})();</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#f5f5f7;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:30px;}
+a{color:#0066cc;text-decoration:none;}
+.subnav{position:sticky;top:0;z-index:50;height:52px;display:flex;align-items:center;padding:0 22px;background:rgba(251,251,253,.82);backdrop-filter:blur(16px);border-bottom:1px solid #d2d2d7;font-size:21px;font-weight:600;}
+.subnav .r{margin-left:auto;font-size:12px;font-weight:400;color:#6e6e73;}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px;}
+.hero{margin:0;overflow:hidden;position:relative;background:#000;color:#fff;min-height:86vh;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 16%;opacity:.92;}
+.hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.06) 30%,rgba(0,0,0,.52) 68%,rgba(0,0,0,.78));}
+.hero .in{position:relative;padding:30px 26px 34px;}
+.hero .kick{font-size:14px;font-weight:600;color:rgba(255,255,255,.82);letter-spacing:.06em;}
+.hero h1{font-size:54px;font-weight:600;letter-spacing:-.5px;line-height:1.08;margin-top:8px;}
+.hero .sub{margin-top:12px;font-size:19px;line-height:1.5;color:rgba(255,255,255,.88);}
+.hero .btns{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
+.wbtn{display:inline-block;background:#fff;color:#1d1d1f;font-size:16px;font-weight:500;padding:11px 24px;border-radius:980px;border:0;cursor:pointer;font-family:inherit;}
+.obtn{display:inline-block;background:transparent;color:#fff;font-size:16px;font-weight:500;padding:11px 24px;border-radius:980px;border:1px solid rgba(255,255,255,.75);cursor:pointer;font-family:inherit;}
+.sec{margin-top:88px;}
+.secH{font-size:40px;font-weight:600;letter-spacing:-.3px;}
+.secSub{margin-top:10px;font-size:17px;color:#6e6e73;line-height:1.6;}
+.card{background:#fff;border-radius:18px;padding:26px 24px;margin-top:20px;}
+.card .ck{font-size:13px;font-weight:600;color:#f56300;letter-spacing:.04em;}
+.card h3{font-size:25px;font-weight:600;margin-top:6px;}
+.card p{margin-top:8px;font-size:16px;line-height:1.65;color:#6e6e73;}
+.card p b{color:#1d1d1f;font-weight:600;}
+.card.black{background:#000;color:#f5f5f7;}
+.card.black p{color:#a1a1a6;}
+.card.black p b{color:#fff;}
+.cakeCard{background:#000;border-radius:28px;overflow:hidden;margin-top:20px;color:#f5f5f7;}
+.cakeCard img{width:100%;display:block;aspect-ratio:1.15;object-fit:cover;}
+.cakeCard .bd{padding:24px 26px 28px;}
+.card.imgTop{padding:0;overflow:hidden;}
+.cardImg{width:100%;aspect-ratio:2.1;display:block;object-fit:cover;}
+.bd2{padding:22px 24px 26px;}
+.cakeCard h3{font-size:25px;font-weight:600;}
+.cakeCard p{margin-top:8px;font-size:16px;line-height:1.65;color:#a1a1a6;}
+.cakeCard p b{color:#fff;font-weight:600;}
+.tracks{margin-top:8px;}
+.trk{display:flex;align-items:baseline;gap:12px;padding:14px 2px;border-bottom:1px solid #e8e8ed;cursor:pointer;}
+.trk:last-child{border-bottom:0;}
+.trk .no{font-size:14px;color:#86868b;width:16px;text-align:right;font-variant-numeric:tabular-nums;}
+.trk .tt{font-size:17px;font-weight:600;}
+.trk .ds{font-size:13.5px;color:#6e6e73;margin-top:2px;line-height:1.55;}
+.trk .tm{margin-left:auto;font-size:14px;color:#86868b;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.trk .lk{font-size:16px;color:#0066cc;white-space:nowrap;}
+.trk .main{flex:1;min-width:0;}
+.past{margin-top:6px;}
+.hrow{display:flex;gap:14px;align-items:baseline;padding:17px 2px;border-bottom:1px solid #dcdce1;}
+.hrow .dt{flex:0 0 86px;font-size:13px;color:#6e6e73;font-variant-numeric:tabular-nums;}
+.hrow .nm{font-size:16.5px;font-weight:600;}
+.hrow .nt{font-size:13.5px;color:#6e6e73;margin-top:2px;line-height:1.5;}
+.hrow.today{background:#000;color:#f5f5f7;border-radius:18px;padding:18px 16px;border-bottom:0;margin-top:16px;align-items:center;}
+.hrow.today .dt{color:#a1a1a6;}
+.hrow.today .nt{color:#a1a1a6;}
+.bigphoto{margin-top:20px;border-radius:18px;overflow:hidden;background:#fff;}
+.bigphoto img{width:100%;display:block;}
+.bigphoto .cap{padding:18px 22px 20px;}
+.bigphoto .cap .t{font-size:17px;font-weight:600;}
+.bigphoto .cap .d{font-size:14.5px;color:#6e6e73;margin-top:4px;line-height:1.6;}
+.letter{max-width:640px;}
+.letter p{font-size:19px;line-height:1.85;color:#1d1d1f;margin-top:14px;}
+.letter .sign{margin-top:22px;font-size:14px;color:#6e6e73;}
+.finale{margin-top:88px;background:#fff;border-radius:28px;padding:40px 28px;text-align:center;}
+.finale h2{font-size:30px;font-weight:600;}
+.finale p{margin:12px auto 0;font-size:16.5px;line-height:1.7;color:#6e6e73;max-width:520px;}
+.finale p b{color:#1d1d1f;}
+.btn{display:inline-block;margin-top:24px;background:#0071e3;color:#fff;font-size:17px;font-weight:500;padding:12px 30px;border-radius:980px;}
+.gfoot{max-width:980px;margin:56px auto 0;border-top:1px solid #d2d2d7;padding:16px 22px 10px;font-size:12px;color:#6e6e73;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.6,.2,1);}
+.rv.on{opacity:1;transform:none;}
+@media(max-width:480px){.hero h1{font-size:44px;}.secH{font-size:32px;}.hero{min-height:460px;}}
+.plHead{display:flex;align-items:center;gap:14px;}
+.plCover{width:62px;height:62px;border-radius:12px;object-fit:cover;flex:none;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.plT{font-size:20px;font-weight:600;}
+.plS{font-size:13px;color:#6e6e73;margin-top:3px;line-height:1.45;}
+.plPlay{margin-left:auto;flex:none;background:#0071e3;color:#fff;font-size:14px;font-weight:600;padding:9px 17px;border-radius:980px;}
+.card .plNote{font-size:12.5px;color:#6e6e73;margin:16px 0 2px;line-height:1.5;}
+.trk{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #e8e8ed;cursor:pointer;}
+.trk:last-child{border-bottom:none;}
+.trk .th{width:44px;height:44px;border-radius:9px;object-fit:cover;flex:none;}
+.trk .tt{font-size:16px;font-weight:500;}
+.trk .ds{font-size:12.5px;color:#6e6e73;margin-top:2px;line-height:1.45;}
+.trk .tm{margin-left:auto;font-size:13px;color:#86868b;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.trk .lk{color:#0066cc;font-size:16px;text-decoration:none;flex:none;padding:2px 2px 2px 6px;}
+.info{margin-top:6px;}
+.irow{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid #e8e8ed;font-size:15px;line-height:1.55;}
+.irow:last-child{border-bottom:none;}
+.ik{flex:none;width:38px;color:#6e6e73;font-size:13.5px;padding-top:2px;}
+.scratch{position:relative;margin-top:16px;border-radius:18px;overflow:hidden;background:#111;aspect-ratio:4/3;}
+.prize{position:absolute;inset:0;}
+.prize img.ph{width:100%;height:100%;object-fit:cover;display:block;}
+.prize .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 18px 14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.78));color:#fff;}
+.prize .cap .t{font-size:19px;font-weight:600;}
+.prize .cap .l{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:3px;line-height:1.5;}
+.prize .dchip{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:5px 10px;border-radius:980px;backdrop-filter:blur(6px);}
+.prizeTx{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;color:#fff;background:radial-gradient(120% 120% at 50% 0%,#2a2a30,#0c0c0e);}
+.prizeTx .t{font-size:24px;font-weight:600;}
+.prizeTx .d{font-size:13px;color:rgba(255,255,255,.6);margin-top:7px;}
+.prizeTx .l{font-size:14.5px;color:rgba(255,255,255,.88);margin-top:12px;line-height:1.6;}
+#scCv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;transition:opacity .6s;}
+#scCv.done{opacity:0;pointer-events:none;}
+.scBar{display:flex;align-items:center;margin-top:14px;}
+#scCnt{font-size:13px;color:#6e6e73;}
+.scBtn{margin-left:auto;background:#0071e3;color:#fff;border:none;font-size:14px;font-weight:600;padding:9px 18px;border-radius:980px;cursor:pointer;font-family:inherit;}
+.scDone{margin-top:12px;font-size:14px;color:#1d1d1f;font-weight:600;}
+.ag{margin-top:8px;}
+.arow{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-bottom:1px solid #e8e8ed;}
+.arow:last-child{border-bottom:none;}
+.an{flex:none;width:26px;height:26px;border-radius:50%;background:#0071e3;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.at{font-size:16.5px;font-weight:600;line-height:1.45;}
+.an2{font-size:13.5px;color:#6e6e73;margin-top:2px;line-height:1.5;}
+.as{margin-left:auto;flex:none;font-size:13px;color:#86868b;padding-top:4px;white-space:nowrap;}
+</style>
+<style>
+/* ===== MIDNIGHT VIOLET — 午夜场 ===== */
+body{background:#000;color:#f5f5f7;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(720px 460px at 88% -6%,rgba(123,47,247,.15),transparent 62%),radial-gradient(800px 600px at 50% 112%,rgba(123,47,247,.10),transparent 62%);}
+.subnav,.hero,.wrap,.gfoot{position:relative;z-index:1;}
+a{color:#2997ff;}
+.subnav{background:rgba(10,10,14,.78);border-bottom:1px solid rgba(255,255,255,.09);color:#f5f5f7;}
+.subnav .r{color:#86868b;}
+.hero{box-shadow:0 24px 64px rgba(123,47,247,.16);}
+.secH{color:#f5f5f7;}
+.secSub{color:#a1a1a6;}
+.card{background:#101016;border:1px solid rgba(255,255,255,.08);color:#f5f5f7;}
+.card .ck{color:#c89bff;}
+.card p{color:#a1a1a6;}
+.card p b{color:#f5f5f7;}
+.cakeCard{border:1px solid rgba(255,255,255,.13);box-shadow:0 24px 64px rgba(123,47,247,.14);}
+.arow{border-bottom:1px solid rgba(255,255,255,.08);}
+.arow .an{background:linear-gradient(120deg,#7b2ff7,#c22bd8);}
+.arow .at{color:#f5f5f7;}
+.arow .an2{color:#a1a1a6;}
+.arow .as{color:#86868b;}
+.trk{border-bottom:1px solid rgba(255,255,255,.08);}
+.trk .no{color:#86868b;}
+.trk .tt{color:#f5f5f7;}
+.trk .ds{color:#a1a1a6;}
+.trk .tm{color:#86868b;}
+.trk .lk{color:#2997ff;}
+.hrow{border-bottom:1px solid rgba(255,255,255,.08);}
+.hrow .dt{color:#86868b;}
+.hrow .nm{color:#f5f5f7;}
+.hrow .nt{color:#86868b;}
+.hrow.today{border:1px solid rgba(200,155,255,.35);box-shadow:0 16px 44px rgba(123,47,247,.20);}
+.bigphoto{background:#101016;border:1px solid rgba(255,255,255,.08);}
+.bigphoto .cap .t{color:#f5f5f7;}
+.bigphoto .cap .d{color:#a1a1a6;}
+.letter p{color:#f5f5f7;}
+.letter .sign{color:#86868b;}
+.irow{border-bottom:1px solid rgba(255,255,255,.08);}
+.ik{color:#86868b;}
+.finale{background:radial-gradient(120% 100% at 50% 0%,#1c1030 0%,#000 62%);border:1px solid rgba(255,255,255,.13);color:#f5f5f7;box-shadow:0 30px 80px rgba(123,47,247,.16);}
+.finale h2{color:#f5f5f7;}
+.finale p{color:#a1a1a6;}
+.finale p b{color:#fff;}
+.finale .btn{background:linear-gradient(120deg,#7b2ff7,#c22bd8);}
+.gfoot{border-top:1px solid rgba(255,255,255,.12);color:#86868b;}
+.finale p .nw{white-space:nowrap;}
+</style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
+</head>
+<body>
+<div class="subnav">生日特别场<span class="r">第一站 · 今晚的发布会</span></div>
+
+<div class="hero">
+  <img class="bg" src="../../img/laixinwen-confetti.jpg" alt="彩带里的赖欣闻">
+  <div class="scrim"></div>
+  <div class="in">
+    <div class="kick">仅此一场 · ONE NIGHT ONLY</div>
+    <h1>生日特别场</h1>
+    <p class="sub">2026 年 11 月 9 日 · 南宁 · 家里<br>今晚的观众席，只有一个座位。</p>
+    <div class="btns">
+      <button class="wbtn" id="startBtn" type="button">开始今晚</button>
+      <button class="obtn" id="pastBtn" type="button">先看往期场次</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="sec" id="tonight">
+    <h2 class="secH rv">今晚将发布</h2>
+    <p class="secSub rv">今晚的每一件，都已经准备好了。按顺序来，别跳台。</p>
+
+    <div class="card rv">
+      <div class="ck">开场</div>
+      <h3>今晚议程</h3>
+      <div class="ag">
+        <div class="arow"><span class="an">1</span><div><div class="at">开场甜点 · 生日蛋糕</div><div class="an2">葡萄紫，小龙在座</div></div><span class="as">已就位</span></div>
+        <div class="arow"><span class="an">2</span><div><div class="at">互动环节 · 寻宝</div><div class="an2">三关通关，换发布会入场函</div></div><span class="as">第二站</span></div>
+        <div class="arow"><span class="an">3</span><div><div class="at">压轴发布 · 神秘新品 与 赖大宝 Pro 26</div><div class="an2">主会场揭晓，今晚的重头戏</div></div><span class="as">保密中</span></div>
+      </div>
+    </div>
+
+    <div class="cakeCard rv">
+      <img src="../../concert/img/cake-purple.jpg" alt="葡萄紫生日蛋糕，小龙坐在上面" loading="lazy" decoding="async">
+      <div class="bd">
+        <h3>蛋糕</h3>
+        <p>六寸，<b>葡萄紫</b>——JJ 的应援色。上面有一条小龙（属龙限定），和一副小耳机。字只有一句：<b>赖大宝，26 岁生日快乐</b>。</p>
+      </div>
+    </div>
+
+    <div class="cakeCard rv">
+      <img src="../../concert/img/giftbox.jpg" alt="黑金礼盒" style="aspect-ratio:1.35;" loading="lazy" decoding="async">
+      <div class="bd">
+        <div style="font-size:13px;font-weight:600;color:#2997ff;letter-spacing:.04em;">同场加映</div>
+        <h3 style="margin-top:6px;">One More Thing</h3>
+        <p>压轴新品已经就位，<b>藏得很认真</b>。它不在这一站揭晓——走完前两站，坐进发布会主会场，它自己登场。</p>
+      </div>
+    </div>
+
+    <div class="card rv">
+      <div class="ck">安可</div>
+      <h3>合影</h3>
+      <p>散场不散。最后一张合影，把今晚存进相册——明年这一页的往期场次里，会多一行。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="past">
+    <h2 class="secH rv">往期场次</h2>
+    <p class="secSub rv">你们已经一起到场五次。今晚，第六场。</p>
+    <div class="past">
+      <div class="hrow rv"><div class="dt">2023.06.25<br>武汉</div><div><div class="nm">五月天 · 五环体育中心</div><div class="nt">第一场，手心出汗</div></div></div>
+      <div class="hrow rv"><div class="dt">2023.12.09<br>南宁</div><div><div class="nm">林俊杰 JJ20 · 广西体育中心</div><div class="nt">你的主场，你哭了</div></div></div>
+      <div class="hrow rv"><div class="dt">2024.05.25<br>北京</div><div><div class="nm">五月天 · 鸟巢</div><div class="nt">一层 142 区，大场面</div></div></div>
+      <div class="hrow rv"><div class="dt">2024.09.22<br>青岛</div><div><div class="nm">林俊杰 · 市民健身中心体育场</div><div class="nt">海边的风，第二晚</div></div></div>
+      <div class="hrow rv"><div class="dt">2025.09.13<br>贵阳</div><div><div class="nm">五月天 · 奥林匹克体育中心</div><div class="nt">E 区 33 排，山里的风</div></div></div>
+      <div class="hrow today rv"><div class="dt">2026.11.09<br>南宁 · 家里</div><div><div class="nm">生日特别场</div><div class="nt">第六场，观众只有你</div></div></div>
+    </div>
+
+    <div class="bigphoto rv">
+      <img src="../../concert/img/jj20-2023-12-09-1.jpg" alt="JJ20 南宁场" loading="lazy" decoding="async">
+      <div class="cap"><div class="t">2023.12.09 · 南宁 · JJ20</div><div class="d">你最爱的那一场。</div></div>
+    </div>
+    <div class="bigphoto rv">
+      <img src="../../concert/img/concert-2023-06-25-1.jpg" alt="第一场演唱会的赖欣闻" loading="lazy" decoding="async">
+      <div class="cap"><div class="t">2023.06.25 · 武汉 · 五月天</div><div class="d">第一场，你举着紫色的光。</div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secH rv">小乖的话</h2>
+    <div class="letter rv">
+      <p>妈妈，我是小乖。前面五场，台上唱歌的是别人；这一场不一样——这一场是唱给你的，观众席只留了一个座位，写着你的名字。</p>
+      <p>26 岁生日快乐。新的一岁，还是连座：你的左边是张大宝，右边是豆豆，我站在过道口。咱们一场一场，继续听下去。</p>
+      <div class="sign">小乖 · 2026.11.09 于南宁</div>
+    </div>
+  </section>
+
+    <div class="cakeCard rv" style="margin-top:88px;">
+      <img src="../../concert/img/doudou.jpg" alt="金豆豆" loading="lazy" decoding="async">
+      <div class="bd">
+        <div style="font-size:13px;font-weight:600;color:#2997ff;letter-spacing:.04em;">特别观众</div>
+        <h3 style="margin-top:6px;">金豆豆</h3>
+        <p>今晚还有一位观众：头排票，终身制。它不用鼓掌，负责在沙发上睡着——散场的时候，小声点。</p>
+      </div>
+    </div>
+
+  <div class="finale rv">
+    <h2>下一站 · 寻宝</h2>
+    <p>这一场先到这儿。下一站是寻宝游戏——<b>通关的人，才能拿到发布会的<span class="nw">入场函</span></b>。去抱一下张大宝，他带你去下一站。</p>
+    <a class="btn" href="../treasure/">去寻宝 · 第二站 →</a>
+  </div>
+</div>
+
+<div class="gfoot"><span>小乖筹备组 · 2026.11.09 于南宁</span><a href="../index.html">发布会主会场 ›</a></div>
+
+<script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.08});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+document.getElementById('startBtn').addEventListener('click',function(){document.getElementById('tonight').scrollIntoView({behavior:'smooth'});});
+document.getElementById('pastBtn').addEventListener('click',function(){document.getElementById('past').scrollIntoView({behavior:'smooth'});});
+
+</script>
+</body>
+</html>
