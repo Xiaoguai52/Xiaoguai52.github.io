@@ -463,6 +463,35 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     </div>
   </div>
 
+  <div class="pods" id="watchTeaser">
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">还有一块新品</h2>
+    <p class="tag2 rv s2">今晚的第三位主角，也先卖个关子。</p>
+    <img class="teaserImg rv s2" src="../img/watch-teaser.jpg" alt="黑金礼盒，缝里透出紫色的光" loading="lazy" decoding="async">
+    <p class="teaserTx rv">这一件，也被张大宝安排好了——藏没藏、藏在哪，不剧透。<br/>等你走完前两站、坐进发布会，它自己登场。</p>
+    <div class="teaserCd rv">距离发布 · <span class="n" id="watchCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
+    <button class="rv" id="watchUnlock" type="button">我已经找到它了 · 提前发布</button>
+    <p class="teaserWarn" id="watchWarn" hidden>真的找到了？没找到先别点——点开，今晚的惊喜就提前散场了。<br/>确认已经在手里了，就再点一次。</p>
+  </div>
+
+  <div class="pods" id="watchReal" hidden>
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">Apple Watch Series 11</h2>
+    <p class="tag2 rv s2">为健康，再进一步。</p>
+    <div class="imgwrap rv s2"><a rel="ar" href="../img/watch-s11.usdz"><img src="../img/watch-s11.webp" alt="Apple Watch Series 11，葡萄紫表带" loading="lazy" decoding="async"/></a><span class="arbadge">AR · 点图看 3D</span></div>
+    <p class="arhint rv s2">点一下手表，就能像在苹果官网那样，把它放到你的桌子上转着看</p>
+    <div class="podgrid rv">
+      <div class="pg"><div class="n">血压提醒</div><div class="k">高血压的苗头<br/>替张大宝盯着</div></div>
+      <div class="pg"><div class="n">睡眠评分</div><div class="k">睡得好不好<br/>它比金豆豆清楚</div></div>
+      <div class="pg"><div class="n">24 小时</div><div class="k">单次充电续航<br/>陪你从早到晚</div></div>
+    </div>
+    <p class="twist rv">官网在售，RMB 2999 起。<br/>这一块今晚买不买——<b>看张大宝的表现。</b></p>
+    <div class="podcard rv" id="watchcard">
+      <div class="hint">— 点 一 下 ， 有 彩 蛋 —</div>
+      <div class="secret">⌚ 这块表今晚先住在屏幕里。<br/>想要的话，许愿池在张大宝那儿——长期有效，随时兑现。<br/><span style="color:#a1a1a6;font-size:13px;">它负责盯着你的健康，他负责盯着你。</span></div>
+    </div>
+  </div>
+
   <div class="pods" id="podsTeaser">
     <div class="eyebrow rv">同 场 加 映</div>
     <h2 class="rv s1 gradtext">还有一件新品</h2>
@@ -489,34 +518,6 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     <div class="podcard rv" id="podcard">
       <div class="hint">— 点 一 下 ， 有 彩 蛋 —</div>
       <div class="secret">🎧 盒子上刻了几个只给你看的小记号。<br/>是什么先不剧透——拆开的时候，记得先翻过来看盒子。<br/><span style="color:#a1a1a6;font-size:13px;">它负责把全世界的吵闹关小，把你的歌放大。</span></div>
-    </div>
-  </div>
-
-  <div class="pods" id="watchTeaser">
-    <div class="eyebrow rv">同 场 加 映</div>
-    <h2 class="rv s1 gradtext">还有一块新品</h2>
-    <p class="tag2 rv s2">今晚的第三位主角，也先卖个关子。</p>
-    <img class="teaserImg rv s2" src="../img/watch-teaser.jpg" alt="黑金礼盒，缝里透出紫色的光" loading="lazy" decoding="async">
-    <p class="teaserTx rv">这一件，也被张大宝安排好了——藏没藏、藏在哪，不剧透。<br/>等你走完前两站、坐进发布会，它自己登场。</p>
-    <div class="teaserCd rv">距离发布 · <span class="n" id="watchCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
-    <button class="rv" id="watchUnlock" type="button">我已经找到它了 · 提前发布</button>
-    <p class="teaserWarn" id="watchWarn" hidden>真的找到了？没找到先别点——点开，今晚的惊喜就提前散场了。<br/>确认已经在手里了，就再点一次。</p>
-  </div>
-
-  <div class="pods" id="watchReal" hidden>
-    <div class="eyebrow rv">同 场 加 映</div>
-    <h2 class="rv s1 gradtext">Apple Watch Series 11</h2>
-    <p class="tag2 rv s2">为健康，再进一步。</p>
-    <div class="imgwrap rv s2"><img src="../img/watch-s11.webp" alt="Apple Watch Series 11，葡萄紫表带" loading="lazy" decoding="async"/></div>
-    <div class="podgrid rv">
-      <div class="pg"><div class="n">血压提醒</div><div class="k">高血压的苗头<br/>替张大宝盯着</div></div>
-      <div class="pg"><div class="n">睡眠评分</div><div class="k">睡得好不好<br/>它比金豆豆清楚</div></div>
-      <div class="pg"><div class="n">24 小时</div><div class="k">单次充电续航<br/>陪你从早到晚</div></div>
-    </div>
-    <p class="twist rv">官网在售，RMB 2999 起。<br/>这一块今晚买不买——<b>看张大宝的表现。</b></p>
-    <div class="podcard rv" id="watchcard">
-      <div class="hint">— 点 一 下 ， 有 彩 蛋 —</div>
-      <div class="secret">⌚ 这块表今晚先住在屏幕里。<br/>想要的话，许愿池在张大宝那儿——长期有效，随时兑现。<br/><span style="color:#a1a1a6;font-size:13px;">它负责盯着你的健康，他负责盯着你。</span></div>
     </div>
   </div>
 
