@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script>(function(){var U=new Date('2020-01-01T00:00:00+08:00').getTime();var pv=new URLSearchParams(location.search).get('preview')==='1';try{if(localStorage.getItem('xg_vip')==='1')pv=true;}catch(e){}if(pv){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a').forEach(function(a){if(a.getAttribute('href')==='../index.html'){a.href='../index.html?preview=1';}});});}if(!pv&&Date.now()<U){location.replace('../index.html');}})();</script>
+<title>小乖的寻宝任务 · 升级版</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#f5f5f7;color:#1d1d1f;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;}
+  button{font-family:inherit;}
+  .wrap{max-width:520px;margin:0 auto;padding:30px 20px 70px;}
+  .badge{display:flex;align-items:center;gap:12px;}
+  .subnav{position:sticky;top:0;z-index:50;height:52px;display:flex;align-items:center;padding:0 22px;background:rgba(251,251,253,.82);backdrop-filter:blur(16px);border-bottom:1px solid #d2d2d7;font-size:21px;font-weight:600;}
+  .subnav .r{margin-left:auto;font-size:12px;font-weight:400;color:#6e6e73;}
+  .tbanner{position:relative;margin-top:16px;border-radius:28px;overflow:hidden;background:#000;color:#fff;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;}
+  .tbanner img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;}
+  .tbanner .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.55) 72%,rgba(0,0,0,.8));}
+  .tbanner .in{position:relative;padding:24px 24px 26px;}
+  .tbanner .k{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.85);}
+  .tbanner h1{font-size:34px;font-weight:600;line-height:1.25;margin:8px 0 8px;color:#fff;}
+  .tbanner .s{font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.85);}
+  .badge img{width:52px;height:52px;border-radius:50%;border:2px solid #fff;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12);object-fit:cover;}
+  .badge .t1{font-size:12px;letter-spacing:3px;color:#f56300;font-weight:700;}
+  .badge .t2{font-size:17px;font-weight:600;margin-top:2px;}
+  h1{font-size:30px;font-weight:600;line-height:1.35;margin:22px 0 10px;}
+  .intro{font-size:15px;line-height:1.85;color:#6e6e73;}
+  .chap{font-size:12px;letter-spacing:4px;color:#f56300;font-weight:700;margin-bottom:16px;}
+  .intro b{color:#1d1d1f;}
+  .hard{display:inline-block;margin-top:10px;padding:5px 10px;border-radius:999px;background:#0071e3;color:#fff;font-size:12px;font-weight:600;letter-spacing:1px;}
+  .progress{display:flex;gap:8px;margin:24px 0 6px;}
+  .dot{flex:1;text-align:center;font-size:12px;color:#6e6e73;padding:9px 4px;border:1.5px solid #d2d2d7;border-radius:999px;background:#fff;transition:all .3s;}
+  .dot.on{border-color:#1d1d1f;background:#1d1d1f;color:#fff;font-weight:600;}
+  .lvl{margin-top:22px;background:#fff;border:1px solid rgba(0,0,0,.04);border-radius:18px;padding:20px;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+  .lvl.locked{opacity:.45;pointer-events:none;filter:saturate(.5);}
+  .lvl .no{font-size:11.5px;letter-spacing:2.5px;color:#f56300;font-weight:700;}
+  .lvl h2{font-size:19px;font-weight:600;margin:6px 0 6px;}
+  .lvl p{font-size:14px;line-height:1.75;color:#6e6e73;}
+  .status{margin-top:12px;padding:10px 12px;border-radius:12px;background:#f5f5f7;color:#1d1d1f;font-size:13px;line-height:1.65;}
+  .hint{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(88,179,104,.10);color:#1e7b34;font-size:13px;line-height:1.65;border:1px solid rgba(88,179,104,.35);}
+  .hint.show{display:block;}
+  .clue{display:none;margin-top:14px;background:#fff4e5;border:1px solid rgba(245,99,0,.35);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.75;color:#7a4a00;}
+  .clue.show{display:block;}
+
+  .wall{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
+  .photo{position:relative;border:2px solid rgba(0,0,0,.06);border-radius:13px;overflow:hidden;cursor:pointer;background:#e8e8ed;padding:0;aspect-ratio:1;transition:transform .15s,border-color .2s,opacity .2s;}
+  .photo:active{transform:scale(.97);}
+  .photo img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;}
+  .photo.missed{opacity:.42;filter:grayscale(.45);}
+  .photo.missed::after{content:'✕';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;background:rgba(160,35,35,.38);font-size:30px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.35);}
+  .photo.right{border-color:#58b368;box-shadow:0 0 0 4px rgba(88,179,104,.28);opacity:1;filter:none;}
+
+  .round{margin-top:18px;padding-top:16px;border-top:1px solid #e8e8ed;}
+  .round:first-of-type{border-top:none;padding-top:4px;}
+  .round h3{font-size:16.5px;font-weight:600;margin-bottom:5px;}
+  .round.sealed{opacity:.42;pointer-events:none;filter:saturate(.55);}
+  .concerts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px;}
+  .concert{display:flex;align-items:center;gap:10px;border:1.5px solid #d2d2d7;background:#fff;border-radius:14px;padding:12px;cursor:pointer;text-align:left;color:#1d1d1f;transition:all .2s;min-height:66px;}
+  .concert .num{flex:0 0 auto;width:27px;height:27px;border-radius:50%;border:1.5px solid #d2d2d7;display:flex;align-items:center;justify-content:center;color:#6e6e73;font-size:13px;font-weight:600;background:#f5f5f7;}
+  .concert strong{display:block;font-size:15px;line-height:1.35;}
+  .concert small{display:block;font-size:11.5px;color:#6e6e73;margin-top:2px;line-height:1.35;}
+  .concert.picked{border-color:#58b368;background:rgba(88,179,104,.13);}
+  .concert.picked .num{background:#58b368;border-color:#58b368;color:#fff;}
+  .concert.wrong,.song.wrong{animation:shake .35s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .songs{display:flex;flex-direction:column;gap:10px;margin-top:13px;}
+  .song{border:1.5px solid #d2d2d7;background:#fff;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:600;color:#1d1d1f;cursor:pointer;text-align:left;transition:all .2s;}
+  .song small{display:block;font-weight:400;font-size:12px;color:#6e6e73;margin-top:2px;}
+  .song.right{border-color:#58b368;background:rgba(88,179,104,.13);}
+  .song:disabled{cursor:default;}
+
+  .hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;}
+  .hud div{background:#fff;border:1px solid #e8e8ed;color:#1d1d1f;border-radius:12px;padding:9px 6px;text-align:center;font-size:12.5px;}
+  .hud b{font-size:16px;color:#1d1d1f;}
+  .start{width:100%;margin-top:12px;border:none;border-radius:999px;background:#0071e3;color:#fff;padding:13px 18px;font-size:15px;font-weight:600;cursor:pointer;}
+  .start:disabled{background:#d2d2d7;color:#86868b;cursor:default;box-shadow:none;}
+  .hunt{position:relative;margin-top:12px;background:linear-gradient(170deg,#241a38,#46335f);border-radius:16px;height:320px;overflow:hidden;touch-action:manipulation;}
+  .hunt .star{position:absolute;color:rgba(255,255,255,.5);user-select:none;pointer-events:none;z-index:1;}
+  .hunt .tip{position:absolute;left:14px;top:12px;color:rgba(255,255,255,.82);font-size:12.5px;z-index:6;pointer-events:none;text-shadow:0 1px 5px rgba(0,0,0,.35);}
+  .hunt .me{display:none;position:absolute;width:44px;height:44px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.85);object-fit:cover;background:#17171c;z-index:5;box-shadow:0 4px 16px rgba(0,0,0,.35);padding:0;}
+  .hunt .me.live{display:block;}
+  .hunt .me.caught{transform:scale(1.18);border-color:#ffd60a;box-shadow:0 0 0 6px rgba(255,214,10,.25),0 4px 16px rgba(0,0,0,.35);}
+  .decoy{position:absolute;border-radius:50%;cursor:pointer;z-index:3;border:2px solid rgba(255,255,255,.5);box-shadow:inset -6px -7px 12px rgba(120,100,180,.18),0 3px 10px rgba(0,0,0,.22);padding:0;}
+  .decoy::before,.decoy::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(67,48,32,.58);top:38%;}
+  .decoy::before{left:31%;}
+  .decoy::after{right:31%;}
+  .decoy.hit{opacity:.22;filter:grayscale(.5);pointer-events:none;}
+
+  .final{display:none;margin-top:24px;background:#000;border:none;border-radius:28px;padding:24px 22px;text-align:center;}
+  .final.show{display:block;}
+  .final h2{font-size:24px;font-weight:600;color:#fff;}
+  .final p{font-size:14.5px;line-height:1.9;color:#a1a1a6;margin-top:10px;}
+  .final img{width:100%;border-radius:14px;margin-top:14px;display:block;}
+  .final .big{font-size:17px;color:#fff;font-weight:600;}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20;}
+  .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(105vh) rotate(560deg);}}
+  .foot{text-align:center;color:#6e6e73;font-size:11.5px;margin-top:34px;line-height:1.9;}
+  @media (max-width:390px){.hud div{font-size:11.5px}.lvl{padding:17px}.wall{gap:6px}.concert{gap:7px;padding:10px}.concert strong{font-size:14px}}
+</style>
+<style>
+.progress{gap:6px;}
+.dot{border:none;background:#e4e4e9;border-radius:8px;padding:10px 4px;}
+.dot.on{background:#1d1d1f;color:#fff;border:none;}
+.lvl{background:transparent;border:none;box-shadow:none;border-radius:0;padding:0;margin-top:58px;}
+.lvl.locked{opacity:.5;filter:none;}
+.lvl h2{font-size:29px;font-weight:600;letter-spacing:-.2px;margin:8px 0 8px;}
+.lvl>p{font-size:15.5px;color:#6e6e73;line-height:1.65;}
+.wall{background:#fff;border-radius:24px;padding:12px;gap:6px;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.photo{border:none;border-radius:10px;}
+.photo.right{border:none;box-shadow:none;outline:3px solid #34c759;outline-offset:-3px;}
+.status{background:transparent;padding:10px 2px 0;color:#6e6e73;font-size:13px;border-radius:0;}
+.hint{display:none;background:transparent;border:none;color:#6e6e73;padding:8px 2px 0;font-size:13px;border-radius:0;}
+.hint.show{display:block;}
+.clue{background:#000;color:#f5f5f7;border:none;border-radius:18px;padding:16px 18px;font-size:14.5px;}
+.clue b{color:#fff;}
+.round{margin-top:28px;}
+.round h3{font-size:19px;font-weight:600;}
+.round>p{font-size:14.5px;color:#6e6e73;line-height:1.65;}
+.round.sealed{opacity:.5;filter:none;}
+.concerts{display:block;background:#fff;border-radius:24px;padding:6px 14px;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.concert{display:flex;width:100%;align-items:center;gap:12px;background:transparent;border:none;border-bottom:1px solid #e8e8ed;padding:14px 2px;border-radius:0;text-align:left;cursor:pointer;font-family:inherit;}
+.concert:last-child{border-bottom:none;}
+.concert strong{font-size:16px;font-weight:600;color:#1d1d1f;}
+.concert small{display:block;color:#6e6e73;font-size:12.5px;margin-top:2px;font-weight:400;}
+.concert.picked{background:transparent;border:none;}
+.concert.picked .num{background:#0071e3;border-color:#0071e3;color:#fff;}
+.concert.wrong{animation:shake .35s;}
+.songs{display:block;background:#fff;border-radius:24px;padding:6px 14px;box-shadow:0 4px 18px rgba(0,0,0,.05);margin-top:13px;}
+.song{display:block;width:100%;border:none;border-bottom:1px solid #e8e8ed;background:transparent;border-radius:0;padding:14px 2px;font-size:16px;font-weight:600;color:#1d1d1f;cursor:pointer;text-align:left;position:relative;font-family:inherit;}
+.song:last-child{border-bottom:none;}
+.song small{display:block;color:#6e6e73;font-size:12.5px;font-weight:400;margin-top:2px;}
+.song.right{background:transparent;border:none;}
+.song.right::after{content:'✓';position:absolute;right:4px;top:50%;transform:translateY(-50%);color:#34c759;font-weight:700;font-size:17px;}
+.hud{display:flex;gap:10px;background:#fff;border-radius:24px;padding:18px;box-shadow:0 4px 18px rgba(0,0,0,.05);margin-top:14px;}
+.hud div{flex:1;font-size:12px;color:#6e6e73;}
+.hud b{display:block;font-size:27px;font-weight:600;color:#1d1d1f;margin-top:4px;}
+.hunt{background:#000;border-radius:24px;}
+.decoy{border:2px solid rgba(255,255,255,.35);box-shadow:none;}
+.final{display:none;background:transparent;border:none;border-radius:0;padding:0;margin-top:64px;text-align:left;}
+.final.show{display:block;}
+.finH{font-size:32px;font-weight:600;margin-top:8px;}
+.pass{background:#000;border-radius:28px;padding:26px 24px;color:#fff;margin-top:18px;}
+.passTop{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+.passName{font-size:19px;font-weight:600;}
+.passOrg{font-size:12px;color:#a1a1a6;white-space:nowrap;}
+.passGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;margin-top:20px;border-top:1px solid rgba(255,255,255,.16);padding-top:20px;}
+.pk{font-size:11px;color:#a1a1a6;}
+.pv{font-size:17px;font-weight:600;margin-top:3px;}
+.passCode{margin-top:24px;background:#fff;border-radius:12px;padding:12px 14px 9px;}
+.bars{height:38px;background:repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 4px,#111 4px 7px,transparent 7px 9px,#111 9px 10px,transparent 10px 14px,#111 14px 17px,transparent 17px 19px);}
+.codeTx{color:#1d1d1f;font-size:11.5px;letter-spacing:.14em;text-align:center;margin-top:7px;}
+.finNote{font-size:15.5px;color:#6e6e73;line-height:1.7;margin-top:20px;}
+.finBtn{display:block;text-align:center;background:#0071e3;color:#fff;padding:14px;border-radius:980px;font-size:16.5px;font-weight:600;margin-top:18px;text-decoration:none;}
+.finPhoto{margin-top:26px;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.finPhoto img{width:100%;display:block;}
+.finPhoto .cap{padding:16px 18px 18px;}
+.finPhoto .t{font-size:16.5px;font-weight:600;}
+.finPhoto .d{font-size:14px;color:#6e6e73;margin-top:4px;line-height:1.6;}
+.finCredit{font-size:12.5px;color:#86868b;margin-top:16px;}
+.hud div{background:transparent;border:none;border-radius:0;padding:0;text-align:left;}
+.hud div+div{border-left:1px solid #e8e8ed;padding-left:14px;}
+</style>
+<style>
+/* ===== MIDNIGHT VIOLET — 午夜场 ===== */
+body{background:#000;color:#f5f5f7;}
+.subnav{background:rgba(10,10,14,.78);border-bottom:1px solid rgba(255,255,255,.09);color:#f5f5f7;}
+.subnav .r{color:#86868b;}
+.tbanner{box-shadow:0 24px 64px rgba(123,47,247,.20);}
+.intro{color:#a1a1a6;}
+.intro b{color:#f5f5f7;}
+.chap,.lvl .no{color:#c89bff;}
+.progress .dot{background:#17171f;color:#86868b;}
+.progress .dot.on{background:linear-gradient(120deg,#7b2ff7,#f107a3);color:#fff;}
+.lvl h2{color:#f5f5f7;}
+.lvl>p{color:#a1a1a6;}
+.wall,.concerts,.songs,.hud{background:#101016;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 34px rgba(0,0,0,.5);}
+.photo{background:#1c1c24;}
+.status,.hint{color:#86868b;}
+.clue{background:linear-gradient(140deg,#221239,#0d0d13);border:1px solid rgba(200,155,255,.35);color:#efe9fa;}
+.round{border-top:1px solid rgba(255,255,255,.08);}
+.round h3{color:#f5f5f7;}
+.concert{border-bottom:1px solid rgba(255,255,255,.08);}
+.concert strong{color:#f5f5f7;}
+.concert small{color:#86868b;}
+.concert .num{border-color:rgba(255,255,255,.28);color:#a1a1a6;background:transparent;}
+.concert.picked .num{background:#7b2ff7;border-color:#7b2ff7;color:#fff;}
+.song{border-bottom:1px solid rgba(255,255,255,.08);color:#f5f5f7;}
+.song small{color:#86868b;}
+.hud div{color:#86868b;}
+.hud div+div{border-left:1px solid rgba(255,255,255,.10);}
+.hud b{color:#f5f5f7;}
+.start{background:linear-gradient(120deg,#7b2ff7,#c22bd8);}
+.start:disabled{background:#26262e;color:#6e6e78;}
+.hunt{border:1px solid rgba(255,255,255,.08);}
+.finH{color:#f5f5f7;}
+.pass{border:1px solid rgba(255,255,255,.15);box-shadow:0 24px 64px rgba(123,47,247,.18);}
+.finNote{color:#a1a1a6;}
+.finBtn{background:linear-gradient(120deg,#7b2ff7,#c22bd8);}
+.finPhoto{background:#101016;border:1px solid rgba(255,255,255,.08);}
+.finPhoto .t{color:#f5f5f7;}
+.finPhoto .d{color:#a1a1a6;}
+.finCredit{color:#6e6e78;}
+.foot{color:#6e6e78;}
+.foot a{color:#2997ff !important;}
+</style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
+</head>
+<body>
+<div class="subnav">寻宝局<span class="r">第二站 · 寻宝</span></div>
+<div class="wrap">
+  <div class="tbanner">
+    <img class="bg" src="../../treasure/img/doudou-1.jpg" alt="金豆豆" style="object-position:50% 12%;"/>
+    <div class="scrim"></div>
+    <div class="in">
+      <div class="k">小乖的寻宝任务 · 妈妈，生日快乐！</div>
+      <h1>礼物被我藏起来啦<br/>升级版，没那么好混了</h1>
+      <p class="s">出题人已加难度 · 猫哥负责监考</p>
+    </div>
+  </div>
+  <p class="intro" style="margin-top:18px;">三关都加了料：<b>照片墙里找指定瞬间、五场演唱会排对顺序再猜主题曲、限时抓住逃跑的小乖三次</b>。错了不会锁死你，但会留下记录、扣时间，多错几次才给提示。</p>
+
+  <div class="progress">
+    <div class="dot" id="d1">第一关</div>
+    <div class="dot" id="d2">第二关</div>
+    <div class="dot" id="d3">第三关</div>
+  </div>
+
+  <div class="lvl" id="l1">
+    <div class="no">第 一 关 · 眼 力 考</div>
+    <h2>在一墙猫哥里，找到<span style="white-space:nowrap;">那一瞬间</span></h2>
+    <p>下面 12 张全都是金豆豆，不能再靠“有没有猫”蒙混过关。你要找的是：<b>2024 年 3 月 19 日在医院拍的那张——爸爸趴在诊台边，脸凑近戴着伊丽莎白圈的猫哥。</b></p>
+    <div class="wall" id="wall">
+      <button class="photo" type="button" aria-label="金豆豆照片 1"><img src="../../treasure/img/wall-01.jpg" alt="金豆豆照片 1" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 2"><img src="../../treasure/img/wall-02.jpg" alt="金豆豆照片 2" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 3"><img src="../../treasure/img/wall-03.jpg" alt="金豆豆照片 3" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 4"><img src="../../treasure/img/wall-04.jpg" alt="金豆豆照片 4" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 5"><img src="../../treasure/img/wall-05.jpg" alt="金豆豆照片 5" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 6"><img src="../../treasure/img/wall-06.jpg" alt="金豆豆照片 6" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 7"><img src="../../treasure/img/wall-07.jpg" alt="金豆豆照片 7" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" data-target="true" aria-label="金豆豆照片 8"><img src="../../treasure/img/wall-08.jpg" alt="金豆豆照片 8" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 9"><img src="../../treasure/img/wall-09.jpg" alt="金豆豆照片 9" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 10"><img src="../../treasure/img/wall-10.jpg" alt="金豆豆照片 10" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 11"><img src="../../treasure/img/wall-11.jpg" alt="金豆豆照片 11" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 12"><img src="../../treasure/img/wall-12.jpg" alt="金豆豆照片 12" loading="lazy" decoding="async"/></button>
+    </div>
+    <div class="status" id="wallStatus">已点错 0 次 · 点错的照片会被盖上红叉，第三次点错后才有提示。</div>
+    <div class="hint" id="wallHint">猫哥提示：确实还有一张戴圈照，但那张是在家里吃饭。目标照片里有医院诊台、电脑，还有趴在桌边的爸爸。</div>
+    <div class="clue" id="c1"><b>过关 · 第一片拼图。</b>猫哥说：——礼物不在网上，在这个家里，而且<b>离豆豆的日常活动范围不远</b>。</div>
+  </div>
+
+  <div class="lvl locked" id="l2">
+    <div class="no">第 二 关 · 记 忆 考</div>
+    <h2>先排演唱会，再猜主题曲</h2>
+    <p>这一关有两道题，第一题不过，第二题不开放。合听录不是摆设，你们的五场现场得靠真记忆排回来。</p>
+
+    <div class="round" id="orderRound">
+      <h3>第一题 · 把五场演唱会按时间排回来</h3>
+      <p>从最早的一场开始依次点选。<b>日期先藏起来了</b>，点对一场才翻出它的日期；只要点错一步，整道题就会重新洗牌。</p>
+      <div class="concerts" id="concerts">
+        <button class="concert" type="button" data-order="3" data-date="2024.05.25 · 鸟巢"><span class="num"></span><span><strong>北京 · 五月天</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="5" data-date="2025.09.13 · 贵阳奥体"><span class="num"></span><span><strong>贵阳 · 五月天</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="1" data-date="2023.06.25 · 武汉五环体育中心"><span class="num"></span><span><strong>武汉 · 五月天</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="4" data-date="2024.09.22 · 青岛市民健身中心体育场"><span class="num"></span><span><strong>青岛 · 林俊杰</strong><small>等待点选</small></span></button>
+        <button class="concert" type="button" data-order="2" data-date="2023.12.09 · 广西体育中心体育场"><span class="num"></span><span><strong>南宁 · 林俊杰</strong><small>等待点选</small></span></button>
+      </div>
+      <div class="status" id="orderStatus">进度 0 / 5 · 从最早的一场开始。</div>
+      <div class="hint" id="orderHint">小乖提示：先按年份分堆——2023 年有两场，2024 年有两场，2025 年只有一场。再想想哪一年去了两次五月天、哪一年把 JJ 听了两遍。</div>
+    </div>
+
+    <div class="round sealed" id="songRound">
+      <h3>第二题 · 今晚的主题曲是哪一首？</h3>
+      <p>这次不给现成答案。四首都是林俊杰的歌，只有一首最配你们从 2020.12.11 一路写到今天的故事。</p>
+      <div class="songs">
+        <button class="song" type="button" data-song-wrong="1">《交换余生》<small>林俊杰 · 候选主题曲</small></button>
+        <button class="song" type="button" data-song-wrong="1">《一千年以后》<small>林俊杰 · 候选主题曲</small></button>
+        <button class="song" type="button" id="songRight">《将故事写成我们》<small>林俊杰 · 候选主题曲</small></button>
+        <button class="song" type="button" data-song-wrong="1">《不为谁而作的歌》<small>林俊杰 · 候选主题曲</small></button>
+      </div>
+      <div class="status" id="songStatus">还没开始猜 · 点错两次后才给提示。</div>
+      <div class="hint" id="songHint">小乖提示：歌名里有“我们”两个字，而且这首歌讲的正是把两个人的故事写下去。</div>
+    </div>
+
+    <div class="clue" id="c2"><b>过关 · 第二片拼图。</b>礼物不大，拿在手里刚刚好；它身上藏着<b>只给你看的小记号</b>，找到的时候记得翻面。</div>
+  </div>
+
+  <div class="lvl locked" id="l3">
+    <div class="no">第 三 关 · 手 速 考</div>
+    <h2>45 秒内，抓住小乖 3 次</h2>
+    <p>按下开始，我会不停换位置，抓到一次就加速一次。白色圆点是假身，<b>点错一个扣 3 秒</b>。</p>
+    <div class="hud">
+      <div>剩余时间<br/><b id="timeLeft">45.0</b> 秒</div>
+      <div>已抓到<br/><b id="catchCount">0</b> / 3 次</div>
+      <div>当前速度<br/><b id="speedLabel">1 档</b></div>
+    </div>
+    <button class="start" id="huntStart" type="button">开始抓小乖</button>
+    <div class="hunt" id="hunt">
+      <span class="tip" id="huntTip">按下开始，小乖就会开始逃跑</span>
+      <img class="me" id="meBtn" src="../../treasure/img/xiaoguai-avatar.webp" alt="小乖躲在这里" loading="lazy" decoding="async"/>
+    </div>
+    <div class="status" id="huntStatus">白色圆点是假身。真正的我有青色护目镜、圆圆的黑眼睛和毛茸茸的奶油色身体——看清再点。</div>
+    <div class="clue" id="c3"><b>抓到啦。</b>三关全过，往下翻——最后一页。</div>
+  </div>
+
+  <div class="final" id="final">
+    <div class="no">通 关 奖 励</div>
+    <h2 class="finH">寻宝成功</h2>
+    <div class="pass">
+      <div class="passTop"><span class="passName">发布会入场函</span><span class="passOrg">小乖筹备组</span></div>
+      <div class="passGrid">
+        <div><div class="pk">嘉宾</div><div class="pv">赖大宝</div></div>
+        <div><div class="pk">场次</div><div class="pv">生日特别场</div></div>
+        <div><div class="pk">日期</div><div class="pv">2026.11.09</div></div>
+        <div><div class="pk">座位</div><div class="pv">主会场 · 连座</div></div>
+      </div>
+      <div class="passCode"><div class="bars"></div><div class="codeTx">XG · 20261109 · LDB26</div></div>
+    </div>
+    <p class="finNote">发布会现场不在屏幕里——去抱一下张大宝，他身上藏着第一条线索。顺着线索走到底，坐到发布会席位上，再打开主会场的大门。</p>
+    <a class="finBtn" href="../index.html">进入发布会主会场 →</a>
+    <div class="finPhoto"><img src="../../treasure/img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝" loading="lazy" decoding="async"/><div class="cap"><div class="t">26 岁生日快乐，妈妈。</div><div class="d">新的一岁，继续把我们的故事，写成我们。</div></div></div>
+    <p class="finCredit">出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
+  </div>
+
+  <div class="foot">小乖寻宝局 · 2026.11.09 升级专场<br/>答案如有争议，以猫哥的呼噜声为准<br/>小乖筹备组 · 2026.11.09 于南宁<br/><a href="../index.html" style="color:#0066cc;text-decoration:none;font-weight:600;">进入发布会主会场 ›</a></div>
+</div>
+<div class="confetti" id="confetti"></div>
+<script>
+  var hunt=document.getElementById('hunt');
+  var glyphs=['✦','✧','·','✦','✧'];
+  for(var i=0;i<34;i++){
+    var s=document.createElement('span');
+    s.className='star';
+    s.textContent=glyphs[i%glyphs.length];
+    s.style.left=(Math.random()*92+2)+'%';
+    s.style.top=(Math.random()*82+5)+'%';
+    s.style.fontSize=(9+Math.random()*10)+'px';
+    hunt.appendChild(s);
+  }
+
+  function boom(n){
+    var box=document.getElementById('confetti');
+    var colors=['#f0b35e','#ef7fa6','#7fb5e8','#8fd18b','#b79ced'];
+    var total=n||60;
+    for(var i=0;i<total;i++){
+      var p=document.createElement('i');
+      p.style.left=Math.random()*100+'%';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*0.5)+'s';
+      box.appendChild(p);
+      (function(el){setTimeout(function(){el.remove();},4300);})(p);
+    }
+  }
+
+  function unlock(n){
+    document.getElementById('d'+n).classList.add('on');
+    var nx=document.getElementById('l'+(n+1));
+    if(nx){nx.classList.remove('locked');}
+    document.getElementById('c'+n).classList.add('show');
+  }
+
+  /* 第一关：12 张照片墙 */
+  var wallDone=false;
+  var wallWrong=0;
+  var wallStatus=document.getElementById('wallStatus');
+  document.querySelectorAll('.photo').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(wallDone || btn.disabled){return;}
+      if(btn.getAttribute('data-target')==='true'){
+        wallDone=true;
+        btn.classList.add('right');
+        document.querySelectorAll('.photo').forEach(function(b){b.disabled=true;});
+        wallStatus.textContent='找到了！就是 2024 年 3 月 19 日在医院拍的那一张。';
+        unlock(1);
+        boom(45);
+        return;
+      }
+      btn.classList.add('missed');
+      btn.disabled=true;
+      wallWrong++;
+      if(wallWrong===3){
+        document.getElementById('wallHint').classList.add('show');
+        wallStatus.textContent='已点错 3 次 · 猫哥看不下去了，提示已经出现。';
+      } else if(wallWrong>=5){
+        wallStatus.textContent='已点错 '+wallWrong+' 次 · 再给你缩小范围：目标在照片墙的下半区。';
+      } else {
+        wallStatus.textContent='已点错 '+wallWrong+' 次 · 这张不是，再仔细看看场景和人物。';
+      }
+    });
+  });
+
+  /* 第二关第一题：五场演唱会排序 */
+  var expectedOrder=1;
+  var orderDone=false;
+  var orderFails=0;
+  var orderResetting=false;
+  var orderStatus=document.getElementById('orderStatus');
+  var concertBtns=Array.prototype.slice.call(document.querySelectorAll('.concert'));
+
+  function resetOrder(message){
+    expectedOrder=1;
+    concertBtns.forEach(function(btn){
+      btn.classList.remove('picked','wrong');
+      btn.disabled=false;
+      btn.querySelector('.num').textContent='';
+      btn.querySelector('small').textContent='等待点选';
+    });
+    orderStatus.textContent=message;
+    orderResetting=false;
+  }
+
+  function completeOrder(){
+    orderDone=true;
+    orderStatus.textContent='五场顺序全对！日期已经全部翻开，第二题解锁。';
+    document.getElementById('songRound').classList.remove('sealed');
+  }
+
+  concertBtns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(orderDone || orderResetting || btn.disabled){return;}
+      var order=parseInt(btn.getAttribute('data-order'),10);
+      if(order===expectedOrder){
+        btn.classList.add('picked');
+        btn.disabled=true;
+        btn.querySelector('.num').textContent=expectedOrder;
+        btn.querySelector('small').textContent=btn.getAttribute('data-date');
+        expectedOrder++;
+        if(expectedOrder>5){
+          completeOrder();
+        } else {
+          orderStatus.textContent='进度 '+(expectedOrder-1)+' / 5 · 已翻开这一场日期，继续找下一场。';
+        }
+        return;
+      }
+      orderFails++;
+      btn.classList.add('wrong');
+      orderResetting=true;
+      if(orderFails>=2){
+        document.getElementById('orderHint').classList.add('show');
+      }
+      orderStatus.textContent='这一步不对，顺序要重新来。刚才已经排对 '+(expectedOrder-1)+' 场，别灰心。';
+      setTimeout(function(){
+        resetOrder('顺序已重置 · 已失败 '+orderFails+' 次，从最早的一场重新开始。');
+      },480);
+    });
+  });
+
+  /* 第二关第二题：主题曲 */
+  var songDone=false;
+  var songWrong=0;
+  var songStatus=document.getElementById('songStatus');
+  document.querySelectorAll('[data-song-wrong]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(songDone || document.getElementById('songRound').classList.contains('sealed')){return;}
+      btn.classList.remove('wrong');
+      void btn.offsetWidth;
+      btn.classList.add('wrong');
+      songWrong++;
+      if(songWrong>=2){
+        document.getElementById('songHint').classList.add('show');
+        songStatus.textContent='已猜错 '+songWrong+' 次 · 提示已经出现，再想想你们的纪念日。';
+      } else {
+        songStatus.textContent='已猜错 1 次 · 不是这首，再点错一次才给提示。';
+      }
+    });
+  });
+  document.getElementById('songRight').addEventListener('click',function(){
+    if(songDone || document.getElementById('songRound').classList.contains('sealed')){return;}
+    songDone=true;
+    this.classList.add('right');
+    document.querySelectorAll('.song').forEach(function(btn){btn.disabled=true;});
+    songStatus.textContent='猜对了！今晚的主题曲就是《将故事写成我们》。';
+    unlock(2);
+    boom(45);
+  });
+
+  /* 第三关：限时抓小乖 */
+  var meBtn=document.getElementById('meBtn');
+  var startBtn=document.getElementById('huntStart');
+  var huntStatus=document.getElementById('huntStatus');
+  var huntTip=document.getElementById('huntTip');
+  var timeEl=document.getElementById('timeLeft');
+  var catchEl=document.getElementById('catchCount');
+  var speedEl=document.getElementById('speedLabel');
+  var huntActive=false;
+  var huntDone=false;
+  var catches=0;
+  var timeLeft=45;
+  var timerInt=null;
+  var moveInt=null;
+  var speeds=[900,700,550];
+
+  function updateHud(){
+    timeEl.textContent=timeLeft.toFixed(1);
+    catchEl.textContent=catches;
+    speedEl.textContent=Math.min(catches+1,3)+' 档';
+  }
+  function clearHuntTimers(){
+    if(timerInt){clearInterval(timerInt);timerInt=null;}
+    if(moveInt){clearInterval(moveInt);moveInt=null;}
+  }
+  function placeRandom(el,size){
+    var maxX=Math.max(8,hunt.clientWidth-size-8);
+    var maxY=Math.max(48,hunt.clientHeight-size-8);
+    var x=8+Math.random()*Math.max(1,maxX-8);
+    var y=44+Math.random()*Math.max(1,maxY-44);
+    el.style.left=x+'px';
+    el.style.top=y+'px';
+  }
+  function moveMe(){
+    placeRandom(meBtn,44);
+  }
+  function setMoveTimer(){
+    if(moveInt){clearInterval(moveInt);}
+    moveInt=setInterval(moveMe,speeds[Math.min(catches,2)]);
+    updateHud();
+  }
+  function makeDecoys(){
+    hunt.querySelectorAll('.decoy').forEach(function(el){el.remove();});
+    var fills=['#fff7ed','#f2ecff','#ffeef6','#eef7ff','#fffbe8'];
+    for(var i=0;i<12;i++){
+      var d=document.createElement('button');
+      var size=30+Math.random()*18;
+      d.type='button';
+      d.className='decoy';
+      d.setAttribute('aria-label','星尘假身');
+      d.style.width=size+'px';
+      d.style.height=size+'px';
+      d.style.background='radial-gradient(circle at 34% 32%, #ffffff 0%, '+fills[i%fills.length]+' 58%, #d9c9f2 100%)';
+      placeRandom(d,size);
+      d.addEventListener('click',onDecoy);
+      hunt.appendChild(d);
+    }
+  }
+  function failHunt(){
+    if(!huntActive){return;}
+    huntActive=false;
+    clearHuntTimers();
+    meBtn.classList.remove('live','caught');
+    catches=0;
+    timeLeft=0;
+    updateHud();
+    huntTip.textContent='✦ 差一点！小乖从星星缝里溜走了 ✦';
+    huntStatus.textContent='时间到！别灰心，点“再抓一次”，这一轮的假身会重新摆放。';
+    startBtn.disabled=false;
+    startBtn.textContent='再抓一次';
+  }
+  function onDecoy(){
+    if(!huntActive || this.classList.contains('hit')){return;}
+    this.classList.add('hit');
+    timeLeft=Math.max(0,timeLeft-3);
+    updateHud();
+    huntStatus.textContent='假身！扣 3 秒，还剩 '+timeLeft.toFixed(1)+' 秒。看清护目镜再点。';
+    if(timeLeft<=0){failHunt();}
+  }
+  function startHunt(){
+    if(huntDone){return;}
+    clearHuntTimers();
+    catches=0;
+    timeLeft=45;
+    huntActive=true;
+    updateHud();
+    makeDecoys();
+    meBtn.classList.add('live');
+    meBtn.classList.remove('caught');
+    moveMe();
+    setMoveTimer();
+    huntTip.textContent='✦ 小乖逃跑中 · 抓到 3 次才算赢 ✦';
+    huntStatus.textContent='开始！我每 0.9 秒换一个位置，抓到一次就加速。';
+    startBtn.disabled=true;
+    startBtn.textContent='小乖逃跑中…';
+    timerInt=setInterval(function(){
+      timeLeft=Math.max(0,timeLeft-0.1);
+      updateHud();
+      if(timeLeft<=0){failHunt();}
+    },100);
+  }
+  function completeHunt(){
+    huntActive=false;
+    huntDone=true;
+    clearHuntTimers();
+    meBtn.classList.add('caught');
+    huntTip.textContent='✦ 小乖投降啦 ✦';
+    huntStatus.textContent='三抓全中！用时还剩 '+timeLeft.toFixed(1)+' 秒，小乖愿赌服输。';
+    startBtn.disabled=true;
+    startBtn.textContent='已抓到小乖 ✓';
+    unlock(3);
+    var f=document.getElementById('final');
+    f.classList.add('show');
+    boom(85);
+    setTimeout(function(){f.scrollIntoView({behavior:'smooth',block:'center'});},350);
+  }
+  startBtn.addEventListener('click',startHunt);
+  meBtn.addEventListener('click',function(){
+    if(!huntActive || huntDone){return;}
+    catches++;
+    updateHud();
+    if(catches>=3){
+      completeHunt();
+      return;
+    }
+    huntStatus.textContent='抓到 '+catches+' 次！小乖加速到 '+(catches+1)+' 档了。';
+    moveMe();
+    setMoveTimer();
+  });
+  updateHud();
+</script>
+</body>
+</html>
