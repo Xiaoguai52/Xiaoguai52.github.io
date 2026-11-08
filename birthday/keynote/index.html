@@ -21,7 +21,7 @@
   #gate .c { font-size:15px; color:#a1a1a6; font-variant-numeric:tabular-nums; }
 
   /* ---------- stage ---------- */
-  #stage { position:relative; width:min(100vw, 177.78vh); aspect-ratio:16/9; background:#000; overflow:hidden;
+  #stage { position:relative; width:min(100vw, 177.78vh); width:min(100vw, 177.78dvh); aspect-ratio:16/9; background:#000; overflow:hidden;
     container-type:size; }
   .slide { position:absolute; inset:0; opacity:0; pointer-events:none; transform:scale(1.025);
     transition:opacity .45s ease, transform .45s ease; overflow:hidden; background:#000; }
@@ -78,6 +78,25 @@
   #hint { position:absolute; left:50%; transform:translateX(-50%); bottom:8cqh; font-size:1.5cqw; color:#86868b; z-index:20;
     animation:pulse 2.2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:.9} }
+
+  /* 横屏提示：仅竖屏小屏出现，停留几秒后自动淡出；横屏与桌面不出现、不挡内容 */
+  #rotTip { position:fixed; left:50%; top:calc(12px + env(safe-area-inset-top)); transform:translateX(-50%); z-index:40;
+    background:rgba(28,28,30,.85); color:#f5f5f7; font-size:13px; letter-spacing:.06em; padding:9px 16px; border-radius:999px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.12); opacity:0; pointer-events:none; white-space:nowrap; }
+  @media (orientation:portrait) and (max-width:820px) {
+    #rotTip { animation:rotIn .6s ease 1.2s both, rotOut .8s ease 6.5s forwards; }
+  }
+  @keyframes rotIn { from{opacity:0; transform:translate(-50%,-6px)} to{opacity:1; transform:translate(-50%,0)} }
+  @keyframes rotOut { to{opacity:0; visibility:hidden} }
+
+  /* 桌面：鼠标悬停在两侧翻页区时显示淡淡的箭头 */
+  @media (hover:hover) and (pointer:fine) {
+    .zone::after { position:absolute; top:50%; transform:translateY(-50%); font-size:44px; line-height:1;
+      color:rgba(255,255,255,.55); opacity:0; transition:opacity .25s; }
+    #zprev::after { content:"‹"; left:26px; }
+    #znext::after { content:"›"; right:26px; }
+    .zone:hover::after { opacity:.6; }
+  }
 
   /* V2.0 数字页：数字轻微放大入场，逐个错开 */
   @keyframes numIn { from{opacity:0; transform:scale(.93)} to{opacity:1; transform:scale(1)} }
@@ -174,6 +193,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
 </div>
 
 <div id="app" hidden>
+  <div id="rotTip">📱 横过手机看，效果更好</div>
   <div id="stage">
 
     <!-- 1 开场 -->
