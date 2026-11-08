@@ -564,6 +564,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   <li>抱抱快充需张大宝本人在场执行；异地时可用视频通话临时替代，功率略有下降。</li>
   <li id="note4">本条涉及今晚的神秘新品，发布后自动解码——没解码之前，谁也不许猜中。</li>
   <li>本页面所有「官方数据」均为小乖发布会筹备组单方面宣布，张大宝的保留意见不影响发布效力。</li>
+  <li>背景音乐：Meanwhile · Scott Buckley（CC BY 4.0）</li>
 </ol></div>
 
 <div class="gfoot"><span class="crumb">小乖发布会</span> › 赖大宝 Pro 26<br/>本页面由小乖发布会筹备组制作 · 参会人员：张大宝、金豆豆<br/>仅供赖大宝本人观看，转发给闺蜜显摆也可以<br/>Copyright © 2026 小乖筹备组，保留所有撒娇权利 · 2026.11.09 于南宁发布</div>
@@ -769,7 +770,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
 })();
 </script>
 <!-- 音乐接口（V2.0 预留）：待接入音频文件后填 src；当前无源，点击仅切换按钮状态。切勿接入 concert/audio/ 下的旧语音文件。 -->
-<audio id="bgm" preload="none"></audio>
+<audio id="bgm" src="bgm.mp3" loop preload="none"></audio>
 <button id="bgmBtn" type="button" aria-label="背景音乐开关" title="背景音乐">&#9834;</button>
 <style>
 #bgmBtn{position:fixed;right:18px;bottom:18px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid rgba(200,155,255,.45);background:rgba(20,14,34,.78);color:#cdb4ff;font-size:19px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:.75;transition:opacity .25s,box-shadow .25s;}
@@ -779,7 +780,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
 <script>
 (function(){var b=document.getElementById('bgmBtn'),a=document.getElementById('bgm');if(!b||!a)return;
 b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.classList.toggle('on');return;}
-if(a.paused){var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
+if(a.paused){a.volume=0.35;var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
 a.addEventListener('ended',function(){b.classList.remove('on');});})();
 </script>
 </body>
