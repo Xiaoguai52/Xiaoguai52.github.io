@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>赖大宝 Pro 26 - 小乖发布会</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:#fff;color:#1d1d1f;font-family:-apple-system,'SF Pro Display','SF Pro Text','PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:#0066cc;text-decoration:none;}
+  :root{--acc:#f56300;--acc2:#a259e6;}
+  html[data-theme="grape"]{--acc:#a259e6;--acc2:#ff6482;}
+  html[data-theme="peach"]{--acc:#e5567f;--acc2:#a259e6;}
+  [hidden]{display:none!important}
+  sup{font-size:.56em;color:#86868b;font-weight:400;}
+  .gnav{background:rgba(22,22,23,.94);backdrop-filter:blur(12px);height:44px;display:flex;align-items:center;justify-content:center;gap:34px;font-size:12px;color:#e8e8ed;position:relative;z-index:30;padding:0 16px;}
+  .gnav span{opacity:.92;white-space:nowrap;}
+  .gnav .logo{font-size:16px;}
+  @media(max-width:560px){.gnav{gap:22px}.gnav .hideS{display:none}}
+  .pnav{position:sticky;top:0;z-index:25;background:rgba(251,251,253,.78);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.08);transition:box-shadow .3s;}
+  .pnav.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.08);}
+  .pnav .in{max-width:980px;margin:0 auto;padding:0 22px;height:52px;display:flex;align-items:center;justify-content:space-between;}
+  .pnav .name{font-size:20px;font-weight:700;letter-spacing:-.3px;}
+  .pnav .links{display:flex;gap:18px;align-items:center;font-size:12.5px;}
+  .pnav .links a{color:#1d1d1f;opacity:.85;}
+  .btn{display:inline-block;background:#0071e3;color:#fff!important;border-radius:999px;padding:6px 15px;font-size:13px;font-weight:500;opacity:1!important;}
+  .btn.big{padding:11px 26px;font-size:16px;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px;}
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);}
+  .rv.in{opacity:1;transform:none;}
+  .rv.s1{transition-delay:.08s}.rv.s2{transition-delay:.16s}.rv.s3{transition-delay:.24s}
+  /* 动效 2.1：.rv 分化——文字块改为纯淡入，图片块改为缩放+淡入，标题类保留默认的上移淡入，形成三种节奏 */
+  .secSub.rv,.stat.rv,.dcard.rv,.arow.rv,.row.rv,.cs.rv,.caseCap.rv,.teaserTx.rv,.faq.rv{transform:none;}
+  .chipImg.rv,.caseimg.rv,.teaserImg.rv,.bleed.rv,.imgwrap.rv{transform:scale(.96);}
+  .chipImg.rv.in,.caseimg.rv.in,.teaserImg.rv.in,.bleed.rv.in,.imgwrap.rv.in{transform:scale(1);}
+  /* hero — apple product-page grammar: type first, visual full-bleed */
+  .hero{text-align:center;padding:58px 0 0;}
+  .chap{font-size:12px;letter-spacing:4px;color:#e8b06a;font-weight:700;margin-bottom:16px;}
+  .eyebrow{color:var(--acc);font-size:17px;font-weight:600;}
+  h1{font-size:72px;font-weight:600;letter-spacing:-1.8px;line-height:1.06;margin-top:12px;}
+  @media(max-width:560px){h1{font-size:52px;letter-spacing:-1.2px}}
+  .hero .tag{font-size:26px;margin-top:14px;line-height:1.4;font-weight:700;letter-spacing:-.3px;}
+  .claims{margin-top:20px;font-size:17px;line-height:1.65;}
+  .claims b{font-weight:700;}
+  .hero .price{font-size:17px;color:#6e6e73;margin-top:14px;}
+  .hero .buyline{margin-top:12px;font-size:17px;display:flex;gap:26px;justify-content:center;}
+  .hero .buyline a::after{content:' ›';}
+  .hero .meta{margin-top:20px;font-size:13px;color:#6e6e73;letter-spacing:.4px;}
+  .count{display:inline-flex;gap:7px;align-items:center;margin-top:18px;font-size:14px;color:#6e6e73;}
+  .count .n{font-variant-numeric:tabular-nums;font-weight:700;color:#1d1d1f;}
+  .count .dotlive{width:7px;height:7px;border-radius:50%;background:#30d158;animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(48,209,88,.45)}55%{box-shadow:0 0 0 7px rgba(48,209,88,0)}}
+  .stage{margin:44px -22px 0;overflow:hidden;}
+  .stage img{display:block;width:100%;animation:kenburns 16s ease-in-out infinite alternate;}
+  @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.05)}}
+  /* section headlines */
+  .secT{font-size:44px;font-weight:600;letter-spacing:-.8px;text-align:center;line-height:1.18;}
+  @media(max-width:560px){.secT{font-size:33px}}
+  .secSub{text-align:center;color:#6e6e73;font-size:17px;line-height:1.65;margin-top:14px;}
+  .secSub b{color:#1d1d1f;}
+  .kick{font-size:13px;letter-spacing:3px;color:var(--acc);font-weight:700;text-align:center;}
+  .finishes{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:9px;}
+  .finishes .flab{font-size:12.5px;color:#6e6e73;letter-spacing:1px;}
+  .fdots{display:flex;gap:14px;}
+  .fdot{width:26px;height:26px;border-radius:50%;border:2px solid transparent;background:var(--sw);cursor:pointer;padding:0;box-shadow:inset 0 0 0 2px #fff,0 1px 5px rgba(0,0,0,.18);}
+  .fdot.on{border-color:#0071e3;}
+  .finishes .fname{font-size:13px;color:#1d1d1f;font-weight:600;}
+  /* stats — big numerals, hairlines, no boxes */
+  .stats{padding:88px 0 84px;}
+  .statGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:44px;}
+  .stat{padding:26px 0 30px;border-top:1px solid #d2d2d7;}
+  .stat .n{font-size:56px;font-weight:600;letter-spacing:-1px;line-height:1.05;font-variant-numeric:tabular-nums;}
+  .stat .n em{font-style:normal;}
+  .stat .k{font-size:14.5px;color:#6e6e73;margin-top:10px;line-height:1.6;}
+  @media(max-width:560px){.stat .n{font-size:42px}}
+  /* dark section */
+  .dark{background:#000;color:#f5f5f7;padding:96px 0;}
+  .dark .secT{color:#f5f5f7;}
+  .dark .secSub{color:#a1a1a6;}
+  .dark .secSub b{color:#f5f5f7;}
+  .dark .kick{color:#2997ff;}
+  .chipImg{display:block;width:min(300px,78%);margin:32px auto 6px;border-radius:20px;}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px 32px;margin-top:52px;}
+  .dcard{border-top:1px solid rgba(255,255,255,.16);padding-top:18px;}
+  .dcard .k{font-size:12px;color:#86868b;letter-spacing:2px;}
+  .dcard .v{font-size:25px;font-weight:600;margin-top:8px;line-height:1.35;}
+  .dcard .d{font-size:14px;color:#a1a1a6;margin-top:6px;line-height:1.6;}
+  /* feature rows — bare glyph, bold lead, generous rhythm */
+  .featSec{padding:88px 0 0;}
+  .arows{margin-top:44px;display:flex;flex-direction:column;gap:34px;max-width:720px;margin-left:auto;margin-right:auto;}
+  .arow{display:flex;gap:18px;align-items:flex-start;}
+  .arow .ic{flex:none;font-size:25px;line-height:1.5;width:34px;text-align:center;}
+  .arow .tx{font-size:17px;line-height:1.75;color:#6e6e73;}
+  .arow .tx b{color:#1d1d1f;font-weight:700;}
+  .bleed{margin:64px -22px 0;overflow:hidden;}
+  .bleed img{display:block;width:100%;transform:scale(1.14);will-change:transform;}
+  .gradtext{background:linear-gradient(100deg,#7b2ff7,#f107a3,#ff8a5c,#7b2ff7);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite;}
+  @keyframes shine{to{background-position:220% 0}}
+  /* gallery — apple closer-look carousel */
+  .gallerySec{padding:88px 0 0;}
+  .gallerySec .secT{text-align:left;font-size:32px;}
+  .gallerySec .secSub{text-align:left;}
+  .gal{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:28px 22px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .gal::-webkit-scrollbar{display:none;}
+  .slide{flex:0 0 84%;scroll-snap-align:center;}
+  .slide img{width:100%;height:300px;object-fit:cover;border-radius:18px;display:block;}
+  .slide figcaption{font-size:13.5px;color:#6e6e73;margin-top:10px;text-align:center;}
+  .galCtl{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+  .gdots span{width:7px;height:7px;border-radius:50%;background:#d2d2d7;display:inline-block;margin-right:6px;transition:background .3s;}
+  .gdots span.on{background:#1d1d1f;}
+  .garrows{display:flex;gap:8px;}
+  .garrows button{width:36px;height:36px;border-radius:50%;border:1px solid #d2d2d7;background:#fff;font-size:19px;color:#1d1d1f;cursor:pointer;line-height:1;font-family:inherit;}
+  /* faq — apple buy-page accordion */
+  .faqSec{padding:88px 0 0;}
+  .faqSec h2{font-size:28px;font-weight:600;letter-spacing:-.4px;}
+  .faq{margin-top:16px;border-top:1px solid #d2d2d7;}
+  .qa{border-bottom:1px solid #d2d2d7;}
+  .q{width:100%;background:none;border:none;text-align:left;font-size:16.5px;font-weight:600;padding:19px 2px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:#1d1d1f;font-family:inherit;gap:14px;}
+  .q .pm{font-size:23px;color:#86868b;transition:transform .35s;font-weight:400;flex:none;}
+  .qa.open .q .pm{transform:rotate(45deg);}
+  .qa .a{display:none;font-size:15px;color:#6e6e73;line-height:1.75;padding:0 2px 19px;}
+  .qa.open .a{display:block;animation:up .45s cubic-bezier(.2,.7,.2,1) both;}
+  /* case / battery */
+  .caseSec{background:#f5f5f7;margin-top:96px;padding:88px 0;text-align:center;}
+  .caseSec .caseimg{width:74%;max-width:330px;margin:34px auto 6px;display:block;}
+  .caseStats{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:40px;text-align:left;}
+  .caseStats .cs{border-top:1px solid #d2d2d7;padding-top:20px;}
+  .caseStats .cs .n{font-size:40px;font-weight:600;letter-spacing:-.5px;}
+  .caseStats .cs .k{font-size:14.5px;color:#6e6e73;margin-top:8px;line-height:1.6;}
+  .caseSec .bleed{margin-top:52px;}
+  .caseCap{font-size:15px;color:#6e6e73;margin-top:18px;line-height:1.7;}
+  /* checklist — hairline rows */
+  .feat{margin-top:36px;border-top:1px solid #d2d2d7;}
+  .feat .row{display:flex;gap:14px;align-items:flex-start;padding:20px 2px;border-bottom:1px solid #e8e8ed;}
+  .feat .tick{color:#30d158;font-weight:800;font-size:17px;line-height:1.55;}
+  .rv.in .tick{animation:pop .5s cubic-bezier(.2,1.6,.4,1) both;}
+  @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+  .feat .t{font-size:17px;line-height:1.6;}
+  .feat .t span{color:#6e6e73;font-size:15px;}
+  /* airpods */
+  .teaserImg{width:100%;max-width:430px;border-radius:18px;display:block;margin:22px auto 4px;aspect-ratio:1.5;object-fit:cover;}
+.pods{padding:58px 24px 50px;text-align:center;background:#000;color:#f5f5f7;border-radius:28px;margin:96px -10px 0;}
+  .pods h2{font-size:52px;font-weight:600;letter-spacing:-1px;margin-top:10px;}
+  @media(max-width:560px){.pods h2{font-size:40px}}
+  .pods .tag2{font-size:21px;font-weight:600;margin-top:12px;}
+  .pods .imgwrap{margin:10px auto 0;max-width:340px;position:relative;}
+  .pods .imgwrap img{width:100%;display:block;animation:float 5.5s ease-in-out infinite;}
+  .pods .imgwrap a{display:block;-webkit-tap-highlight-color:transparent;}
+  .arbadge{position:absolute;right:6px;bottom:10px;background:rgba(29,29,31,.82);color:#fff;font-size:12px;font-weight:600;border-radius:999px;padding:7px 13px;backdrop-filter:blur(6px);pointer-events:none;}
+  .arhint{font-size:13px;color:#a1a1a6;margin-top:10px;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  /* 动效 2.1：产品图悬浮家族——与 pods 的 float 同语言；用独立 translate 属性实现，与 .rv 的 transform 显现互不冲突；时长/幅度/相位各不相同，避免整页齐步走 */
+  @keyframes float2{0%,100%{translate:0 0}50%{translate:0 -6px}}
+  @keyframes float3{0%,100%{translate:0 0}50%{translate:0 -5px}}
+  .chipImg{animation:float2 6.5s ease-in-out infinite;}
+  .caseSec .caseimg{animation:float3 7.5s ease-in-out -2.6s infinite;}
+  .teaserImg{animation:float2 6.5s ease-in-out -4.1s infinite;}
+  .podgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 24px;margin-top:40px;text-align:center;border-top:1px solid rgba(255,255,255,.14);padding-top:28px;}
+  .podgrid .pg .n{font-size:24px;font-weight:600;letter-spacing:-.3px;}
+  .pg:nth-child(2) .n{font-size:21px;letter-spacing:-1px;}
+  .podgrid .pg .k{font-size:12.5px;color:#a1a1a6;margin-top:6px;line-height:1.55;}
+  .twist{margin-top:44px;font-size:18px;line-height:1.85;}
+  .twist b{background:linear-gradient(transparent 64%,rgba(232,176,106,.38) 64%);}
+  .podcard{margin:26px auto 0;max-width:560px;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:22px;cursor:pointer;background:#121218;}
+  /* mystery product teaser (locked until the treasure reveal) */
+  .giftbox{margin:30px auto 0;width:158px;height:158px;border-radius:36px;background:radial-gradient(circle at 50% 38%,#2c2c30,#131315 72%);display:flex;align-items:center;justify-content:center;font-size:74px;box-shadow:0 24px 60px rgba(0,0,0,.28),inset 0 0 0 1px #3a3a3f;animation:giftfloat 3.6s ease-in-out infinite;}
+  @keyframes giftfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .teaserTx{margin-top:26px;font-size:16.5px;line-height:1.9;color:#a1a1a6;}
+  .teaserTx b{color:#f5f5f7;}
+  .teaserCd{margin-top:18px;display:inline-block;font-size:13px;color:#a1a1a6;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 18px;letter-spacing:1px;}
+  .teaserCd .n{color:#f5f5f7;font-weight:700;font-variant-numeric:tabular-nums;}
+  #podsUnlock{margin-top:22px;background:#0071e3;color:#fff;border:none;font-size:15px;font-weight:600;padding:12px 30px;border-radius:999px;cursor:pointer;font-family:inherit;}
+  #podsRelock{margin-top:20px;background:none;border:none;color:#86868b;font-size:12.5px;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px;}
+  .teaserWarn{margin:14px auto 0;max-width:420px;font-size:13px;color:#ff8a94;line-height:1.8;}
+  .caseTeaser{margin:34px auto 0;max-width:520px;border-radius:22px;background:radial-gradient(circle at 50% 34%,#2c2c30,#131315 74%);color:#f5f5f7;padding:44px 20px 38px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:inset 0 0 0 1px #3a3a3f;}
+  .caseTeaser .gb{font-size:56px;animation:giftfloat 3.6s ease-in-out infinite;}
+  .caseTeaser .gt{font-size:13.5px;color:#a1a1a6;line-height:1.9;letter-spacing:1px;}
+  .podcard .hint{font-size:12.5px;color:#a1a1a6;letter-spacing:2px;}
+  .podcard .secret{display:none;margin-top:10px;font-size:15.5px;line-height:1.85;}
+  .podcard.open .secret{display:block;animation:up .6s cubic-bezier(.2,.7,.2,1) both;}
+  .podcard.open .hint{display:none;}
+  @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  /* compare */
+  .compare{padding:96px 0 0;}
+  .ctable{margin-top:36px;display:grid;grid-template-columns:.92fr 1.04fr 1.04fr;gap:0;font-size:13.5px;line-height:1.6;}
+  .ctable>div{padding:13px 10px;border-bottom:1px solid #e8e8ed;}
+  .ctable .hd{font-weight:700;font-size:16px;border-bottom:2px solid #1d1d1f;}
+  .ctable .hd small{display:block;font-weight:500;color:#6e6e73;font-size:11.5px;margin-top:3px;}
+  .ctable .rk{font-weight:700;color:#1d1d1f;padding-left:2px;}
+  .ctable .dim{color:#6e6e73;}
+  .ctable .hl{background:#f5f5f7;}
+  /* specs */
+  .specs{padding:96px 0 0;}
+  .specTable{margin-top:36px;border-top:1px solid #d2d2d7;}
+  .specTable .r{display:flex;gap:16px;padding:14px 2px;border-bottom:1px solid #e8e8ed;font-size:15px;}
+  .specTable .r .k{flex:none;width:96px;font-weight:700;}
+  .specTable .r .v{color:#3a3a3c;line-height:1.6;}
+  /* buy */
+  .buy{background:#f5f5f7;margin-top:96px;padding:80px 0;text-align:center;}
+  .buy .pname{font-size:32px;font-weight:600;letter-spacing:-.5px;}
+  .buy .pprice{font-size:16px;color:#6e6e73;margin-top:12px;line-height:1.75;}
+  .buy .btn{margin-top:22px;}
+  .buy .fin{font-size:13px;color:#6e6e73;margin-top:14px;}
+  /* eggs — apple-style link rows */
+  .eggs{max-width:980px;margin:0 auto;padding:72px 22px 0;}
+  .eggs h2{font-size:28px;font-weight:600;letter-spacing:-.4px;}
+  .egg{display:flex;gap:16px;align-items:center;margin-top:0;border-top:1px solid #d2d2d7;padding:22px 2px;text-decoration:none;color:#1d1d1f;}
+  .egg:last-of-type{border-bottom:1px solid #d2d2d7;}
+  .egg .ic{font-size:26px;flex:none;}
+  .egg .tt{font-size:19px;font-weight:700;}
+  .egg .dd{font-size:14px;color:#6e6e73;margin-top:3px;line-height:1.55;}
+  .egg .arw{margin-left:auto;color:#86868b;font-size:24px;flex:none;}
+  .notes{max-width:980px;margin:0 auto;padding:44px 22px 0;font-size:11.5px;color:#6e6e73;line-height:1.9;}
+  .notes ol{padding-left:16px;}
+  .gfoot{max-width:980px;margin:40px auto 0;border-top:1px solid #d2d2d7;padding:16px 22px 38px;font-size:11.5px;color:#6e6e73;line-height:1.95;}
+  .gfoot .crumb{color:#1d1d1f;font-weight:600;}
+  /* countdown gate — hard lock: while locked, #app is display:none */
+  html.locked,body.locked{overflow:hidden!important;height:100%!important;overscroll-behavior:none;}
+  body.locked #app{display:none!important;}
+  body.locked>*:not(#gate){visibility:hidden!important;}
+  #gate{position:fixed;inset:0;height:100vh;height:100dvh;z-index:100;background:#000;color:#f5f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .9s ease;touch-action:none;}
+  #gate.off{opacity:0;pointer-events:none;}
+  #gate .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:drift 13s ease-in-out infinite alternate;}
+  #gate .b1{width:300px;height:300px;background:#5e2ea6;top:-90px;left:-70px;}
+  #gate .b2{width:260px;height:260px;background:#0a4d8f;bottom:-80px;right:-60px;animation-delay:-6s;}
+  #gate .b3{width:170px;height:170px;background:#a63d00;bottom:16%;left:-50px;opacity:.35;animation-delay:-3s;}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(46px,30px) scale(1.14)}}
+  #gate .gc{position:relative;text-align:center;padding:24px;}
+  #gate .gk{font-size:12px;letter-spacing:4px;color:#a1a1a6;}
+  #gate .gt{font-size:46px;font-weight:800;letter-spacing:-1px;line-height:1.15;margin-top:16px;background:linear-gradient(95deg,#7dc4ff,#c89bff 55%,#ffb37d);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  #gate .gs{font-size:19px;margin-top:14px;font-weight:600;}
+  #gate .gcd{display:flex;gap:10px;justify-content:center;margin-top:32px;}
+  #gate .gcd .u{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px 0;width:70px;}
+  #gate .gcd .n{font-size:31px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;}
+  #gate .gcd .k{font-size:11px;color:#a1a1a6;margin-top:6px;letter-spacing:2px;}
+  #gate .gd{margin-top:32px;font-size:13px;color:#a1a1a6;line-height:1.9;}
+  #gate .gd b{color:#f5f5f7;}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:90;}
+  .confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translate(var(--sw,0px),106vh) rotate(560deg)}}
+  #bdayPop{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,8,18,.62);}
+  #bdayPop.show{display:flex;animation:popBg 3.8s ease both;}
+  @keyframes popBg{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
+  #bdayPop .t{font-size:46px;font-weight:800;letter-spacing:1px;background:linear-gradient(95deg,#ffd60a,#ff9f0a 38%,#ff6482 68%,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent;animation:popIn 3.8s cubic-bezier(.2,.8,.3,1) both;text-align:center;line-height:1.45;padding:0 20px;}
+  @keyframes popIn{0%{opacity:0;transform:scale(.7)}14%{opacity:1;transform:scale(1.06)}22%{transform:scale(1)}78%{opacity:1}100%{opacity:0;transform:scale(1.02)}}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+<style>
+/* ===== MIDNIGHT VIOLET — 午夜场 ===== */
+body{background:#000;color:#f5f5f7;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(720px 460px at 88% -6%,rgba(123,47,247,.16),transparent 62%),radial-gradient(640px 520px at -12% 34%,rgba(241,7,163,.07),transparent 60%),radial-gradient(800px 600px at 50% 112%,rgba(123,47,247,.10),transparent 62%);}
+#app{position:relative;z-index:1;}
+a{color:#2997ff;}
+sup{color:#86868b;}
+.pnav{background:rgba(10,10,14,.72);border-bottom:1px solid rgba(255,255,255,.09);}
+.pnav .name{color:#f5f5f7;}
+.pnav .links a{color:#f5f5f7;}
+.hero h1{background:linear-gradient(96deg,#fff 15%,#d9b8ff 52%,#f107a3 88%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero .tag{color:#f5f5f7;}
+.hero .price,.hero .meta,.count{color:#a1a1a6;}
+.count .n{color:#f5f5f7;}
+.finishes .flab{color:#86868b;}
+.finishes .fname{color:#f5f5f7;}
+.fdot{box-shadow:inset 0 0 0 2px rgba(0,0,0,.55),0 1px 5px rgba(0,0,0,.5);}
+:root{--acc:#c89bff;}
+.secT{color:#f5f5f7;}
+.secSub{color:#a1a1a6;}
+.secSub b{color:#f5f5f7;}
+.stat{border-top:1px solid rgba(255,255,255,.16);}
+.stat .n{color:#f5f5f7;}
+.stat .k{color:#a1a1a6;}
+.dark{background:#050508;}
+.dark .kick{color:var(--acc);}
+.chipImg{box-shadow:0 24px 70px rgba(123,47,247,.28);}
+.arow .tx{color:#a1a1a6;}
+.arow .tx b{color:#f5f5f7;}
+.feat{border-top:1px solid rgba(255,255,255,.12);}
+.feat .row{border-bottom:1px solid rgba(255,255,255,.08);}
+.feat .t{color:#f5f5f7;}
+.feat .t span{color:#a1a1a6;}
+.caseSec{background:#07070c;}
+.caseimg{border-radius:20px;box-shadow:0 24px 64px rgba(0,0,0,.55);}
+.caseStats .cs{border-top:1px solid rgba(255,255,255,.14);}
+.caseStats .cs .n{color:#f5f5f7;}
+.caseStats .cs .k{color:#a1a1a6;}
+.caseCap{color:#a1a1a6;}
+.caseTeaser{border:1px solid rgba(200,155,255,.25);}
+.pods{border:1px solid rgba(255,255,255,.13);background:radial-gradient(120% 90% at 50% 0%,#1c1030 0%,#000 58%);box-shadow:0 30px 80px rgba(123,47,247,.16);}
+.podcard{background:#14101f;border-color:rgba(255,255,255,.12);}
+.ctable>div{border-bottom:1px solid rgba(255,255,255,.08);color:#f5f5f7;}
+.ctable .hd{border-bottom:2px solid #f5f5f7;color:#f5f5f7;}
+.ctable .hd small{color:#86868b;}
+.ctable .rk{color:#f5f5f7;}
+.ctable .dim{color:#86868b;}
+.ctable .hl{background:rgba(162,89,255,.12);}
+.specTable{border-top:1px solid rgba(255,255,255,.14);}
+.specTable .r{border-bottom:1px solid rgba(255,255,255,.08);color:#f5f5f7;}
+.specTable .r .v{color:#c9c9d4;}
+.slide figcaption{color:#86868b;}
+.gdots span{background:#3a3a44;}
+.gdots span.on{background:#f5f5f7;}
+.garrows button{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);color:#f5f5f7;}
+.faq{border-top:1px solid rgba(255,255,255,.12);}
+.qa{border-bottom:1px solid rgba(255,255,255,.12);}
+.q{color:#f5f5f7;}
+.q .pm{color:#86868b;}
+.qa .a{color:#a1a1a6;}
+.buy{background:#07070c;}
+.buy .pname{color:#f5f5f7;}
+.buy .pprice{color:#a1a1a6;}
+.buy .fin{color:#86868b;}
+.eggs h2{color:#f5f5f7;}
+.egg{border-top:1px solid rgba(255,255,255,.12);color:#f5f5f7;}
+.egg:last-of-type{border-bottom:1px solid rgba(255,255,255,.12);}
+.egg .dd{color:#a1a1a6;}
+.egg .arw{color:#6e6e78;}
+.notes{color:#86868b;}
+.gfoot{border-top:1px solid rgba(255,255,255,.12);color:#86868b;}
+.gfoot .crumb{color:#f5f5f7;}
+#featH2{font-size:31px;}
+/* V2.0 hero 入场：标题/副文案/按钮 150ms 阶梯淡入上移（复用已有 up 关键帧，不叠加新动画体系） */
+.hero .eyebrow{animation:up .7s cubic-bezier(.2,.7,.2,1) both;}
+.hero h1{animation:up .7s cubic-bezier(.2,.7,.2,1) .15s both;}
+.hero .tag{animation:up .7s cubic-bezier(.2,.7,.2,1) .3s both;}
+.hero .buyline{animation:up .7s cubic-bezier(.2,.7,.2,1) .45s both;}
+</style>
+<style>
+/* ===== 照片呈现统一（V2.1 照片专项）：她的生活照片统一影调 + 暗角 + 内描边，融入发布会版式；
+   产品图（耳机/芯片/充电盒/礼盒）不套用，保持原本影棚感。滤镜只统一色温观感，不改变人物本身。 ===== */
+.stage,.bleed{position:relative;}
+.stage img,.bleed img,.gal .slide img{filter:saturate(.94) contrast(1.05) brightness(1.01);}
+.stage::after,.bleed::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(115% 92% at 50% 42%,rgba(0,0,0,0) 58%,rgba(0,0,0,.13) 100%),linear-gradient(to bottom,rgba(0,0,0,.08),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 84%,rgba(0,0,0,.13));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
+.gal .slide{position:relative;}
+.gal .slide::after{content:'';position:absolute;top:0;left:0;right:0;height:300px;border-radius:18px;pointer-events:none;
+  background:radial-gradient(115% 92% at 50% 42%,rgba(0,0,0,0) 58%,rgba(0,0,0,.13) 100%),linear-gradient(to bottom,rgba(0,0,0,.08),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 84%,rgba(0,0,0,.13));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
+</style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
+</head>
+<body>
+<div id="gate">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="gc">
+    <div class="gk">小 乖 发 布 会 · 特 别 活 动</div>
+    <div class="gt">赖大宝 Pro 26</div>
+    <div class="gs">好戏将至。</div>
+    <div class="gcd">
+      <div class="u"><div class="n" id="gd">--</div><div class="k">天</div></div>
+      <div class="u"><div class="n" id="gh">--</div><div class="k">时</div></div>
+      <div class="u"><div class="n" id="gm">--</div><div class="k">分</div></div>
+      <div class="u"><div class="n" id="gs2">--</div><div class="k">秒</div></div>
+    </div>
+    <div class="gd"><b>2026 年 11 月 9 日</b> · 南宁<br/>仅限受邀嘉宾 —— 就是你</div>
+  </div>
+</div>
+<script>(function(){var U=new Date('2020-01-01T00:00:00+08:00').getTime();var q=new URLSearchParams(location.search);var vip=false;try{vip=localStorage.getItem('xg_vip')==='1';}catch(e){}var open=q.get('preview')==='1'||q.get('party')==='1'||vip||Date.now()>=U;if(!open){document.documentElement.classList.add('locked');document.body.classList.add('locked');}})();</script>
+<div id="app">
+<nav class="gnav"><span class="logo"></span><span class="hideS">商店</span><span class="hideS">Mac</span><span class="hideS">iPad</span><span class="hideS">iPhone</span><span class="hideS">Watch</span><span id="gnavPods">Vision</span><span class="hideS">家居</span><span>配件</span><span class="hideS">技术支持</span></nav>
+
+<div class="pnav" id="pnav"><div class="in">
+  <div class="name">赖大宝 Pro 26</div>
+  <div class="links"><a href="#tiles">亮点</a><a href="#compare">机型比较</a><a class="btn" href="#buy">购买</a></div>
+</div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">新款 · 第 26 代</div>
+    <h1>赖大宝 Pro 26</h1>
+    <p class="tag">美得不像话。<br/>Pro 得更不像话。</p>
+    <p class="claims">撒娇效果最高提升至 <b>2 倍</b>，与上一代相比<sup>1</sup><br/>好看程度最高提升至 <b>4 倍</b>，与初代相比<sup>1</sup></p>
+    <p class="price">RMB 无价，全款已被张大宝付清<sup>2</sup></p>
+    <div class="buyline"><a href="#buy">购买</a><a href="#tiles">进一步了解</a></div>
+    <div class="meta">天蝎座芯片 · 属龙限定版 · 笑眼主摄 · 抱抱快充</div>
+    <div class="finishes">
+      <span class="flab">外 观 · 限 定 配 色</span>
+      <div class="fdots">
+        <button class="fdot on" type="button" data-t="" data-n="奶油白" style="--sw:#e9e1d3" aria-label="奶油白"></button>
+        <button class="fdot" type="button" data-t="grape" data-n="葡萄紫 · JJ 应援色" style="--sw:#a259e6" aria-label="葡萄紫"></button>
+        <button class="fdot" type="button" data-t="peach" data-n="蜜桃粉" style="--sw:#f2a0b5" aria-label="蜜桃粉"></button>
+      </div>
+      <span class="fname" id="fname">奶油白</span>
+    </div>
+    <div><span class="count"><span class="dotlive"></span><span id="countText">距离发布</span><span class="n" id="cd">-- 天 -- 时 -- 分 -- 秒</span></span></div>
+    <div class="stage"><img src="../img/laixinwen-glasses.jpg" alt="赖大宝 Pro 26"/></div>
+  </div>
+</div>
+
+<div class="stats" id="tiles"><div class="wrap">
+  <h2 class="secT rv">亮点一览</h2>
+  <p class="secSub rv s1">每一项参数，都是这六年实测出来的。</p>
+  <div class="statGrid">
+    <div class="stat rv"><div class="n"><em data-count="2159">2159</em> 天</div><div class="k">超长记忆，自 2020.12.11 起持续写入，从未丢失数据</div></div>
+    <div class="stat rv s1"><div class="n"><em data-count="26">26</em> 核</div><div class="k">聪明核心全速运转，日常事务、撒娇、算账样样精通</div></div>
+    <div class="stat rv s2"><div class="n">+<em data-count="200">200</em>%</div><div class="k">对金豆豆的爱同比增长，猫哥地位无猫能敌</div></div>
+    <div class="stat rv s3"><div class="n"><em data-count="5">5</em> 分钟</div><div class="k">抱抱快充回血一整天，兼容张大宝牌充电器<sup>3</sup></div></div>
+  </div>
+</div></div>
+
+<div class="dark"><div class="wrap">
+  <div class="kick rv">芯 片</div>
+  <h2 class="secT rv s1" style="margin-top:14px;">天蝎 A26 Pro<br/>聪明，而且记仇</h2>
+  <p class="secSub rv s2">全新一代情感处理核心：<b>你对她的好，一件不落全记住</b>；<br/>你惹她生的气——也记住，但哄一下就删。</p>
+  <img class="chipImg rv s2" src="../img/chip-a26.jpg" alt="天蝎 A26 Pro 芯片" loading="lazy" decoding="async">
+  <div class="dgrid">
+    <div class="dcard rv"><div class="k">情感引擎</div><div class="v">心软 Pro</div><div class="d">对张大宝与金豆豆特别优化</div></div>
+    <div class="dcard rv s1"><div class="k">散热系统</div><div class="v">笑声散热</div><div class="d">一生气就启动，效果显著</div></div>
+    <div class="dcard rv s2"><div class="k">安全隔区</div><div class="v">小秘密专用</div><div class="d">闺蜜聊天记录，张大宝无权访问</div></div>
+    <div class="dcard rv s3"><div class="k">神经网络</div><div class="v">直觉 5.0</div><div class="d">你撒没撒谎，她一眼就知道</div></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="featSec">
+    <div class="kick rv">表 现</div>
+    <h2 class="secT rv s1" id="featH2" style="margin-top:14px;">好脾气，<br/>越处越贴心</h2>
+    <div class="arows">
+      <div class="arow rv"><div class="ic">🎵</div><div class="tx"><b>自适应撒娇功能</b>会利用内置的体贴麦克风，实时调整撒娇的力度：心情好时是糖，心情差时——也是糖，只是带点小脾气。</div></div>
+      <div class="arow rv s1"><div class="ic">🧭</div><div class="tx"><b>个性化陪伴空间</b>可基于你头部的几何结构……不对，基于她对你的了解程度，为你量身打造沉浸感满满的相处体验。</div></div>
+      <div class="arow rv s2"><div class="ic">🎯</div><div class="tx">有了<b>动态贴贴追踪</b>，无论你在客厅、厨房还是加班到深夜，她的关心仿佛就来自你身边。</div></div>
+    </div>
+  </div>
+
+  <div class="featSec">
+    <div class="kick rv">健 康 与 日 常</div>
+    <h2 class="secT rv s1" style="margin-top:14px;">心率，她一直在测</h2>
+    <div class="arows">
+      <div class="arow rv"><div class="ic">❤️</div><div class="tx"><b>心率传感功能。</b>想你的频率全天可测，见到你时自动峰值——该数据不共享，只存她本地。</div></div>
+      <div class="arow rv s1"><div class="ic">💧</div><div class="tx"><b>IP57 级别防眼泪、抗委屈。</b>得益于张大宝的及时安抚工艺，哪怕情绪决堤，也能从容应对。</div></div>
+      <div class="arow rv s2"><div class="ic">📣</div><div class="tx"><b>「嘿，张大宝」。</b>只需喊一声，就能问路线、打电话、查日程——主要是查你几点到家。</div></div>
+      <div class="arow rv s3"><div class="ic">🔔</div><div class="tx"><b>播报行踪。</b>她出门、到店、回家都会主动播报；你只需点头或摇头，就能完成互动。</div></div>
+    </div>
+    <div class="bleed rv"><img src="../img/laixinwen-2021-10-pink-night.jpg" alt="粉色夜色里的赖大宝" loading="lazy" decoding="async"/></div>
+  </div>
+</div>
+
+<div class="caseSec"><div class="wrap">
+  <div class="kick rv">续 航 与 查 找</div>
+  <h2 class="secT rv s1" id="caseH2" style="margin-top:14px;">一抱，就满电</h2>
+  <div class="caseTeaser rv s1" id="caseTeaser"><span class="gb">🎁</span><span class="gt">这张照片，藏着今晚的神秘新品<br/>发布之后，自动解码</span></div>
+  <img class="caseimg rv s1" id="caseReal" src="../img/airpods-case.webp" alt="充电盒" hidden loading="lazy" decoding="async"/>
+  <div class="caseStats">
+    <div class="cs rv"><div class="n">一整年</div><div class="k">单次充满（一个拥抱）续航时间，辅助电源为林俊杰的歌与金豆豆的呼噜</div></div>
+    <div class="cs rv s1"><div class="n">1.5 倍</div><div class="k">精确查找张大宝的距离扩展：他躲到哪个房间，都能被一嗓子定位</div></div>
+  </div>
+  <div class="bleed rv"><img src="../img/laixinwen-confetti.jpg" alt="彩带飞舞里的赖大宝" loading="lazy" decoding="async"/></div>
+  <p class="caseCap rv">续航实测场景：彩带飞起来的那一刻，她笑到眼睛弯起来，电量未见下降。</p>
+</div></div>
+
+<div class="wrap">
+  <div class="featSec">
+    <div class="kick rv">26 代 新 功 能</div>
+    <h2 class="secT rv s1" style="margin-top:14px;">这一代，又进化了</h2>
+    <div class="feat">
+      <div class="row rv"><div class="tick">✓</div><div class="t">更爱笑了 <span>—— 笑点阈值再次降低，张大宝讲冷笑话也能触发</span></div></div>
+      <div class="row rv s1"><div class="tick">✓</div><div class="t">更会过日子了 <span>—— 两个人和一只猫的小家，运转良好</span></div></div>
+      <div class="row rv s2"><div class="tick">✓</div><div class="t">脾气变小了 <span>—— 官方数据，张大宝持保留意见（但不敢当面提）</span></div></div>
+    </div>
+  </div>
+
+  <div class="pods" id="podsTeaser">
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">还有一件新品</h2>
+    <p class="tag2 rv s2">今晚的第二位主角，先卖个关子。</p>
+    <img class="teaserImg rv s2" src="../img/giftbox.jpg" alt="黑金礼盒" loading="lazy" decoding="async">
+    <p class="teaserTx rv">它已经被张大宝藏好了，藏得很认真。<br/>等你走完前两站、坐进发布会，它自己登场。</p>
+    <div class="teaserCd rv">距离发布 · <span class="n" id="podsCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
+    <button class="rv" id="podsUnlock" type="button">我已经找到它了 · 提前发布</button>
+    <p class="teaserWarn" id="podsWarn" hidden>真的找到了？没找到先别点——点开，今晚的惊喜就提前散场了。<br/>确认已经在手里了，就再点一次。</p>
+  </div>
+
+  <div class="pods" id="podsReal" hidden>
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">AirPods Pro 3</h2>
+    <p class="tag2 rv s2">入耳式主动降噪，入主新声代。</p>
+    <div class="imgwrap rv s2"><a rel="ar" href="../img/airpods-pro3.usdz"><img src="../img/airpods-pair.webp" alt="AirPods Pro 3 左右耳机" loading="lazy" decoding="async"/></a><span class="arbadge">AR · 点图看 3D</span></div>
+    <p class="arhint rv s2">点一下耳机，就能像在苹果官网那样，把它放到你的桌子上转着看</p>
+    <div class="podgrid rv">
+      <div class="pg"><div class="n">2 倍</div><div class="k">主动降噪效果<br/>较上一代最高提升<sup>4</sup></div></div>
+      <div class="pg"><div class="n">心率传感</div><div class="k">锻炼时能测心率<br/>替张大宝数着</div></div>
+      <div class="pg"><div class="n">8 小时</div><div class="k">单次充电续航<br/>够听一整天 JJ</div></div>
+    </div>
+    <p class="twist rv">官网在售，RMB 1899。<br/>但这一副不在商店里——<b>今晚，由张大宝亲自呈上。</b></p>
+    <div class="podcard rv" id="podcard">
+      <div class="hint">— 点 一 下 ， 有 彩 蛋 —</div>
+      <div class="secret">🎧 盒子上刻了几个只给你看的小记号。<br/>是什么先不剧透——拆开的时候，记得先翻过来看盒子。<br/><span style="color:#a1a1a6;font-size:13px;">它负责把全世界的吵闹关小，把你的歌放大。</span></div>
+    </div>
+  </div>
+
+  <div class="compare" id="compare">
+    <h2 class="secT rv">机型比较</h2>
+    <p class="secSub rv s1">哪一款适合你？答案只有一个，因为另一款不单卖。</p>
+    <div class="ctable rv s1">
+      <div></div>
+      <div class="hd hl">赖大宝 Pro 26<small>新款 · 本页主角</small></div>
+      <div class="hd">张大宝 标准版<small>2020 年出厂 · 赠品</small></div>
+      <div class="rk">芯片</div><div class="hl">天蝎 A26 Pro</div><div class="dim">直男 1.0（偶尔卡顿）</div>
+      <div class="rk">撒娇降噪</div><div class="hl">主动撒娇，最高 2 倍</div><div class="dim">不适用（他负责被降噪）</div>
+      <div class="rk">续航</div><div class="hl">一整年（抱抱快充）</div><div class="dim">取决于投喂与夸奖</div>
+      <div class="rk">心率传感</div><div class="hl">支持，测想你的频率</div><div class="dim">支持，见她时自动过速</div>
+      <div class="rk">配色</div><div class="hl">赖大宝色（唯一）</div><div class="dim">张大宝色（耐脏）</div>
+      <div class="rk">售价</div><div class="hl">无价 · 不出售</div><div class="dim">免费（还倒贴工资卡）</div>
+    </div>
+  </div>
+
+  <div class="specs">
+    <h2 class="secT rv">技术规格</h2>
+    <div class="specTable rv s1">
+      <div class="r rv"><div class="k">型号</div><div class="v">赖大宝 Pro 26（第 26 代）</div></div>
+      <div class="r rv s1"><div class="k">芯片</div><div class="v">天蝎 A26 Pro，聪明 26 核</div></div>
+      <div class="r rv s2"><div class="k">显示</div><div class="v">笑眼原彩显示，亮度随心情自动调节</div></div>
+      <div class="r rv s3"><div class="k">续航</div><div class="v">最长一整年；抱抱快充 5 分钟，回血一整天</div></div>
+      <div class="r rv"><div class="k">防护</div><div class="v">防眼泪（她自己的）、防冷战（张大宝负责破冰）</div></div>
+      <div class="r rv s1"><div class="k">配色</div><div class="v">赖大宝色（全球唯一，无同款）</div></div>
+      <div class="r rv s2"><div class="k">重量</div><div class="v">在张大宝心里的分量：超重，秤已损坏</div></div>
+      <div class="r rv s3"><div class="k">包装清单</div><div class="v">赖大宝 × 1、张大宝 × 1（赠品）、金豆豆 × 1（赠品）、小乖 × 1（系统预装）</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="gallerySec"><div class="wrap">
+  <h2 class="secT rv">图库</h2>
+  <p class="secSub rv s1">横着滑，看看不同模式下的她。</p>
+</div>
+<div class="gal" id="gal">
+  <figure class="slide"><img src="../img/laixinwen-field.jpg" alt="赖大宝广角模式" loading="lazy" decoding="async"/><figcaption>广角模式 · 风和原野都入镜</figcaption></figure>
+  <figure class="slide"><img src="../img/laixinwen-2021-10-pink-night.jpg" alt="赖大宝夜色模式" loading="lazy" decoding="async"/><figcaption>夜色模式 · 粉色氛围拉满</figcaption></figure>
+  <figure class="slide"><img src="../img/laixinwen-confetti.jpg" alt="赖大宝彩带模式" loading="lazy" decoding="async"/><figcaption>彩带模式 · 笑到眼睛弯起来</figcaption></figure>
+</div>
+<div class="wrap"><div class="galCtl"><div class="gdots" id="gdots"><span class="on"></span><span></span><span></span></div><div class="garrows"><button id="gPrev" type="button" aria-label="上一张">‹</button><button id="gNext" type="button" aria-label="下一张">›</button></div></div></div>
+</div>
+
+<div class="buy" id="buy"><div class="wrap">
+  <div class="pname rv">购买 赖大宝 Pro 26</div>
+  <p class="pprice rv s1">RMB 无价 · 不出售<br/>库存状态：已被张大宝终身预订，概不退换</p>
+  <a class="btn big rv s2" href="#buy" onclick="return false;">已被预订</a>
+  <p class="fin rv s3">分期方案：分一辈子慢慢爱，0% 费率，0 首付（他全付了）<sup>5</sup></p>
+</div></div>
+
+<div class="faqSec"><div class="wrap">
+  <h2 class="rv">常见问题</h2>
+  <div class="faq rv s1">
+    <div class="qa"><button class="q" type="button">赖大宝 Pro 26 支持以旧换新吗？<span class="pm">+</span></button><div class="a">不支持。张大宝属于原装配件，拆卸后无法单独使用，建议终身保留。</div></div>
+    <div class="qa"><button class="q" type="button">保修政策是怎样的？<span class="pm">+</span></button><div class="a">终身保修，维修方式为抱抱与投喂。人为惹哭不在免费维修范围内，需加倍补偿，并附赠奶茶。</div></div>
+    <div class="qa"><button class="q" type="button">电量焦虑怎么办？<span class="pm">+</span></button><div class="a">抱抱快充 5 分钟，回血一整天。如遇连续加班，请提前充满——也就是多抱一会儿。</div></div>
+    <div class="qa"><button class="q" type="button">可以退货吗？<span class="pm">+</span></button><div class="a">本产品为终身预订款，不退不换。张大宝已签字画押，猫哥按爪作证。</div></div>
+  </div>
+</div></div>
+
+<div class="eggs">
+  <h2 class="rv">散场彩蛋</h2>
+  <a class="egg rv" href="concert/index.html" style="margin-top:18px;"><span class="ic">🎫</span><span><span class="tt">一张特别的票</span><div class="dd">生日特别场 · 客厅站，一生一世区 12 排 11 座，凭票兑换蛋糕和拥抱</div></span><span class="arw">›</span></a>
+  <a class="egg rv s1" href="treasure/index.html"><span class="ic">🗺️</span><span><span class="tt">小乖的寻宝局</span><div class="dd">照片墙找猫哥、五场演唱会排序、限时抓小乖——升级版三关，全过有花撒</div></span><span class="arw">›</span></a>
+  <a class="egg rv s2" href="keynote/"><span class="ic">🎤</span><span><span class="tt">最后一站 · Keynote</span><div class="dd">还有一页，写给你</div></span><span class="arw">›</span></a>
+</div>
+
+<div class="notes"><ol>
+  <li>撒娇与好看的提升倍数由小乖筹备组凭六年经验估算，未经第三方检测，但张大宝本人表示「只多不少」。</li>
+  <li>「全款付清」指张大宝已付出全部真心，不接受退款，不支持七天无理由——一辈子也不行。</li>
+  <li>抱抱快充需张大宝本人在场执行；异地时可用视频通话临时替代，功率略有下降。</li>
+  <li id="note4">本条涉及今晚的神秘新品，发布后自动解码——没解码之前，谁也不许猜中。</li>
+  <li>本页面所有「官方数据」均为小乖发布会筹备组单方面宣布，张大宝的保留意见不影响发布效力。</li>
+  <li>背景音乐：《生日快乐》· 刘若英</li>
+</ol></div>
+
+<div class="gfoot"><span class="crumb">小乖发布会</span> › 赖大宝 Pro 26<br/>本页面由小乖发布会筹备组制作 · 参会人员：张大宝、金豆豆<br/>仅供赖大宝本人观看，转发给闺蜜显摆也可以<br/>Copyright © 2026 小乖筹备组，保留所有撒娇权利 · 2026.11.09 于南宁发布</div>
+</div><!-- /#app -->
+
+<div id="bdayPop"><div class="t">🎂 生日快乐<br/>赖大宝</div></div>
+<div class="confetti" id="confetti"></div>
+<script>
+  var target=new Date('2020-01-01T00:00:00+08:00').getTime();
+  var cd=document.getElementById('cd'),ct=document.getElementById('countText');
+  function tick(){
+    var diff=target-Date.now();
+    if(diff<=0){ct.textContent='已发布 · 今天是她的生日';cd.textContent='🎂';return;}
+    var d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+    cd.textContent=d+' 天 '+h+' 时 '+m+' 分 '+s+' 秒';
+    setTimeout(tick,1000);
+  }
+  tick();
+  var pnav=document.getElementById('pnav');
+  addEventListener('scroll',function(){pnav.classList.toggle('scrolled',scrollY>8);},{passive:true});
+  function countUp(el){
+    el.textContent='0'; /* V2.0：触发时先归零再滚到终值；HTML 文本已写终值，JS 失效也不会停在 0 */
+    var end=+el.dataset.count,t0=null;
+    function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1400,1);var e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(end*e);if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');
+      e.target.querySelectorAll('[data-count]').forEach(countUp);io.unobserve(e.target);}});
+  },{threshold:.05,rootMargin:'0px 0px -6% 0px'}):null;
+  document.querySelectorAll('.rv').forEach(function(el){
+    if(io)io.observe(el);else{el.classList.add('in');el.querySelectorAll('[data-count]').forEach(countUp);}
+  });
+  setTimeout(function(){
+    document.querySelectorAll('.rv:not(.in)').forEach(function(el){
+      if(el.getBoundingClientRect().top<innerHeight){el.classList.add('in');el.querySelectorAll('[data-count]').forEach(countUp);}
+    });
+  },2600);
+  function boom(n){
+    var box=document.getElementById('confetti');var colors=['#0071e3','#bf5af2','#f56300','#30d158','#ffd60a','#ff6482'];
+    for(var i=0;i<(n||50);i++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';
+      p.style.background=colors[i%colors.length];p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*0.4)+'s';
+      p.style.setProperty('--sw',(Math.random()*90-45)+'px');
+      if(i%3===0){p.style.borderRadius='50%';p.style.width='10px';p.style.height='10px';}
+      box.appendChild(p);
+      (function(el){setTimeout(function(){el.remove();},4600);})(p);}
+  }
+  function celebrate(force){
+    if(!force){
+      var done=false;
+      try{done=localStorage.getItem('xg_celebrated')==='1';if(!done)localStorage.setItem('xg_celebrated','1');}catch(e){}
+      if(done)return;
+    }
+    var pop=document.getElementById('bdayPop');
+    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},4000);}
+    [0,350,700,1050,1400].forEach(function(d){setTimeout(function(){boom(55);},d);});
+  }
+  /* countdown gate logic */
+  (function(){
+    var gate=document.getElementById('gate');
+    if(!gate)return;
+    var pv=new URLSearchParams(location.search).get('preview')==='1';try{if(localStorage.getItem('xg_vip')==='1')pv=true;}catch(e){}
+    if(pv){document.querySelectorAll('.egg').forEach(function(a){a.href=a.href+'?preview=1';});}
+    function pad(n){return (n<10?'0':'')+n;}
+    function openGate(){
+      document.documentElement.classList.remove('locked');
+      document.body.classList.remove('locked');
+      gate.classList.add('off');
+    }
+    function goConcert(){
+      /* 入口跳转：已解锁且本次会话首次到达主站 → 先去生日特别场（concert）当第一屏；
+         跳走前不调用 celebrate()，一次性庆祝留到真正回到主站时再触发；
+         stay=1 为人工直达主站的口子 */
+      if(new URLSearchParams(location.search).get('stay')==='1')return false;
+      var entered=false;
+      try{entered=sessionStorage.getItem('xg_entered')==='1';if(!entered)sessionStorage.setItem('xg_entered','1');}catch(e){}
+      if(entered)return false;
+      location.replace('concert/'+(pv?'?preview=1':''));
+      return true;
+    }
+    function gTick(){
+      var diff=target-Date.now();
+      if(new URLSearchParams(location.search).get('party')==='1'){
+        openGate();celebrate(true);
+        setTimeout(function(){gate.remove();},950);return;
+      }
+      if(pv){if(goConcert())return;openGate();setTimeout(function(){gate.remove();},950);return;}
+      if(diff<=0){
+        if(goConcert())return;
+        openGate();celebrate();
+        setTimeout(function(){gate.remove();},950);return;
+      }
+      document.getElementById('gd').textContent=Math.floor(diff/86400000);
+      document.getElementById('gh').textContent=pad(Math.floor(diff/3600000)%24);
+      document.getElementById('gm').textContent=pad(Math.floor(diff/60000)%60);
+      document.getElementById('gs2').textContent=pad(Math.floor(diff/1000)%60);
+      setTimeout(gTick,1000);
+    }
+    gTick();
+  })();
+  /* finish picker */
+  var fname=document.getElementById('fname');
+  document.querySelectorAll('.fdot').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.fdot').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      var t=b.getAttribute('data-t');
+      if(t){document.documentElement.setAttribute('data-theme',t);}
+      else{document.documentElement.removeAttribute('data-theme');}
+      fname.textContent=b.getAttribute('data-n');
+    });
+  });
+  /* gallery */
+  var gal=document.getElementById('gal'),gdots=document.getElementById('gdots');
+  function galStep(){var s=gal.querySelector('.slide');return s?s.offsetWidth+14:300;}
+  function galIndex(){return Math.round(gal.scrollLeft/galStep());}
+  function galDots(){var i=Math.min(galIndex(),2);gdots.querySelectorAll('span').forEach(function(d,j){d.classList.toggle('on',j===i);});}
+  if(gal){gal.addEventListener('scroll',function(){requestAnimationFrame(galDots);},{passive:true});
+    document.getElementById('gPrev').addEventListener('click',function(){gal.scrollBy({left:-galStep(),behavior:'smooth'});});
+    document.getElementById('gNext').addEventListener('click',function(){gal.scrollBy({left:galStep(),behavior:'smooth'});});}
+  /* faq accordion */
+  document.querySelectorAll('.qa .q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var qa=q.parentElement,was=qa.classList.contains('open');
+      document.querySelectorAll('.qa').forEach(function(x){x.classList.remove('open');});
+      if(!was)qa.classList.add('open');
+    });
+  });
+  /* scroll parallax on full-bleed photos */
+  var bleeds=document.querySelectorAll('.bleed');
+  function plx(){
+    bleeds.forEach(function(b){
+      var r=b.getBoundingClientRect();
+      if(r.bottom<0||r.top>innerHeight)return;
+      var p=(r.top+r.height/2-innerHeight/2)/innerHeight;
+      var img=b.querySelector('img');
+      if(img)img.style.transform='translateY('+(p*-18).toFixed(1)+'px) scale(1.14)';
+    });
+  }
+  /* 动效 2.1：满幅照片滚动擦洗——按滚动进度给 .bleed 图加 scale 1.08→1.0（独立 scale 属性，与 plx 的视差 transform 互不冲突）；与视差共用同一个节流后的 scroll 处理，只算可见元素；prefers-reduced-motion 时关闭 */
+  var scrubOK=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bleedImgs=document.querySelectorAll('.bleed img');
+  function scrub(){
+    bleedImgs.forEach(function(img){
+      var r=img.parentElement.getBoundingClientRect();
+      if(r.bottom<0||r.top>innerHeight)return;
+      var q=(innerHeight-r.top)/(innerHeight+r.height);
+      q=Math.max(0,Math.min(1,q));
+      img.style.scale=(1.08-0.08*q).toFixed(4);
+    });
+  }
+  var scrTick=false;
+  addEventListener('scroll',function(){
+    if(scrTick)return;scrTick=true;
+    requestAnimationFrame(function(){plx();if(scrubOK)scrub();scrTick=false;});
+  },{passive:true});
+  plx();if(scrubOK)scrub();
+  var pc=document.getElementById('podcard');
+  pc.addEventListener('click',function(){
+    if(pc.classList.contains('open'))return;
+    pc.classList.add('open');boom(70);
+  });
+</script>
+<script>
+/* mystery product gate: reveals at the treasure finale (20:11) or when she confirms she found it */
+(function(){
+  var T=document.getElementById('podsTeaser'),R=document.getElementById('podsReal'),N=document.getElementById('note4');
+  if(!T||!R)return;
+  var U=new Date('2020-01-01T00:00:00+08:00').getTime();
+  var q=new URLSearchParams(location.search);
+  var unlocked=(q.get('preview')==='1'||q.get('party')==='1');try{if(localStorage.getItem('xg_vip')==='1')unlocked=true;}catch(e){}
+  try{if(localStorage.getItem('xg_pods')==='1')unlocked=true;}catch(e){}
+  function reveal(){
+    T.hidden=true;R.hidden=false;
+    if(N)N.textContent='降噪数据来自苹果官网对 AirPods Pro 3 的描述；但对张大宝的呼噜声无效，建议佩戴耳机入睡。';
+    var g=document.getElementById('gnavPods');if(g)g.textContent='AirPods';
+    var fh=document.getElementById('featH2');if(fh)fh.innerHTML='好脾气，<br/>入耳式贴心，入主新声代';
+    var ch=document.getElementById('caseH2');if(ch)ch.textContent='充电盒里，是整个家';
+    var ct=document.getElementById('caseTeaser'),cr=document.getElementById('caseReal');
+    if(ct)ct.hidden=true;if(cr){cr.hidden=false;cr.classList.add('in');}
+    R.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+    try{localStorage.setItem('xg_pods','1');}catch(e){}
+  }
+  function lock(){
+    R.hidden=true;T.hidden=false;
+    if(N)N.textContent='本条涉及今晚的神秘新品，发布后自动解码——没解码之前，谁也不许猜中。';
+    var g=document.getElementById('gnavPods');if(g)g.textContent='Vision';
+    var fh=document.getElementById('featH2');if(fh)fh.innerHTML='好脾气，<br/>越处越贴心';
+    var ch=document.getElementById('caseH2');if(ch)ch.textContent='一抱，就满电';
+    var ct=document.getElementById('caseTeaser'),cr=document.getElementById('caseReal');
+    if(ct)ct.hidden=false;if(cr)cr.hidden=true;
+    try{localStorage.removeItem('xg_pods');}catch(e){}
+    armed=false;
+    if(b)b.textContent='我已经找到它了 · 提前发布';
+    if(w)w.hidden=true;
+    tick();
+  }
+  var cd=document.getElementById('podsCd');
+  function tick(){
+    if(!R.hidden)return;
+    var diff=U-Date.now();
+    if(diff<=0){reveal();return;}
+    var d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+    if(cd)cd.textContent=d+' 天 '+h+' 时 '+m+' 分 '+s+' 秒';
+    setTimeout(tick,1000);
+  }
+  var b=document.getElementById('podsUnlock'),w=document.getElementById('podsWarn'),armed=false;
+  if(b)b.addEventListener('click',function(){
+    if(!armed){armed=true;if(w)w.hidden=false;b.textContent='确认发布 · 它已经在我手里了';return;}
+    reveal();
+  });
+  if(unlocked||Date.now()>=U){reveal();}else{tick();}
+})();
+</script>
+<!-- 音乐接口（V2.0 预留）：待接入音频文件后填 src；当前无源，点击仅切换按钮状态。切勿接入 concert/audio/ 下的旧语音文件。 -->
+<audio id="bgm" src="../bgm.mp3" loop preload="none"></audio>
+<button id="bgmBtn" type="button" aria-label="背景音乐开关" title="背景音乐">&#9834;</button>
+<style>
+#bgmBtn{position:fixed;right:18px;bottom:18px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid rgba(200,155,255,.45);background:rgba(20,14,34,.78);color:#cdb4ff;font-size:19px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:.75;transition:opacity .25s,box-shadow .25s;}
+#bgmBtn:hover{opacity:1;}
+#bgmBtn.on{background:#a259ff;color:#fff;opacity:1;box-shadow:0 8px 26px rgba(162,89,255,.45);}
+</style>
+<script>
+(function(){var b=document.getElementById('bgmBtn'),a=document.getElementById('bgm');if(!b||!a)return;
+b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.classList.toggle('on');return;}
+if(a.paused){a.volume=0.35;var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
+a.addEventListener('ended',function(){b.classList.remove('on');});})();
+</script>
+</body>
+</html>
