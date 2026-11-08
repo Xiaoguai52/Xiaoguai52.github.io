@@ -359,7 +359,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     <div class="gd"><b>2026 年 11 月 9 日</b> · 南宁<br/>仅限受邀嘉宾 —— 就是你</div>
   </div>
 </div>
-<script>(function(){var U=new Date('2026-11-09T00:00:00+08:00').getTime();var q=new URLSearchParams(location.search);var open=q.get('preview')==='1'||q.get('party')==='1'||Date.now()>=U;if(!open){document.documentElement.classList.add('locked');document.body.classList.add('locked');}})();</script>
+<script>(function(){var U=new Date('2026-11-09T00:00:00+08:00').getTime();var q=new URLSearchParams(location.search);var vip=false;try{vip=localStorage.getItem('xg_vip')==='1';}catch(e){}var open=q.get('preview')==='1'||q.get('party')==='1'||vip||Date.now()>=U;if(!open){document.documentElement.classList.add('locked');document.body.classList.add('locked');}})();</script>
 <div id="app">
 <nav class="gnav"><span class="logo"></span><span class="hideS">商店</span><span class="hideS">Mac</span><span class="hideS">iPad</span><span class="hideS">iPhone</span><span class="hideS">Watch</span><span id="gnavPods">Vision</span><span class="hideS">家居</span><span>配件</span><span class="hideS">技术支持</span></nav>
 
@@ -629,7 +629,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   (function(){
     var gate=document.getElementById('gate');
     if(!gate)return;
-    var pv=new URLSearchParams(location.search).get('preview')==='1';
+    var pv=new URLSearchParams(location.search).get('preview')==='1';try{if(localStorage.getItem('xg_vip')==='1')pv=true;}catch(e){}
     if(pv){document.querySelectorAll('.egg').forEach(function(a){a.href=a.href+'?preview=1';});}
     function pad(n){return (n<10?'0':'')+n;}
     function openGate(){
@@ -738,7 +738,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   if(!T||!R)return;
   var U=new Date('2026-11-09T00:00:00+08:00').getTime();
   var q=new URLSearchParams(location.search);
-  var unlocked=(q.get('preview')==='1'||q.get('party')==='1');
+  var unlocked=(q.get('preview')==='1'||q.get('party')==='1');try{if(localStorage.getItem('xg_vip')==='1')unlocked=true;}catch(e){}
   try{if(localStorage.getItem('xg_pods')==='1')unlocked=true;}catch(e){}
   function reveal(){
     T.hidden=true;R.hidden=false;
