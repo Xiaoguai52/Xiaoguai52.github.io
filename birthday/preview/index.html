@@ -170,7 +170,7 @@
   .teaserTx b{color:#f5f5f7;}
   .teaserCd{margin-top:18px;display:inline-block;font-size:13px;color:#a1a1a6;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 18px;letter-spacing:1px;}
   .teaserCd .n{color:#f5f5f7;font-weight:700;font-variant-numeric:tabular-nums;}
-  #podsUnlock{margin-top:22px;background:#0071e3;color:#fff;border:none;font-size:15px;font-weight:600;padding:12px 30px;border-radius:999px;cursor:pointer;font-family:inherit;}
+  #podsUnlock,#watchUnlock{margin-top:22px;background:#0071e3;color:#fff;border:none;font-size:15px;font-weight:600;padding:12px 30px;border-radius:999px;cursor:pointer;font-family:inherit;}
   #podsRelock{margin-top:20px;background:none;border:none;color:#86868b;font-size:12.5px;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px;}
   .teaserWarn{margin:14px auto 0;max-width:420px;font-size:13px;color:#ff8a94;line-height:1.8;}
   .caseTeaser{margin:34px auto 0;max-width:520px;border-radius:22px;background:radial-gradient(circle at 50% 34%,#2c2c30,#131315 74%);color:#f5f5f7;padding:44px 20px 38px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:inset 0 0 0 1px #3a3a3f;}
@@ -492,6 +492,34 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     </div>
   </div>
 
+  <div class="pods" id="watchTeaser">
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">还有一块新品</h2>
+    <p class="tag2 rv s2">今晚的第三位主角，也先卖个关子。</p>
+    <img class="teaserImg rv s2" src="../img/watch-teaser.jpg" alt="黑金礼盒，缝里透出紫色的光" loading="lazy" decoding="async">
+    <p class="teaserTx rv">这一件，也被张大宝安排好了——藏没藏、藏在哪，不剧透。<br/>等你走完前两站、坐进发布会，它自己登场。</p>
+    <div class="teaserCd rv">距离发布 · <span class="n" id="watchCd">-- 天 -- 时 -- 分 -- 秒</span></div><br/>
+    <button class="rv" id="watchUnlock" type="button">我已经找到它了 · 提前发布</button>
+    <p class="teaserWarn" id="watchWarn" hidden>真的找到了？没找到先别点——点开，今晚的惊喜就提前散场了。<br/>确认已经在手里了，就再点一次。</p>
+  </div>
+
+  <div class="pods" id="watchReal" hidden>
+    <div class="eyebrow rv">同 场 加 映</div>
+    <h2 class="rv s1 gradtext">Apple Watch Series 11</h2>
+    <p class="tag2 rv s2">为健康，再进一步。</p>
+    <div class="imgwrap rv s2"><img src="../img/watch-s11.webp" alt="Apple Watch Series 11，葡萄紫表带" loading="lazy" decoding="async"/></div>
+    <div class="podgrid rv">
+      <div class="pg"><div class="n">血压提醒</div><div class="k">高血压的苗头<br/>替张大宝盯着</div></div>
+      <div class="pg"><div class="n">睡眠评分</div><div class="k">睡得好不好<br/>它比金豆豆清楚</div></div>
+      <div class="pg"><div class="n">24 小时</div><div class="k">单次充电续航<br/>陪你从早到晚</div></div>
+    </div>
+    <p class="twist rv">官网在售，RMB 2999 起。<br/>这一块今晚买不买——<b>看张大宝的表现。</b></p>
+    <div class="podcard rv" id="watchcard">
+      <div class="hint">— 点 一 下 ， 有 彩 蛋 —</div>
+      <div class="secret">⌚ 这块表今晚先住在屏幕里。<br/>想要的话，许愿池在张大宝那儿——长期有效，随时兑现。<br/><span style="color:#a1a1a6;font-size:13px;">它负责盯着你的健康，他负责盯着你。</span></div>
+    </div>
+  </div>
+
   <div class="compare" id="compare">
     <h2 class="secT rv">机型比较</h2>
     <p class="secSub rv s1">哪一款适合你？答案只有一个，因为另一款不单卖。</p>
@@ -778,6 +806,42 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   if(b)b.addEventListener('click',function(){
     if(!armed){armed=true;if(w)w.hidden=false;b.textContent='确认发布 · 它已经在我手里了';return;}
     reveal();
+  });
+  if(unlocked||Date.now()>=U){reveal();}else{tick();}
+})();
+</script>
+<script>
+/* decoy product gate: same mechanics as the mystery product — midnight auto-reveal, or her two-step confirm */
+(function(){
+  var T=document.getElementById('watchTeaser'),R=document.getElementById('watchReal');
+  if(!T||!R)return;
+  var U=new Date('2020-01-01T00:00:00+08:00').getTime();
+  var q=new URLSearchParams(location.search);
+  var unlocked=(q.get('preview')==='1'||q.get('party')==='1');try{if(localStorage.getItem('xg_vip')==='1')unlocked=true;}catch(e){}
+  try{if(localStorage.getItem('xg_watch')==='1')unlocked=true;}catch(e){}
+  function reveal(){
+    T.hidden=true;R.hidden=false;
+    R.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+    try{localStorage.setItem('xg_watch','1');}catch(e){}
+  }
+  var cd=document.getElementById('watchCd');
+  function tick(){
+    if(!R.hidden)return;
+    var diff=U-Date.now();
+    if(diff<=0){reveal();return;}
+    var d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+    if(cd)cd.textContent=d+' 天 '+h+' 时 '+m+' 分 '+s+' 秒';
+    setTimeout(tick,1000);
+  }
+  var b=document.getElementById('watchUnlock'),w=document.getElementById('watchWarn'),armed=false;
+  if(b)b.addEventListener('click',function(){
+    if(!armed){armed=true;if(w)w.hidden=false;b.textContent='确认发布 · 它已经在我手里了';return;}
+    reveal();
+  });
+  var wc=document.getElementById('watchcard');
+  if(wc)wc.addEventListener('click',function(){
+    if(wc.classList.contains('open'))return;
+    wc.classList.add('open');if(window.boom)boom(70);
   });
   if(unlocked||Date.now()>=U){reveal();}else{tick();}
 })();
