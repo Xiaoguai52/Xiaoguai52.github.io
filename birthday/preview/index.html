@@ -240,9 +240,9 @@
   .confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
   @keyframes fall{to{transform:translate(var(--sw,0px),106vh) rotate(560deg)}}
   #bdayPop{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(8,8,18,.62);}
-  #bdayPop.show{display:flex;animation:popBg 3.8s ease both;}
+  #bdayPop.show{display:flex;animation:popBg 6.2s ease both;}
   @keyframes popBg{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
-  #bdayPop .t{font-size:46px;font-weight:800;letter-spacing:1px;background:linear-gradient(95deg,#ffd60a,#ff9f0a 38%,#ff6482 68%,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent;animation:popIn 3.8s cubic-bezier(.2,.8,.3,1) both;text-align:center;line-height:1.45;padding:0 20px;}
+  #bdayPop .t{font-size:46px;font-weight:800;letter-spacing:1px;background:linear-gradient(95deg,#ffd60a,#ff9f0a 38%,#ff6482 68%,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent;animation:popIn 6.2s cubic-bezier(.2,.8,.3,1) both;text-align:center;line-height:1.45;padding:0 20px;}
   @keyframes popIn{0%{opacity:0;transform:scale(.7)}14%{opacity:1;transform:scale(1.06)}22%{transform:scale(1)}78%{opacity:1}100%{opacity:0;transform:scale(1.02)}}
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
@@ -599,6 +599,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
 <div class="gfoot"><span class="crumb">小乖发布会</span> › 赖大宝 Pro 26<br/>本页面由小乖发布会筹备组制作 · 参会人员：张大宝、金豆豆<br/>仅供赖大宝本人观看，转发给闺蜜显摆也可以<br/>Copyright © 2026 小乖筹备组，保留所有撒娇权利 · 2026.11.09 于南宁发布</div>
 </div><!-- /#app -->
 
+<button id="celReplay" style="position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:200;background:#7b2ff7;color:#fff;border:0;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:700;box-shadow:0 8px 30px rgba(123,47,247,.5);cursor:pointer">🎉 彩带测试 · 点我放一次</button>
 <div id="bdayPop"><div class="t">🎂 生日快乐<br/>赖大宝</div></div>
 <div class="confetti" id="confetti"></div>
 <script>
@@ -645,7 +646,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
   }
   function showCelebration(){
     var pop=document.getElementById('bdayPop');
-    if(pop){pop.classList.add('show');setTimeout(function(){pop.remove();},6500);}
+    if(pop){pop.classList.add('show');setTimeout(function(){pop.classList.remove('show');},6500);}
     [0,400,800,1200,1600,2000].forEach(function(d){setTimeout(function(){boom(55);},d);});
   }
   function celebrate(force){
@@ -867,5 +868,6 @@ b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.c
 if(a.paused){a.volume=0.35;var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
 a.addEventListener('ended',function(){b.classList.remove('on');});})();
 </script>
+<script>document.getElementById('celReplay').addEventListener('click',function(){showCelebration();});</script>
 </body>
 </html>
