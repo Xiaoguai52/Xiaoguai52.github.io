@@ -24,7 +24,7 @@
   #stage { position:relative; width:min(100vw, 177.78vh); aspect-ratio:16/9; background:#000; overflow:hidden;
     container-type:size; }
   .slide { position:absolute; inset:0; opacity:0; pointer-events:none; transform:scale(1.025);
-    transition:opacity .55s ease, transform .55s ease; overflow:hidden; background:#000; }
+    transition:opacity .45s ease, transform .45s ease; overflow:hidden; background:#000; }
   .slide.active { opacity:1; pointer-events:auto; transform:scale(1); }
   .slide .pad { position:absolute; inset:0; padding:6cqh 7cqw; display:flex; flex-direction:column; }
 
@@ -78,7 +78,33 @@
   #hint { position:absolute; left:50%; transform:translateX(-50%); bottom:8cqh; font-size:1.5cqw; color:#86868b; z-index:20;
     animation:pulse 2.2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:.9} }
+
+  /* V2.0 数字页：数字轻微放大入场，逐个错开 */
+  @keyframes numIn { from{opacity:0; transform:scale(.93)} to{opacity:1; transform:scale(1)} }
+  .slide.active .stat .n { animation:numIn .65s cubic-bezier(.2,.7,.2,1) both; }
+  .slide.active .stat:nth-child(2) .n { animation-delay:.07s; }
+  .slide.active .stat:nth-child(3) .n { animation-delay:.14s; }
+  .slide.active .stat:nth-child(4) .n { animation-delay:.21s; }
+
+  /* V2.0 回忆页 Moments：电影式轮播 */
+  .moments { position:relative; flex:1; min-height:0; border-radius:1.6cqw; overflow:hidden;
+    box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 18px 50px rgba(0,0,0,.6); background:#0a0a12; }
+  .moments figure { position:absolute; inset:0; opacity:0; transition:opacity .9s ease; }
+  .moments figure.on { opacity:1; }
+  .moments img { width:100%; height:100%; object-fit:cover; object-position:center 26%; display:block; }
+  .moments figcaption { position:absolute; left:0; right:0; bottom:0; padding:3.2cqh 2.2cqw 2.4cqh;
+    font-size:1.7cqw; font-weight:600; letter-spacing:.06em;
+    background:linear-gradient(to top, rgba(0,0,0,.72), transparent); }
+
+  /* V2.0 终章分段揭晓 */
+  .fin { opacity:0; }
+  .slide.active .fin { animation:finIn .85s cubic-bezier(.2,.7,.2,1) both; animation-delay:var(--d,0s); }
+  @keyframes finIn { from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none} }
 </style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
 </head>
 <body>
 
@@ -126,9 +152,9 @@
           <h2 class="h-big" style="margin-top:1.2cqh;">每一块屏幕，<span class="violet">都是她。</span></h2>
         </div>
         <div class="trio">
-          <figure><img src="../img/laixinwen-confetti.jpg" alt="五彩纸屑里的她"><figcaption>开场 · 五彩纸屑</figcaption></figure>
-          <figure><img src="../img/laixinwen-field.jpg" alt="外景的她"><figcaption>日常 · 晴天模式</figcaption></figure>
-          <figure><img src="../img/laixinwen-2021-10-pink-night.jpg" alt="粉色夜晚的她"><figcaption>夜晚 · 粉色氛围</figcaption></figure>
+          <figure><img src="../img/laixinwen-confetti.jpg" alt="五彩纸屑里的她" loading="lazy" decoding="async"><figcaption>开场 · 五彩纸屑</figcaption></figure>
+          <figure><img src="../img/laixinwen-field.jpg" alt="外景的她" loading="lazy" decoding="async"><figcaption>日常 · 晴天模式</figcaption></figure>
+          <figure><img src="../img/laixinwen-2021-10-pink-night.jpg" alt="粉色夜晚的她" loading="lazy" decoding="async"><figcaption>夜晚 · 粉色氛围</figcaption></figure>
         </div>
       </div>
     </section>
@@ -147,7 +173,7 @@
               <div class="row"><div class="k">笑容显示</div><div class="v">常亮 · 24 小时不熄屏</div></div>
             </div>
           </div>
-          <img class="chipimg" src="../img/chip-a26.jpg" alt="A26 Pro 芯片">
+          <img class="chipimg" src="../img/chip-a26.jpg" alt="A26 Pro 芯片" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -165,7 +191,22 @@
       </div>
     </section>
 
-    <!-- 6 那一夜 -->
+    <!-- 6 回忆 Moments（V2.0 新增章节） -->
+    <section class="slide" id="momentsSlide">
+      <div class="pad" style="gap:3.2cqh;">
+        <div>
+          <div class="eyebrow">The Moments We Keep</div>
+          <h2 class="h-big" style="margin-top:1.2cqh;">那些只有我们知道的<span class="violet">瞬间。</span></h2>
+        </div>
+        <div class="moments" id="momentsBox">
+          <figure class="on"><img loading="lazy" decoding="async" src="../concert/img/jj20-2023-12-09-1.jpg" alt="2023 年南宁 JJ20 现场的她"><figcaption>2023.12.09 · 南宁 · JJ20 现场</figcaption></figure>
+          <figure><img loading="lazy" decoding="async" src="../img/laixinwen-2021-10-pink-night.jpg" alt="2021 年粉色夜晚里的她"><figcaption>2021 · 粉色的一夜</figcaption></figure>
+          <figure><img loading="lazy" decoding="async" src="../img/laixinwen-field.jpg" alt="日常晴天里的她"><figcaption>日常 · 晴天</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 那一夜 -->
     <section class="slide">
       <div class="glow" style="width:38cqw;height:38cqw;right:2cqw;top:20cqh;background:#4c1d95;"></div>
       <div class="pad" style="flex-direction:row;align-items:center;gap:5cqw;">
@@ -178,14 +219,14 @@
         <figure style="flex:1;display:flex;justify-content:center;">
           <img src="../concert/img/jj20-2023-12-09-1.jpg" alt="2023 年南宁 JJ20 那晚的她"
                style="height:74cqh;aspect-ratio:3/4;object-fit:cover;border-radius:1.8cqw;
-                      box-shadow:0 0 80px rgba(162,89,255,.35), 0 0 0 1px rgba(255,255,255,.10);">
+                      box-shadow:0 0 80px rgba(162,89,255,.35), 0 0 0 1px rgba(255,255,255,.10);" loading="lazy" decoding="async">
         </figure>
       </div>
     </section>
 
-    <!-- 7 生日快乐 -->
+    <!-- 8 生日快乐 -->
     <section class="slide">
-      <img class="fullimg" src="../treasure/img/laixinwen-2021-12-11-roses.jpg" alt="抱着玫瑰的她" style="filter:brightness(.72);">
+      <img class="fullimg" src="../treasure/img/laixinwen-2021-12-11-roses.jpg" alt="抱着玫瑰的她" style="filter:brightness(.72);" loading="lazy" decoding="async">
       <div class="scrim"></div>
       <div class="pad" style="align-items:center;justify-content:flex-end;text-align:center;gap:1.8cqh;padding-bottom:9cqh;">
         <h2 class="h-mega grad" style="font-size:9.6cqw;">生日快乐</h2>
@@ -193,23 +234,24 @@
       </div>
     </section>
 
-    <!-- 8 One more thing -->
+    <!-- 9 One more thing -->
     <section class="slide">
       <div class="glow" style="width:44cqw;height:44cqw;left:28cqw;top:16cqh;background:#4c1d95;"></div>
       <div class="pad" style="align-items:center;justify-content:center;text-align:center;gap:3cqh;">
         <h2 class="h-big">One more thing.</h2>
-        <img class="omtimg" src="../img/giftbox.jpg" alt="神秘礼盒">
+        <img class="omtimg" src="../img/giftbox.jpg" alt="神秘礼盒" loading="lazy" decoding="async">
         <p class="sub">神秘新品 · 明晚揭晓</p>
       </div>
     </section>
 
-    <!-- 9 谢幕 -->
+    <!-- 10 谢幕 -->
     <section class="slide">
       <div class="glow" style="width:50cqw;height:50cqw;left:25cqw;bottom:-26cqw;background:#5b21b6;"></div>
       <div class="pad" style="align-items:center;justify-content:center;text-align:center;gap:3cqh;">
-        <h2 class="h-big grad">生日快乐，赖大宝。</h2>
-        <p class="sub">张大宝 · 金豆豆 · 小乖 联合发布</p>
-        <p class="tiny">本场发布会无录播 —— 因为她就在现场。<br>南宁 · 2026.11.09</p>
+        <h2 class="h-big grad fin" style="--d:0s">生日快乐，赖大宝。</h2>
+        <p class="sub fin" style="--d:.6s">张大宝 · 金豆豆 · 小乖 联合发布</p>
+        <p class="tiny fin" style="--d:1.4s">本场发布会无录播 —— 因为她就在现场。<br>南宁 · 2026.11.09</p>
+        <p class="fin" style="--d:2.2s;font-size:2.5cqw;font-weight:700;letter-spacing:.05em;">Happy Birthday，<span class="grad">赖大宝。</span></p>
       </div>
     </section>
 
@@ -217,7 +259,7 @@
     <div id="znext" class="zone"></div>
     <div id="brand">LAIDABAO PRO 26</div>
     <div id="hud"></div>
-    <div id="count">1 / 9</div>
+    <div id="count">1 / 10</div>
     <div id="hint">点按两侧或按方向键翻页</div>
   </div>
 </div>
@@ -279,6 +321,31 @@
     if (Math.abs(dx) > 48) go(cur + (dx < 0 ? 1 : -1));
     tx = null;
   }, { passive: true });
+
+  /* V2.0 回忆页电影轮播：仅在该页激活时推进（4.5s 一张，淡入淡出） */
+  (function(){
+    var slide=document.getElementById('momentsSlide'),box=document.getElementById('momentsBox');
+    if(!slide||!box)return;
+    var figs=box.querySelectorAll('figure');var mi=0;
+    setInterval(function(){
+      if(!slide.classList.contains('active'))return;
+      figs[mi].classList.remove('on');mi=(mi+1)%figs.length;figs[mi].classList.add('on');
+    },4500);
+  })();
+</script>
+<!-- 音乐接口（V2.0 预留）：待接入音频文件后填 src；当前无源，点击仅切换按钮状态。切勿接入 concert/audio/ 下的旧语音文件。 -->
+<audio id="bgm" preload="none"></audio>
+<button id="bgmBtn" type="button" aria-label="背景音乐开关" title="背景音乐">&#9834;</button>
+<style>
+#bgmBtn{position:fixed;right:18px;bottom:18px;z-index:30;width:46px;height:46px;border-radius:50%;border:1px solid rgba(200,155,255,.45);background:rgba(20,14,34,.78);color:#cdb4ff;font-size:19px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:.75;transition:opacity .25s,box-shadow .25s;}
+#bgmBtn:hover{opacity:1;}
+#bgmBtn.on{background:#a259ff;color:#fff;opacity:1;box-shadow:0 8px 26px rgba(162,89,255,.45);}
+</style>
+<script>
+(function(){var b=document.getElementById('bgmBtn'),a=document.getElementById('bgm');if(!b||!a)return;
+b.addEventListener('click',function(){var src=a.getAttribute('src');if(!src){b.classList.toggle('on');return;}
+if(a.paused){var p=a.play();if(p&&p.catch)p.catch(function(){});b.classList.add('on');}else{a.pause();b.classList.remove('on');}});
+a.addEventListener('ended',function(){b.classList.remove('on');});})();
 </script>
 </body>
 </html>
