@@ -644,14 +644,26 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       document.body.classList.remove('locked');
       gate.classList.add('off');
     }
+    function goConcert(){
+      /* 入口跳转：已解锁且本次会话首次到达主站 → 先去生日特别场（concert）当第一屏；
+         跳走前不调用 celebrate()，一次性庆祝留到真正回到主站时再触发；
+         stay=1 为人工直达主站的口子 */
+      if(new URLSearchParams(location.search).get('stay')==='1')return false;
+      var entered=false;
+      try{entered=sessionStorage.getItem('xg_entered')==='1';if(!entered)sessionStorage.setItem('xg_entered','1');}catch(e){}
+      if(entered)return false;
+      location.replace('concert/'+(pv?'?preview=1':''));
+      return true;
+    }
     function gTick(){
       var diff=target-Date.now();
       if(new URLSearchParams(location.search).get('party')==='1'){
         openGate();celebrate(true);
         setTimeout(function(){gate.remove();},950);return;
       }
-      if(pv){openGate();setTimeout(function(){gate.remove();},950);return;}
+      if(pv){if(goConcert())return;openGate();setTimeout(function(){gate.remove();},950);return;}
       if(diff<=0){
+        if(goConcert())return;
         openGate();celebrate();
         setTimeout(function(){gate.remove();},950);return;
       }
