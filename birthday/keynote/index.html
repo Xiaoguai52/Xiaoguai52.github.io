@@ -131,6 +131,34 @@
   .moments::after { z-index:2; }
   /* 终章满幅图：更强的底部渐变，保证大字与副文案可读（滤镜在行内样式合并） */
   .scrim { background:linear-gradient(to top, rgba(0,0,0,.90) 0%, rgba(0,0,0,.48) 34%, rgba(0,0,0,.16) 58%, rgba(0,0,0,.05) 78%); }
+
+  /* V2.1 情感终章「写给你」：全屏照片 + 他的原话，克制温暖，不用紫色辉光，不拦截翻页 */
+  #letterSlide .lt-inner { position:absolute; inset:0; pointer-events:none; }
+  .lt-frame { position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; }
+  .lt-frame.on { opacity:1; }
+  /* 竖幅生活照不硬裁满屏：同图虚化压暗作底铺满，原图完整居中呈现，人脸保持自然比例 */
+  .lt-frame img.lt-bg { position:absolute; inset:-4%; width:108%; height:108%; object-fit:cover; display:block;
+    filter:blur(26px) brightness(.48) saturate(.85); }
+  .lt-frame img.lt-main { position:relative; z-index:1; width:100%; height:100%; object-fit:contain; display:block;
+    filter:saturate(.94) contrast(1.05) brightness(1.01); }
+  .lt-frame.on img.lt-main { animation:ltZoomA 6.4s ease-out both; }
+  .lt-frame.alt.on img.lt-main { animation-name:ltZoomB; }
+  @keyframes ltZoomA { from{transform:scale(1)} to{transform:scale(1.045)} }
+  @keyframes ltZoomB { from{transform:scale(1.045)} to{transform:scale(1)} }
+  .lt-scrim { position:absolute; inset:0; z-index:2;
+    background:linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.44) 30%, rgba(0,0,0,.10) 55%, rgba(0,0,0,.06) 100%); }
+  .lt-eyebrow { position:absolute; top:6cqh; left:7cqw; z-index:3; font-size:1.55cqw; font-weight:600;
+    letter-spacing:.38em; color:rgba(246,241,233,.82); text-shadow:0 1px 14px rgba(0,0,0,.65); }
+  .lt-lines { position:absolute; left:7cqw; right:7cqw; bottom:13cqh; z-index:3; text-align:center; }
+  .lt-line { position:absolute; left:0; right:0; bottom:0; font-size:3.05cqw; font-weight:600; line-height:1.45;
+    color:#fff; text-shadow:0 2px 26px rgba(0,0,0,.55); opacity:0; transform:translateY(14px);
+    transition:opacity .9s ease, transform .9s ease; }
+  .lt-line.show { opacity:1; transform:none; }
+  .lt-line.sign { font-size:2.15cqw; font-weight:500; color:rgba(255,255,255,.88); letter-spacing:.06em; }
+  @media (prefers-reduced-motion: reduce) {
+    .lt-frame, .lt-line { transition:none; }
+    .lt-frame.on img.lt-main, .lt-frame.alt.on img.lt-main { animation:none; }
+  }
 </style>
 <script>
 /* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
@@ -273,7 +301,32 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       </div>
     </section>
 
-    <!-- 10 谢幕 -->
+    <!-- 10 终章 · 写给你（V2.1 情感终章） -->
+    <section class="slide" id="letterSlide">
+      <div class="lt-inner">
+        <div class="lt-frame on"><img class="lt-bg" src="../img/wall3d/c005.jpg" alt="" aria-hidden="true" decoding="async"><img class="lt-main" src="../img/wall3d/c005.jpg" alt="" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame alt"><img class="lt-bg" src="../img/wall3d/c022.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c022.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame"><img class="lt-bg" src="../img/wall3d/c038.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c038.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame alt"><img class="lt-bg" src="../img/wall3d/c055.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c055.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame"><img class="lt-bg" src="../img/wall3d/c071.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c071.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame alt"><img class="lt-bg" src="../img/wall3d/c088.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c088.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame"><img class="lt-bg" src="../img/wall3d/c104.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c104.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-frame alt"><img class="lt-bg" src="../img/wall3d/c117.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><img class="lt-main" src="../img/wall3d/c117.jpg" alt="" loading="lazy" decoding="async"><div class="lt-scrim"></div></div>
+        <div class="lt-eyebrow">最后一章 · 写给你</div>
+        <div class="lt-lines">
+          <p class="lt-line">赖大宝，26 岁生日快乐。</p>
+          <p class="lt-line">从 2020 年 12 月 11 日到现在，快六年了。</p>
+          <p class="lt-line">我们一起听了五场演唱会，从武汉唱到贵阳。</p>
+          <p class="lt-line">家里也从两个人，变成了两个人加一只猫，再加一个小乖。</p>
+          <p class="lt-line">谢谢你一直陪着我。</p>
+          <p class="lt-line">往后的每一个生日，我都在。</p>
+          <p class="lt-line">今晚还有一场，只唱给你一个人听。</p>
+          <p class="lt-line sign">—— 张大宝</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 谢幕 -->
     <section class="slide">
       <div class="glow" style="width:50cqw;height:50cqw;left:25cqw;bottom:-26cqw;background:#5b21b6;"></div>
       <div class="pad" style="align-items:center;justify-content:center;text-align:center;gap:3cqh;">
@@ -288,7 +341,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
     <div id="znext" class="zone"></div>
     <div id="brand">LAIDABAO PRO 26</div>
     <div id="hud"></div>
-    <div id="count">1 / 10</div>
+    <div id="count">1 / 11</div>
     <div id="hint">点按两侧或按方向键翻页</div>
   </div>
 </div>
@@ -360,6 +413,53 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       if(!slide.classList.contains('active'))return;
       figs[mi].classList.remove('on');mi=(mi+1)%figs.length;figs[mi].classList.add('on');
     },4500);
+  })();
+
+  /* V2.1 情感终章：激活时从头自动播放——每帧 5s，照片交叉淡入淡出，
+     第一帧先纯照片 0.8s 再出字；最后一帧（落款）停住不循环；离开重置。 */
+  (function(){
+    var slide=document.getElementById('letterSlide');
+    if(!slide)return;
+    var frames=slide.querySelectorAll('.lt-frame'),
+        lines=slide.querySelectorAll('.lt-line'),
+        reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        idx=0,running=false,t1=null,t2=null;
+    function show(i){
+      idx=i;
+      for(var k=0;k<frames.length;k++){
+        frames[k].classList.toggle('on',k===i);
+        lines[k].classList.toggle('show',k===i);
+      }
+    }
+    function scheduleNext(){
+      t2=setTimeout(function(){
+        if(idx<frames.length-1){ show(idx+1); scheduleNext(); }
+      },5000);
+    }
+    function start(){
+      running=true;
+      if(reduced){ show(0); lines[0].classList.add('show'); return; }
+      /* 重置：只亮第一帧照片，字先藏 */
+      for(var k=0;k<frames.length;k++){
+        frames[k].classList.toggle('on',k===0);
+        lines[k].classList.remove('show');
+      }
+      idx=0;
+      t1=setTimeout(function(){ lines[0].classList.add('show'); scheduleNext(); },800);
+    }
+    function stop(){
+      running=false; idx=0;
+      if(t1)clearTimeout(t1); if(t2)clearTimeout(t2); t1=t2=null;
+      for(var k=0;k<frames.length;k++){
+        frames[k].classList.toggle('on',k===0);
+        lines[k].classList.remove('show');
+      }
+    }
+    setInterval(function(){
+      var active=slide.classList.contains('active');
+      if(active&&!running)start();
+      else if(!active&&running)stop();
+    },200);
   })();
 </script>
 <!-- 音乐接口（V2.0 预留）：待接入音频文件后填 src；当前无源，点击仅切换按钮状态。切勿接入 concert/audio/ 下的旧语音文件。 -->
