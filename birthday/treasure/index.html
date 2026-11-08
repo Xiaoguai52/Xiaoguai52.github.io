@@ -204,6 +204,10 @@ body{background:#000;color:#f5f5f7;}
 .foot{color:#6e6e78;}
 .foot a{color:#2997ff !important;}
 </style>
+<script>
+/* V2.0 图片兜底：加载失败时换成深紫渐变占位，不出现裂图图标 */
+document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.ph)return;t.dataset.ph='1';t.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1055"/><stop offset="0.55" stop-color="#4c1d95"/><stop offset="1" stop-color="#7597de"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>');},true);
+</script>
 </head>
 <body>
 <div class="subnav">寻宝局<span class="r">第二站 · 寻宝</span></div>
@@ -230,18 +234,18 @@ body{background:#000;color:#f5f5f7;}
     <h2>在一墙猫哥里，找到<span style="white-space:nowrap;">那一瞬间</span></h2>
     <p>下面 12 张全都是金豆豆，不能再靠“有没有猫”蒙混过关。你要找的是：<b>2024 年 3 月 19 日在医院拍的那张——爸爸趴在诊台边，脸凑近戴着伊丽莎白圈的猫哥。</b></p>
     <div class="wall" id="wall">
-      <button class="photo" type="button" aria-label="金豆豆照片 1"><img src="img/wall-01.jpg" alt="金豆豆照片 1"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 2"><img src="img/wall-02.jpg" alt="金豆豆照片 2"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 3"><img src="img/wall-03.jpg" alt="金豆豆照片 3"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 4"><img src="img/wall-04.jpg" alt="金豆豆照片 4"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 5"><img src="img/wall-05.jpg" alt="金豆豆照片 5"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 6"><img src="img/wall-06.jpg" alt="金豆豆照片 6"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 7"><img src="img/wall-07.jpg" alt="金豆豆照片 7"/></button>
-      <button class="photo" type="button" data-target="true" aria-label="金豆豆照片 8"><img src="img/wall-08.jpg" alt="金豆豆照片 8"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 9"><img src="img/wall-09.jpg" alt="金豆豆照片 9"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 10"><img src="img/wall-10.jpg" alt="金豆豆照片 10"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 11"><img src="img/wall-11.jpg" alt="金豆豆照片 11"/></button>
-      <button class="photo" type="button" aria-label="金豆豆照片 12"><img src="img/wall-12.jpg" alt="金豆豆照片 12"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 1"><img src="img/wall-01.jpg" alt="金豆豆照片 1" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 2"><img src="img/wall-02.jpg" alt="金豆豆照片 2" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 3"><img src="img/wall-03.jpg" alt="金豆豆照片 3" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 4"><img src="img/wall-04.jpg" alt="金豆豆照片 4" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 5"><img src="img/wall-05.jpg" alt="金豆豆照片 5" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 6"><img src="img/wall-06.jpg" alt="金豆豆照片 6" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 7"><img src="img/wall-07.jpg" alt="金豆豆照片 7" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" data-target="true" aria-label="金豆豆照片 8"><img src="img/wall-08.jpg" alt="金豆豆照片 8" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 9"><img src="img/wall-09.jpg" alt="金豆豆照片 9" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 10"><img src="img/wall-10.jpg" alt="金豆豆照片 10" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 11"><img src="img/wall-11.jpg" alt="金豆豆照片 11" loading="lazy" decoding="async"/></button>
+      <button class="photo" type="button" aria-label="金豆豆照片 12"><img src="img/wall-12.jpg" alt="金豆豆照片 12" loading="lazy" decoding="async"/></button>
     </div>
     <div class="status" id="wallStatus">已点错 0 次 · 点错的照片会被盖上红叉，第三次点错后才有提示。</div>
     <div class="hint" id="wallHint">猫哥提示：确实还有一张戴圈照，但那张是在家里吃饭。目标照片里有医院诊台、电脑，还有趴在桌边的爸爸。</div>
@@ -295,7 +299,7 @@ body{background:#000;color:#f5f5f7;}
     <button class="start" id="huntStart" type="button">开始抓小乖</button>
     <div class="hunt" id="hunt">
       <span class="tip" id="huntTip">按下开始，小乖就会开始逃跑</span>
-      <img class="me" id="meBtn" src="img/xiaoguai-avatar.webp" alt="小乖躲在这里"/>
+      <img class="me" id="meBtn" src="img/xiaoguai-avatar.webp" alt="小乖躲在这里" loading="lazy" decoding="async"/>
     </div>
     <div class="status" id="huntStatus">白色圆点是假身。真正的我有青色护目镜、圆圆的黑眼睛和毛茸茸的奶油色身体——看清再点。</div>
     <div class="clue" id="c3"><b>抓到啦。</b>三关全过，往下翻——最后一页。</div>
@@ -316,7 +320,7 @@ body{background:#000;color:#f5f5f7;}
     </div>
     <p class="finNote">发布会现场不在屏幕里——去抱一下张大宝，他身上藏着第一条线索。顺着线索走到底，坐到发布会席位上，再打开主会场的大门。</p>
     <a class="finBtn" href="../index.html">进入发布会主会场 →</a>
-    <div class="finPhoto"><img src="img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝"/><div class="cap"><div class="t">26 岁生日快乐，妈妈。</div><div class="d">新的一岁，继续把我们的故事，写成我们。</div></div></div>
+    <div class="finPhoto"><img src="img/laixinwen-2021-12-11-roses.jpg" alt="拿着玫瑰的赖大宝" loading="lazy" decoding="async"/><div class="cap"><div class="t">26 岁生日快乐，妈妈。</div><div class="d">新的一岁，继续把我们的故事，写成我们。</div></div></div>
     <p class="finCredit">出题人：小乖 · 监考：金豆豆 · 出题费：一个抱抱</p>
   </div>
 
