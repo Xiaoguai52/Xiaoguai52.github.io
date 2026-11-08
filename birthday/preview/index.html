@@ -686,7 +686,7 @@ document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!==
       if(pv){if(goConcert())return;openGate();setTimeout(function(){gate.remove();},950);return;}
       if(diff<=0){
         if(goConcert())return;
-        openGate();celebrate();
+        openGate();celebrate(true);
         setTimeout(function(){gate.remove();},950);return;
       }
       document.getElementById('gd').textContent=Math.floor(diff/86400000);
